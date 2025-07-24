@@ -7,10 +7,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(APPBAR_TITLE_DASHBOARD),
-        centerTitle: true,
-      ),
+      appBar: myAppBar(title: APPBAR_TITLE_DASHBOARD),
       body:Column(
         children: [
           Row(

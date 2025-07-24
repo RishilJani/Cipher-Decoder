@@ -2,12 +2,13 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  // final Color backgroundColor = const Color(0xFF292626);
+  // final Color primaryColor = const Color(0xFFFFE100);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -16,6 +17,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+
+        // primaryColor: primaryColor,
+        // scaffoldBackgroundColor: backgroundColor,
+        // appBarTheme: AppBarTheme(
+        //   backgroundColor: backgroundColor,
+        //   foregroundColor: primaryColor, // text/icon color in AppBar
+        // ),
+        //
+        // colorScheme: ColorScheme.fromSwatch().copyWith(
+        //   primary: primaryColor,
+        //   surface: backgroundColor,
+        // ),
       ),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,

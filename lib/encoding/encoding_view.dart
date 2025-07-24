@@ -10,35 +10,28 @@ class EncodingView extends StatefulWidget {
 
 class _EncodingViewState extends State<EncodingView> {
   EncodingController encodingController = EncodingController();
-
   String _selectedMethod = '';
 
   @override
   void initState() {
     super.initState();
-    _selectedMethod = encodingController.encodingList[0];
+    _selectedMethod = encodeDecodeMethods[0];
   }
 
   TextEditingController plainTextController = TextEditingController();
   TextEditingController cipherTextController = TextEditingController();
   TextEditingController keyController = TextEditingController();
-
-  String cipheredText = '';
   double height = 10;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    bool showConditionalField =
-        encodingController.keyRequired.contains(_selectedMethod);
-    // Define consistent spacing
+    bool showConditionalField = keyRequired.contains(_selectedMethod);
     const double fieldSpacing = 20.0;
+    
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(APPBAR_TITLE_ENCODING),
-        centerTitle: true,
-      ),
+      appBar: myAppBar(title: APPBAR_TITLE_ENCODING),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -91,7 +84,7 @@ class _EncodingViewState extends State<EncodingView> {
                   Icon(Icons.arrow_drop_down_circle, color: theme.primaryColor),
               isExpanded: true,
               value: _selectedMethod,
-              items: encodingController.encodingList.map(
+              items: encodeDecodeMethods.map(
                 (e) {
                   return DropdownMenuItem(
                     value: e,
@@ -156,11 +149,30 @@ class _EncodingViewState extends State<EncodingView> {
                       fieldSpacing * 1.5), // Adjust spacing if field is hidden
 
             myInputfield(
-              context: context,
-              controller: cipherTextController,
-              textTitle: "Encoded text:",
-              enabled: false,
-            ),
+                context: context,
+                controller: cipherTextController,
+                textTitle: "Encoded text:",
+                readonly: true,
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        copyText(cipherTextController.text);
+                      },
+                      icon: const Icon(Icons.copy),
+                      tooltip: "Copy cipher text only",
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        copyText(
+                            "${plainTextController.text} \n\n${cipherTextController.text}");
+                      },
+                      icon: const Icon(Icons.copy_all),
+                      tooltip: "Copy normal and cipher text",
+                    ),
+                  ],
+                )),
             const SizedBox(height: fieldSpacing * 1.5),
           ],
         ),
@@ -168,52 +180,4 @@ class _EncodingViewState extends State<EncodingView> {
     );
   }
 
-  Widget myInputfield(
-      {key,
-      required context,
-      required String textTitle,
-      hintText,
-      controller,
-      minLines,
-      maxLines,
-      keyboardType,
-      textInputAction,
-      onChanged,
-      validator,
-      enabled}) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
-    return Column(
-      key: key,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          textTitle,
-          style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 10.0),
-        TextFormField(
-          enabled: enabled,
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: hintText,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            filled: true,
-            fillColor: Colors.grey[100],
-          ),
-          style: textTheme.bodyLarge,
-          minLines: minLines,
-          maxLines: maxLines,
-          keyboardType: keyboardType,
-          textInputAction: textInputAction,
-          onChanged: onChanged,
-          validator: validator,
-        ),
-        const SizedBox(height: 15.0),
-      ],
-    );
-  }
 }

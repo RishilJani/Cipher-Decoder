@@ -17,9 +17,13 @@ const String EN_MONO_ALPHABATIC = "Mono Alphabatic";
 enum EncodeDecodeTypes {
   Ceaser_Cipher,
   Atbash_Cipher,
-  Mono_Cipher
+  Mono_Alphabatic_Cipher
 }
 // endregion
+
+List<String> encodeDecodeMethods = [EN_CEASER_CIPHER, EN_ATBASH_CIPHER, EN_MONO_ALPHABATIC];
+List<String> keyRequired = [EN_MONO_ALPHABATIC];
+
 
 // region Routes
 const String RT_DASHBOARD = "/dashboard";

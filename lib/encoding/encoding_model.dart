@@ -1,19 +1,29 @@
 class EncodingModel {
-  String? plaintText;
 
-  EncodingModel({this.plaintText});
-
-  String ceaserCipher(String plainText) {
-    String cipherText = monoAlphabaticCipher(plainText: plainText, key: 3);
+  String ceaserCipher(String plainText,{int? key = 3}) {
+    String cipherText = monoAlphabaticCipher(plainText: plainText, key: key!);
     return cipherText;
   }
 
   String atbashCipher(String plainText){
-    String cipherText = plainText;
-    return cipherText;
+    StringBuffer cipherText = StringBuffer();
+
+    for(var code in plainText.codeUnits){
+      if(code >= 65 && code <= 90){
+        cipherText.writeCharCode(90 - (code - 65));
+      }else if(code >= 97 && code <= 122){
+        cipherText.writeCharCode(122 - (code - 97));
+      }else{
+        cipherText.writeCharCode(code);
+      }
+    }
+    return cipherText.toString();
   }
 
   String monoAlphabaticCipher({required String plainText, required int key}){
+    if(key % 26 == 0){
+      return plainText;
+    }
     final shift = key % 26;
     final buffer = StringBuffer();
 
@@ -31,7 +41,6 @@ class EncodingModel {
         buffer.writeCharCode(code);
       }
     }
-    print("Cipher String ===== ${buffer.toString()}");
     return buffer.toString();
   }
 

@@ -10,7 +10,7 @@ class DecodingView extends StatefulWidget {
 
 class _DecodingViewState extends State<DecodingView> {
   DecodingController decodingController = DecodingController();
-  String _selectedMethod = '';
+  EncodeDecodeTypes _selectedMethod = encodeDecodeMethods[0];
   @override
   void initState() {
 
@@ -49,17 +49,17 @@ class _DecodingViewState extends State<DecodingView> {
                 minLines: 3,
                 maxLines: 7,
                 keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.newline,
                 onChanged: (value) {
                   setState(() {
-                    onChanged();
+                    onDecodeChanged();
                   });
                 }),
             // endregion
 
             SizedBox(height: height),
 
-            // drop down
+            // region Dropdown
             Text(
               'Select method to decode:',
               style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -74,26 +74,30 @@ class _DecodingViewState extends State<DecodingView> {
                 fillColor: Colors.grey[100],
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
-              style: textTheme.bodyLarge,
+              style: textTheme.bodyMedium,
               icon: Icon(Icons.arrow_drop_down_circle, color: theme.primaryColor),
               isExpanded: true,
               value: _selectedMethod,
               items: encodeDecodeMethods.map((e) {
                 return DropdownMenuItem(
                   value: e,
-                  child: Text(e),
+                  child: Text(encodeDecodeString(e)),
                 );
               },
               ).toList(),
               onChanged: (value) {
                 setState(() {
                   _selectedMethod = value!;
-                  onChanged();
+                  onDecodeChanged();
                 });
               },
             ),
 
-            // animated switch
+            // endregion
+
+
+            // region AnimatedSwitch
+
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
@@ -112,7 +116,7 @@ class _DecodingViewState extends State<DecodingView> {
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   setState(() {
-                    onChanged();
+                    onDecodeChanged();
                   });
                 },
                 validator: (value) {
@@ -125,9 +129,9 @@ class _DecodingViewState extends State<DecodingView> {
                 },
               )
                   : const SizedBox.shrink(
-                  key: ValueKey(
-                      'emptyConditional')), // Use SizedBox.shrink when hidden
+                  key: ValueKey( 'emptyConditional')), // Use SizedBox.shrink when hidden
             ),
+            // endregion
 
             if (!showConditionalField)
               const SizedBox(
@@ -161,9 +165,16 @@ class _DecodingViewState extends State<DecodingView> {
                   ],
                 )
             ),
+            const SizedBox(height: fieldSpacing * 1.5),
             // endregion
 
-            const SizedBox(height: fieldSpacing * 1.5),
+
+            description(
+                context: context,
+                selectedMethod: _selectedMethod,
+                text1 : cipherTextController.text,
+                text2 : plainTextController.text
+            ),
 
           ],
         ),
@@ -171,7 +182,7 @@ class _DecodingViewState extends State<DecodingView> {
     );
   }
 
-  void onChanged(){
+  void onDecodeChanged(){
     int? key = keyController.text.isNotEmpty
         ? int.parse(keyController.text)
         : null;

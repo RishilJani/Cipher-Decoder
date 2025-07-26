@@ -1,4 +1,5 @@
 import 'package:cipher_decoder/utils/import_export.dart';
+import 'package:flutter/cupertino.dart';
 
 // ignore: must_be_immutable
 class EncodingView extends StatefulWidget {
@@ -9,14 +10,14 @@ class EncodingView extends StatefulWidget {
 }
 
 class _EncodingViewState extends State<EncodingView> {
-  EncodingController encodingController = EncodingController();
-  String _selectedMethod = '';
-
   @override
   void initState() {
     super.initState();
     _selectedMethod = encodeDecodeMethods[0];
   }
+  EncodingController encodingController = EncodingController();
+  EncodeDecodeTypes _selectedMethod = encodeDecodeMethods[0];
+
 
   TextEditingController plainTextController = TextEditingController();
   TextEditingController cipherTextController = TextEditingController();
@@ -29,7 +30,6 @@ class _EncodingViewState extends State<EncodingView> {
     final textTheme = theme.textTheme;
     bool showConditionalField = keyRequired.contains(_selectedMethod);
     const double fieldSpacing = 20.0;
-    
     return Scaffold(
       appBar: myAppBar(title: APPBAR_TITLE_ENCODING),
       body: SingleChildScrollView(
@@ -37,7 +37,7 @@ class _EncodingViewState extends State<EncodingView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //region encoding
+            //region Encoding
             myInputfield(
                 context: context,
                 textTitle: "Enter text to encode",
@@ -46,23 +46,18 @@ class _EncodingViewState extends State<EncodingView> {
                 minLines: 3,
                 maxLines: 7,
                 keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.newline,
                 onChanged: (value) {
                   setState(() {
-                    int? key = keyController.text.isNotEmpty
-                        ? int.parse(keyController.text)
-                        : null;
-                    cipherTextController.text = encodingController.encodeUsing(
-                        plainText: plainTextController.text,
-                        method: _selectedMethod,
-                        key: key);
+                    onEncodeChange();
                   });
                 }),
+
+              SizedBox(height: height),
             // endregion
 
-            SizedBox(height: height),
+            // region Dropdown
 
-            // drop down
             Text(
               'Select method to encode:',
               style:
@@ -79,27 +74,29 @@ class _EncodingViewState extends State<EncodingView> {
                 contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 12.0),
               ),
-              style: textTheme.bodyLarge,
-              icon:
-                  Icon(Icons.arrow_drop_down_circle, color: theme.primaryColor),
+              style: textTheme.bodyMedium,
+              icon:  Icon(Icons.arrow_drop_down_circle_sharp, color: theme.primaryColor, size: 28,),
               isExpanded: true,
               value: _selectedMethod,
               items: encodeDecodeMethods.map(
                 (e) {
                   return DropdownMenuItem(
                     value: e,
-                    child: Text(e),
+                    child: Text(encodeDecodeString(e)),
                   );
                 },
               ).toList(),
               onChanged: (value) {
                 setState(() {
                   _selectedMethod = value!;
+                  onEncodeChange();
                 });
               },
             ),
 
-            // animated switch
+            // endregion
+
+            // region AnimatedSwitch
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
@@ -118,14 +115,7 @@ class _EncodingViewState extends State<EncodingView> {
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
-                          int? key = keyController.text.isNotEmpty
-                              ? int.parse(keyController.text)
-                              : null;
-                          cipherTextController.text =
-                              encodingController.encodeUsing(
-                                  plainText: plainTextController.text,
-                                  method: _selectedMethod,
-                                  key: key);
+                          onEncodeChange();
                         });
                       },
                       validator: (value) {
@@ -141,13 +131,16 @@ class _EncodingViewState extends State<EncodingView> {
                       key: ValueKey(
                           'emptyConditional')), // Use SizedBox.shrink when hidden
             ),
+            // endregion
 
-            // style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            // region AdjustSpace
             if (!showConditionalField)
               const SizedBox(
                   height:
                       fieldSpacing * 1.5), // Adjust spacing if field is hidden
+            // endregion
 
+            // region EncodedText
             myInputfield(
                 context: context,
                 controller: cipherTextController,
@@ -172,12 +165,33 @@ class _EncodingViewState extends State<EncodingView> {
                       tooltip: "Copy normal and cipher text",
                     ),
                   ],
-                )),
+                ),
+            ),
             const SizedBox(height: fieldSpacing * 1.5),
+            // endregion
+
+            // region Description
+            description(
+                context: context,
+                selectedMethod: _selectedMethod,
+                text1 : plainTextController.text,
+                text2 : cipherTextController.text
+            ),
+            // endregion
           ],
         ),
       ),
     );
   }
 
+  void onEncodeChange(){
+    int? key = keyController.text.isNotEmpty
+        ? int.parse(keyController.text)
+        : null;
+    cipherTextController.text = encodingController.encodeUsing(
+        plainText: plainTextController.text,
+        method: _selectedMethod,
+        key: key);
+
+  }
 }

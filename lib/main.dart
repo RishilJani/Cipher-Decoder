@@ -1,34 +1,38 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-
 void main() {
   runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // final Color backgroundColor = const Color(0xFF292626);
-  // final Color primaryColor = const Color(0xFFFFE100);
+  final Color backgroundColor = const Color(0xFFE0F7FA);
+  final Color surfaceColor = const Color(0xFFD6E4E5);
+  final Color primaryColor = const Color(0xFFBCCCDC);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-
-        // primaryColor: primaryColor,
-        // scaffoldBackgroundColor: backgroundColor,
-        // appBarTheme: AppBarTheme(
-        //   backgroundColor: backgroundColor,
-        //   foregroundColor: primaryColor, // text/icon color in AppBar
-        // ),
-        //
-        // colorScheme: ColorScheme.fromSwatch().copyWith(
-        //   primary: primaryColor,
-        //   surface: backgroundColor,
-        // ),
+        scaffoldBackgroundColor: backgroundColor,
+        primaryColor: primaryColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: surfaceColor,
+          foregroundColor: Colors.black,
+        ),
+        cardColor: surfaceColor,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: primaryColor,
+          surface: surfaceColor,
+        ),
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+          bodyLarge: TextStyle(color: Colors.black, fontSize: 20,),
+          bodyMedium: TextStyle(color: Colors.black87, fontSize: 17),
+        ),
       ),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,

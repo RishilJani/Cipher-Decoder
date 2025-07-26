@@ -24,7 +24,7 @@ Widget myInputfield(
     children: [
       Text(
         textTitle,
-        style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+        style: textTheme.titleMedium,
       ),
       const SizedBox(height: 10.0),
       TextFormField(
@@ -39,10 +39,11 @@ Widget myInputfield(
           suffixIcon: suffixIcon,
           fillColor: Colors.grey[100],
         ),
-        style: textTheme.bodyLarge,
+        style: textTheme.bodyMedium,
         minLines: minLines,
         maxLines: maxLines,
         keyboardType: keyboardType,
+        enableInteractiveSelection: true,
         textInputAction: textInputAction,
         onChanged: onChanged,
         validator: validator,
@@ -66,16 +67,6 @@ void copyText(String txt) {
   );
 }
 
-// to convert String into EncodeDecodeTypes enum
-EncodeDecodeTypes fromString(String s){
-  if(s == EN_CEASER_CIPHER){
-    return EncodeDecodeTypes.Ceaser_Cipher;
-  }else if(s == EN_ATBASH_CIPHER){
-    return EncodeDecodeTypes.Atbash_Cipher;
-  }else{
-    return EncodeDecodeTypes.Mono_Alphabatic_Cipher;
-  }
-}
 
 // custom Appbar
 AppBar myAppBar({required String title}){
@@ -85,4 +76,16 @@ AppBar myAppBar({required String title}){
     ),),
     centerTitle: true,
   );
+}
+
+
+String encodeDecodeString(EncodeDecodeTypes method){
+  if(method == EncodeDecodeTypes.Mono_Alphabatic_Cipher){
+    return EN_MONO_ALPHABATIC;
+  }else if(method == EncodeDecodeTypes.Atbash_Cipher){
+    return EN_ATBASH_CIPHER;
+  }else if(method == EncodeDecodeTypes.Ceaser_Cipher){
+    return EN_CEASER_CIPHER;
+  }
+  return "";
 }

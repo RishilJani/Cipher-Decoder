@@ -2,6 +2,8 @@ export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
 export 'package:get/get.dart';
 
+export 'package:cipher_decoder/encode_decode_functions.dart';
+
 export 'package:cipher_decoder/utils/string_constants.dart';
 export 'package:cipher_decoder/utils/app_routes.dart';
 export 'package:cipher_decoder/utils/common_functions.dart';

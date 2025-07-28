@@ -44,4 +44,33 @@ class EncodingModel {
     return buffer.toString();
   }
 
+  String railFence({required String plainText,required int key}){
+    if(key == 1){
+      return plainText;
+    }
+
+    int ind1 = 0;
+    bool isDown = true;
+    List<String> strs = [];
+    for(int i = 0 ; i < key;i++){
+      strs.add("");
+    }
+    for (int i = 0; i < plainText.length; i++) {
+      strs[ind1] += plainText[i];
+
+      if(isDown){
+        if(ind1 < key-1){ ind1++;}
+        else{ ind1--; isDown = false;}
+      }else{
+        if(ind1 > 0){ ind1--; }
+        else{ ind1++; isDown = true; }
+      }
+    }
+
+    String ans = "";
+    for (String str in strs) {
+      ans = ans + str;
+    }
+    return ans;
+  }
 }

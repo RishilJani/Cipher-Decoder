@@ -54,7 +54,11 @@ class _DecodingViewState extends State<DecodingView> {
                   setState(() {
                     onDecodeChanged();
                   });
-                }),
+                },
+                suffixIcon: IconButton(onPressed: () {
+                  pasteText();
+                }, icon: Icon(Icons.paste)),
+            ),
             // endregion
 
             SizedBox(height: height),
@@ -81,7 +85,7 @@ class _DecodingViewState extends State<DecodingView> {
               items: encodeDecodeMethods.map((e) {
                 return DropdownMenuItem(
                   value: e,
-                  child: Text(encodeDecodeString(e)),
+                  child: Text(encodeDecodeToString(e)),
                 );
               },
               ).toList(),
@@ -144,7 +148,52 @@ class _DecodingViewState extends State<DecodingView> {
                 controller: plainTextController,
                 textTitle: "Decoded text:",
                 readonly: true,
-                suffixIcon: Row(
+            ),
+            const SizedBox(height: fieldSpacing * 1.5),
+            // endregion
+
+
+            // region Description
+            description(
+                context: context,
+                selectedMethod: _selectedMethod,
+                text1 : cipherTextController.text,
+                text2 : plainTextController.text
+            ),
+
+            // endregion
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onDecodeChanged(){
+    int? key = keyController.text.isNotEmpty
+        ? int.parse(keyController.text)
+        : null;
+    plainTextController.text = decodingController.decodeUsing(
+        cipherText: cipherTextController.text,
+        method: _selectedMethod,
+        key: key);
+  }
+
+  void pasteText() async{
+    ClipboardData? data = await Clipboard.getData('text/plain');
+    if(data != null){
+      print("data ======= ${data.text}");
+      setState(() {
+        cipherTextController.text = data.text!;
+        onDecodeChanged();
+      });
+    }else{
+      print("data is NULL......................}");
+    }
+  }
+}
+
+/*
+ Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
@@ -164,31 +213,4 @@ class _DecodingViewState extends State<DecodingView> {
                     ),
                   ],
                 )
-            ),
-            const SizedBox(height: fieldSpacing * 1.5),
-            // endregion
-
-
-            description(
-                context: context,
-                selectedMethod: _selectedMethod,
-                text1 : cipherTextController.text,
-                text2 : plainTextController.text
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-
-  void onDecodeChanged(){
-    int? key = keyController.text.isNotEmpty
-        ? int.parse(keyController.text)
-        : null;
-    plainTextController.text = decodingController.decodeUsing(
-        cipherText: cipherTextController.text,
-        method: _selectedMethod,
-        key: key);
-  }
-}
+ */

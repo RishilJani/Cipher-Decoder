@@ -82,7 +82,7 @@ class _EncodingViewState extends State<EncodingView> {
                 (e) {
                   return DropdownMenuItem(
                     value: e,
-                    child: Text(encodeDecodeString(e)),
+                    child: Text(encodeDecodeToString(e)),
                   );
                 },
               ).toList(),

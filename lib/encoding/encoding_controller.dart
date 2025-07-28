@@ -9,6 +9,8 @@ class EncodingController extends GetxController {
       return encodingModel.atbashCipher(plainText);
     }else if(method == EncodeDecodeTypes.Mono_Alphabatic_Cipher){
       return encodingModel.monoAlphabaticCipher(plainText: plainText, key: key ?? 3);
+    }else if(method == EncodeDecodeTypes.Rail_Fence_Cipher){
+      return encodingModel.railFence(plainText: plainText, key: key ?? 1);
     }
     return "";
   }

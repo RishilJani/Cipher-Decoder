@@ -4,20 +4,38 @@ Map<dynamic,dynamic> methods = {
   EncodeDecodeTypes.Ceaser_Cipher : CEASER_CIPHER_DESC,
   EncodeDecodeTypes.Atbash_Cipher : ATBASH_CIPHER_DESC,
   EncodeDecodeTypes.Mono_Alphabatic_Cipher : MONO_ALPHABATIC_CIPHER_DESC,
+  EncodeDecodeTypes.Rail_Fence_Cipher : RAIL_FENCE_DESC,
 };
 
 List<EncodeDecodeTypes> encodeDecodeMethods = EncodeDecodeTypes.values;
-List<EncodeDecodeTypes> keyRequired = [EncodeDecodeTypes.Mono_Alphabatic_Cipher];
+List<EncodeDecodeTypes> keyRequired = [EncodeDecodeTypes.Mono_Alphabatic_Cipher, EncodeDecodeTypes.Rail_Fence_Cipher];
 
+
+// to convert EncodeDecodeTypes into String
+String encodeDecodeToString(EncodeDecodeTypes method){
+  if(method == EncodeDecodeTypes.Mono_Alphabatic_Cipher){
+    return EN_MONO_ALPHABATIC;
+  }
+  else if(method == EncodeDecodeTypes.Atbash_Cipher){
+    return EN_ATBASH_CIPHER;
+  }
+  else if(method == EncodeDecodeTypes.Ceaser_Cipher){
+    return EN_CEASER_CIPHER;
+  }
+  else if(method == EncodeDecodeTypes.Rail_Fence_Cipher) {return EN_RAIL_FENCE;}
+  return "";
+}
 
 // to convert String into EncodeDecodeTypes enum
-EncodeDecodeTypes fromString(String s) {
+EncodeDecodeTypes encodeDecodeFromString(String s) {
   if(s == EN_CEASER_CIPHER){
     return EncodeDecodeTypes.Ceaser_Cipher;
   }else if(s == EN_ATBASH_CIPHER){
     return EncodeDecodeTypes.Atbash_Cipher;
-  }else{
+  }else if(s == EN_MONO_ALPHABATIC){
     return EncodeDecodeTypes.Mono_Alphabatic_Cipher;
+  }else{
+    return EncodeDecodeTypes.Rail_Fence_Cipher;
   }
 }
 
@@ -31,7 +49,7 @@ Widget description({required context, selectedMethod, text1 , text2 }){
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(encodeDecodeString(selectedMethod),style: textTheme.titleMedium?.copyWith(fontSize: 18)),
+        Text(encodeDecodeToString(selectedMethod),style: textTheme.titleMedium?.copyWith(fontSize: 18)),
         Text(methods[selectedMethod], style: textTheme.bodyMedium,),
         Text(des)
       ],
@@ -40,7 +58,7 @@ Widget description({required context, selectedMethod, text1 , text2 }){
 }
 
 String dynamicDescription({required String text1 ,required String text2}){
-  String ans = "";
+  String ans = "\ne.g.\n";
   int count = 0;
   var l1 = text1.split('');
   var l2 = text2.split('');

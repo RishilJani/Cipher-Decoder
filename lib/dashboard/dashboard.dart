@@ -10,9 +10,10 @@ class Dashboard extends StatelessWidget {
       body:Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customIconButton(
                   onPressed: () { Get.toNamed(RT_ENCODING_VIEW); },
@@ -20,13 +21,18 @@ class Dashboard extends StatelessWidget {
                     fontSize: 17
                   ),)
                 ),
-
+              ],
+            ),
+            // SizedBox(height: 25,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 customIconButton(
                     onPressed: (){
                       Get.toNamed(RT_DECODING_VIEW);
                     },
                     child: const Text("Decoding",style: TextStyle(
-                      fontSize: 17
+                        fontSize: 17
                     ),)
                 ),
               ],

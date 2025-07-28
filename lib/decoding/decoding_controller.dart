@@ -10,6 +10,8 @@ class DecodingController {
       return decodingModel.atbashCipher(cipherText);
     } else if (method == EncodeDecodeTypes.Mono_Alphabatic_Cipher) {
       return decodingModel.monoAlphabaticCipher(cipherText: cipherText, key: key ?? 3);
+    }else if(method == EncodeDecodeTypes.Rail_Fence_Cipher){
+      return decodingModel.railFenceCipher(cipherText: cipherText, key: key ?? 1);
     }
     return "";
   }

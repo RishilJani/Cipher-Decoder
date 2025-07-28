@@ -78,14 +78,3 @@ AppBar myAppBar({required String title}){
   );
 }
 
-
-String encodeDecodeString(EncodeDecodeTypes method){
-  if(method == EncodeDecodeTypes.Mono_Alphabatic_Cipher){
-    return EN_MONO_ALPHABATIC;
-  }else if(method == EncodeDecodeTypes.Atbash_Cipher){
-    return EN_ATBASH_CIPHER;
-  }else if(method == EncodeDecodeTypes.Ceaser_Cipher){
-    return EN_CEASER_CIPHER;
-  }
-  return "";
-}

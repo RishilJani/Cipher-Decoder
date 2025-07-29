@@ -10,12 +10,13 @@ class DecodingView extends StatefulWidget {
 
 class _DecodingViewState extends State<DecodingView> {
   DecodingController decodingController = DecodingController();
-  EncodeDecodeTypes _selectedMethod = encodeDecodeMethods[0];
+  EncodeDecodeMethods _selectedMethod = encodeDecodeMethods[0];
+  bool showConditionalField = false;
   @override
   void initState() {
-
     super.initState();
     _selectedMethod = encodeDecodeMethods[0];
+    showConditionalField = keyConditionalField(_selectedMethod);
   }
 
   TextEditingController plainTextController = TextEditingController();
@@ -29,7 +30,7 @@ class _DecodingViewState extends State<DecodingView> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    bool showConditionalField = keyRequired.contains(_selectedMethod);
+
     // Define consistent spacing
     const double fieldSpacing = 20.0;
     return Scaffold(
@@ -55,9 +56,8 @@ class _DecodingViewState extends State<DecodingView> {
                     onDecodeChanged();
                   });
                 },
-                suffixIcon: IconButton(onPressed: () {
-                  pasteText();
-                }, icon: Icon(Icons.paste)),
+                optional: plainTextController,
+                suffixIcon: pasteIconButton(controller: cipherTextController,onChange: onDecodeChanged),
             ),
             // endregion
 
@@ -85,7 +85,7 @@ class _DecodingViewState extends State<DecodingView> {
               items: encodeDecodeMethods.map((e) {
                 return DropdownMenuItem(
                   value: e,
-                  child: Text(encodeDecodeToString(e)),
+                  child: Text(e.title!),
                 );
               },
               ).toList(),
@@ -142,12 +142,19 @@ class _DecodingViewState extends State<DecodingView> {
                   height:
                   fieldSpacing * 1.5), // Adjust spacing if field is hidden
 
-            // region Decoded
+            // region DecodedText
             myInputfield(
                 context: context,
                 controller: plainTextController,
                 textTitle: "Decoded text:",
                 readonly: true,
+                suffixIcon: IconButton(
+                onPressed: () {
+                  copyText(plainTextController.text);
+                },
+                icon: const Icon(Icons.copy),
+                tooltip: "Copy decoded text only",
+              ),
             ),
             const SizedBox(height: fieldSpacing * 1.5),
             // endregion
@@ -176,41 +183,8 @@ class _DecodingViewState extends State<DecodingView> {
         cipherText: cipherTextController.text,
         method: _selectedMethod,
         key: key);
+    showConditionalField = keyConditionalField(_selectedMethod);
+    setState(() {});
   }
 
-  void pasteText() async{
-    ClipboardData? data = await Clipboard.getData('text/plain');
-    if(data != null){
-      print("data ======= ${data.text}");
-      setState(() {
-        cipherTextController.text = data.text!;
-        onDecodeChanged();
-      });
-    }else{
-      print("data is NULL......................}");
-    }
-  }
 }
-
-/*
- Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        copyText(cipherTextController.text);
-                      },
-                      icon: const Icon(Icons.copy),
-                      tooltip: "Copy normal text only",
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        copyText(
-                            "${plainTextController.text} \n\n${cipherTextController.text}");
-                      },
-                      icon: const Icon(Icons.copy_all),
-                      tooltip: "Copy normal and cipher text",
-                    ),
-                  ],
-                )
- */

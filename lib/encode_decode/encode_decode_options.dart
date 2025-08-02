@@ -3,7 +3,7 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore:must_be_immutable
 class EncodeDecodeOptions extends StatelessWidget {
   final dynamic controller;
-  KeyFieldController keyFieldController = KeyFieldController();
+  KeyFieldController keyFieldController = Get.find<KeyFieldController>();
   EncodeDecodeOptions({super.key, required this.controller});
 
   double fieldSpacing = 20.0;

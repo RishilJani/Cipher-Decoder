@@ -24,7 +24,9 @@ class CeaseCipher extends EncodeDecodeMethods {
 
   @override
   String decode({required String cipherText, int? key}) {
-    return MonoAlphabaticCipher().decode(cipherText: cipherText, key: 23);
+    String str = MonoAlphabaticCipher().decode(cipherText: cipherText, key: 3);
+    print("DECODE ==== $str");
+    return str;
   }
 
   @override

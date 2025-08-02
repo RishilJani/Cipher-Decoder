@@ -1,11 +1,11 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-Map<dynamic,dynamic> methods = {
-  EncodeDecodeTypes.Ceaser_Cipher : CEASER_CIPHER_DESC,
-  EncodeDecodeTypes.Atbash_Cipher : ATBASH_CIPHER_DESC,
-  EncodeDecodeTypes.Mono_Alphabatic_Cipher : MONO_ALPHABATIC_CIPHER_DESC,
-  EncodeDecodeTypes.Rail_Fence_Cipher : RAIL_FENCE_DESC,
-};
+// Map<dynamic,dynamic> methods = {
+//   EncodeDecodeTypes.Ceaser_Cipher : CEASER_CIPHER_DESC,
+//   EncodeDecodeTypes.Atbash_Cipher : ATBASH_CIPHER_DESC,
+//   EncodeDecodeTypes.Mono_Alphabatic_Cipher : MONO_ALPHABATIC_CIPHER_DESC,
+//   EncodeDecodeTypes.Rail_Fence_Cipher : RAIL_FENCE_DESC,
+// };
 
 List<EncodeDecodeMethods> _encodeDecodeMethods = [];
 

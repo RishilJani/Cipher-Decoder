@@ -8,17 +8,21 @@ class KeyFieldController extends GetxController{
   void updateSelectedMethod(EncodeDecodeMethods method, {controller, isEncode = true}){
     selectedMethod.value = method;
     showConditionalField.value = method.requiresKey;
+
     onChange(isEncode: isEncode, controller: controller);
     Get.back();
   }
 
   void onChange({controller , bool isEncode = true}){
-    showConditionalField.value = selectedMethod.value.requiresKey;
+    // showConditionalField.value = selectedMethod.value.requiresKey;
     if(isEncode){
+      print("Encoding Controller == ${controller.runtimeType}");
       controller.encodeUsing(method: selectedMethod.value);
     }else{
+      print("Decoding Controller == ${controller.runtimeType}");
       controller.decodeUsing(method: selectedMethod.value);
     }
-    update();
+    print(".................Updating.................");
+    update([bool,EncodeDecodeMethods]);
   }
 }

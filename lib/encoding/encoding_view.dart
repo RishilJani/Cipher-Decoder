@@ -1,24 +1,14 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // ignore: must_be_immutable
-class EncodingView extends StatefulWidget {
-  const EncodingView({super.key});
-
-  @override
-  State<EncodingView> createState() => _EncodingViewState();
-}
-
-class _EncodingViewState extends State<EncodingView> {
+class EncodingView extends StatelessWidget{
   EncodingController encodingController = EncodingController();
-  KeyFieldController keyFieldController = KeyFieldController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  KeyFieldController keyFieldController = Get.put(KeyFieldController());
+  
   double height = 10;
   static const double fieldSpacing = 20.0;
+
+  EncodingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +20,7 @@ class _EncodingViewState extends State<EncodingView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //region Encoding
-             myInputfield(
+            myInputfield(
                 context: context,
                 textTitle: "Enter text to encode",
                 hintText: 'enter text to cipher...',
@@ -41,15 +31,7 @@ class _EncodingViewState extends State<EncodingView> {
                 textInputAction: TextInputAction.newline,
                 onChanged: (value) { keyFieldController.onChange(controller: encodingController,isEncode: true); },
                 optional: encodingController.cipherTextController,
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [ pasteIconButton(
-                        controller: encodingController.plainTextController,
-                        onChange: keyFieldController.onChange,
-                        isEncode: true
-                      ),
-                  ],
-                )
+                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: keyFieldController.onChange,  isEncode: true)
             ),
             SizedBox(height: height),
             // endregion
@@ -58,49 +40,34 @@ class _EncodingViewState extends State<EncodingView> {
 
             // region EncodedText
             myInputfield(
-                context: context,
-                controller: encodingController.cipherTextController,
-                textTitle: "Encoded text:",
-                readonly: true,
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        copyText(encodingController.cipherTextController.text);
-                      },
-                      icon: const Icon(Icons.copy),
-                      tooltip: "Copy cipher text",
-                    ),
-                    // clearIconButton(controller: cipherTextController, text: "Clear Cipher text"),
-                  ],
-                ),
+              context: context,
+              controller: encodingController.cipherTextController,
+              textTitle: "Encoded text:",
+              hintText: "Encoded text...",
+              readonly: true,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  copyText(encodingController.cipherTextController.text);
+                },
+                icon: const Icon(Icons.copy),
+                tooltip: "Copy cipher text",
               ),
+            ),
             const SizedBox(height: fieldSpacing * 1.5),
             // endregion
 
             // region Description
-            Obx(() {
-              print("OBX CALLED:::::");
-              return description(
-                    context: context,
-                    selectedMethod: keyFieldController.selectedMethod.value,
-                    text1: encodingController.plainTextController.text,
-                    text2: encodingController.cipherTextController.text);
-              }
-            )
-
+            Obx(
+              () => description(
+                  context: context,
+                  selectedMethod: keyFieldController.selectedMethod.value,
+                  text1: encodingController.plainTextController.text,
+                  text2: encodingController.cipherTextController.text)
+            ),
             // endregion
           ],
         ),
       ),
     );
-  }
-
-  void onEncodeChange({selectedMethod}) {
-    encodingController.encodeUsing( method: selectedMethod);
-
-    // int? key = encodingController.keyController.text.isNotEmpty ? int.parse(encodingController.keyController.text) : null;
-    setState(() {});
   }
 }

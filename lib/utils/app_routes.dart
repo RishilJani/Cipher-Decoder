@@ -12,12 +12,12 @@ class AppRoutes{
 
     GetPage(
       name:RT_ENCODING_VIEW,
-      page: () => const EncodingView(),
+      page: () => EncodingView(),
     ),
 
     GetPage(
         name: RT_DECODING_VIEW,
-        page: () => const DecodingView()
+        page: () => DecodingView()
     )
   ];
 }

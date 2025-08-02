@@ -1,5 +1,19 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
+
+// custom Appbar
+AppBar myAppBar({required String title}) {
+  return AppBar(
+    title: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20,
+      ),
+    ),
+    centerTitle: true,
+  );
+}
+
 // custom text input field
 Widget myInputfield(
     {key,
@@ -71,23 +85,28 @@ void copyText(String txt) {
   );
 }
 
-void pasteText({controller, required Function onChange}) async {
+// to paste text from clipboard
+void pasteText({controller, required Function onChange, bool isEncode = true}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
     controller.text = data.text!;
-    onChange();
-  } else {}
+    onChange(controller: controller,isEncode: isEncode);
+  } else {
+    print("::::PASTE DATA is NULL ::::::");
+  }
 }
 
-Widget pasteIconButton({ controller, onChange }) {
+// paste Icon button
+Widget pasteIconButton({ controller, onChange , isEncode}) {
   return IconButton(
       onPressed: () {
-        pasteText(controller: controller, onChange: onChange);
+        pasteText(controller: controller, onChange: onChange, isEncode : isEncode);
       },
       icon: const Icon(Icons.paste)
   );
 }
 
+// clear Icon button
 Widget clearIconButton({controller , text , optional }){
   return IconButton(
     onPressed: () {
@@ -99,144 +118,3 @@ Widget clearIconButton({controller , text , optional }){
   );
 }
 
-// custom Appbar
-AppBar myAppBar({required String title}) {
-  return AppBar(
-    title: Text(
-      title,
-      style: const TextStyle(
-        fontSize: 20,
-      ),
-    ),
-    centerTitle: true,
-  );
-}
-
-void showMethodDialog() async{
-   await Get.dialog(
-       const Text("Hello")
-   ).then((value) {
-     print("world value ============= $value");
-   });
-}
-
-Widget dropdownKeyField({context, selectedMethod, showConditionalField, keyController, Function? onChange,double fieldSpacing = 20.0}){
-  final theme = Theme.of(context);
-  final textTheme = theme.textTheme;
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      // region Dropdown
-      Text(
-        'Select method to encode:',
-        style:
-        textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-      ),
-      const SizedBox(height: 8.0),
-      DropdownButtonFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          filled: true,
-          fillColor: Colors.grey[100],
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0, vertical: 12.0),
-        ),
-        style: textTheme.bodyMedium,
-        icon:  Icon(Icons.arrow_drop_down_circle_sharp, color: theme.primaryColor, size: 28,),
-        isExpanded: true,
-        value: selectedMethod,
-        items: encodeDecodeMethods.map((e) {
-          return DropdownMenuItem(
-            value: e,
-            child: Text(e.title!),
-          );
-        },
-        ).toList(),
-        onChanged: (value) {
-          selectedMethod = value!;
-          // onEncodeChange();
-          onChange!(selectedMethod : selectedMethod);
-        },
-      ),
-
-      // endregion
-
-      // region AnimatedSwitch
-      AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return SizeTransition(
-            sizeFactor: animation,
-            child: FadeTransition(opacity: animation, child: child),
-          );
-        },
-        child: showConditionalField
-            ? myInputfield(
-            key: const ValueKey('conditionalField'),
-            context: context,
-            textTitle: 'Enter Key:',
-            hintText: 'Enter Integer Key...',
-            controller: keyController,
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-                // onEncodeChange();
-                onChange!();
-            },
-            validator: (value) {
-              // Only validate if the field is visible and supposed to be filled
-              if (showConditionalField &&
-                  (value == null || value.isEmpty)) {
-                return 'This field is required is selected.';
-              }
-              return null;
-            },
-            suffixIcon: clearIconButton(controller: keyController,text: "Clear Key")
-        )
-            : const SizedBox.shrink(
-            key: ValueKey(
-                'emptyConditional')), // Use SizedBox.shrink when hidden
-      ),
-      // endregion
-
-      // region AdjustSpace
-      if (!showConditionalField)
-        SizedBox(height: fieldSpacing * 1.5), // Adjust spacing if field is hidden
-      // endregion
-    ],
-  );
-}
-
-void getDialog({theme, controller}){
-  Get.defaultDialog(
-    title: 'Select an Option',
-    content: SizedBox(
-      // We wrap the GridView in a SizedBox to constrain its size in the dialog.
-      width: double.maxFinite,
-      height: 250,
-      child: GridView.count(
-        shrinkWrap: true, // Allows the grid to take up minimal space.
-        crossAxisCount: 2, // Two items per row.
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children: encodeDecodeMethods.map((method) {
-          return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.primaryColor,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onPressed: () {
-              // When a grid item is pressed, update the controller state.
-              controller.selectMethod(method);
-            },
-            child: Text(method.title!),
-          );
-        }).toList(),
-      ),
-    ),
-  );
-}

@@ -19,23 +19,7 @@ List<EncodeDecodeMethods> get encodeDecodeMethods {
     }
   }
   return _encodeDecodeMethods;
-} 
-
-
-List<EncodeDecodeMethods> _keyRequired = [];
-
-List<EncodeDecodeMethods> get keyRequired {
-  if(_keyRequired.isEmpty){
-    _keyRequired.add(MonoAlphabaticCipher());
-    _keyRequired.add(RailFenceCipher());
-  }
-  return _keyRequired;
 }
-
-bool keyConditionalField(selectedMethod){
-  return keyRequired.any((element) => element.title == selectedMethod.title);
-}
-
 
 // to convert EncodeDecodeTypes into String
 String encodeDecodeToString(EncodeDecodeTypes method){

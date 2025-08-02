@@ -3,8 +3,9 @@ import '../utils/import_export.dart';
 abstract class EncodeDecodeMethods {
   String? title;
   String? description;
+  bool requiresKey;
 
-  EncodeDecodeMethods({this.title, this.description});
+  EncodeDecodeMethods({this.title, this.description, this.requiresKey = false});
 
   String encode({required String plainText, int key =  0});
 
@@ -33,7 +34,7 @@ class CeaseCipher extends EncodeDecodeMethods {
 }
 
 class MonoAlphabaticCipher extends EncodeDecodeMethods {
-  MonoAlphabaticCipher()  : super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC);
+  MonoAlphabaticCipher()  : super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
 
   @override
   String encode({required String plainText, int key = 0}) {
@@ -106,7 +107,7 @@ class AtbashCipher extends EncodeDecodeMethods {
 }
 
 class RailFenceCipher extends EncodeDecodeMethods {
-  RailFenceCipher() : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC);
+  RailFenceCipher() : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
 
   @override
   String encode({required String plainText, int key = 1}) {

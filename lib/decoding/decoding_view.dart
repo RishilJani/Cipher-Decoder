@@ -16,7 +16,7 @@ class _DecodingViewState extends State<DecodingView> {
   void initState() {
     super.initState();
     _selectedMethod = encodeDecodeMethods[0];
-    showConditionalField = keyConditionalField(_selectedMethod);
+    showConditionalField = _selectedMethod.requiresKey;
   }
 
   TextEditingController plainTextController = TextEditingController();
@@ -28,8 +28,8 @@ class _DecodingViewState extends State<DecodingView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
+    // final theme = Theme.of(context);
+    // final textTheme = theme.textTheme;
 
     // Define consistent spacing
     const double fieldSpacing = 20.0;
@@ -53,94 +53,24 @@ class _DecodingViewState extends State<DecodingView> {
                 textInputAction: TextInputAction.newline,
                 onChanged: (value) {
                   setState(() {
-                    onDecodeChanged();
+                    onDecodeChange();
                   });
                 },
                 optional: plainTextController,
-                suffixIcon: pasteIconButton(controller: cipherTextController,onChange: onDecodeChanged),
+                suffixIcon: pasteIconButton(controller: cipherTextController,onChange: onDecodeChange),
             ),
             // endregion
 
             SizedBox(height: height),
 
-            // region Dropdown
-            Text(
-              'Select method to decode:',
-              style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8.0),
-            DropdownButtonFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              ),
-              style: textTheme.bodyMedium,
-              icon: Icon(Icons.arrow_drop_down_circle, color: theme.primaryColor),
-              isExpanded: true,
-              value: _selectedMethod,
-              items: encodeDecodeMethods.map((e) {
-                return DropdownMenuItem(
-                  value: e,
-                  child: Text(e.title!),
-                );
-              },
-              ).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedMethod = value!;
-                  onDecodeChanged();
-                });
-              },
-            ),
-
-            // endregion
-
-
-            // region AnimatedSwitch
-
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return SizeTransition(
-                  sizeFactor: animation,
-                  child: FadeTransition(opacity: animation, child: child),
-                );
-              },
-              child: showConditionalField
-                  ?  myInputfield(
-                key: const ValueKey('conditionalField'),
+            dropdownKeyField(
                 context: context,
-                textTitle: 'Enter Key:',
-                hintText: 'Enter Integer Key...',
-                controller: keyController,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    onDecodeChanged();
-                  });
-                },
-                validator: (value) {
-                  // Only validate if the field is visible and supposed to be filled
-                  if (showConditionalField &&
-                      (value == null || value.isEmpty)) {
-                    return 'This field is required is selected.';
-                  }
-                  return null;
-                },
-              )
-                  : const SizedBox.shrink(
-                  key: ValueKey( 'emptyConditional')), // Use SizedBox.shrink when hidden
+                onChange: onDecodeChange,
+                selectedMethod: _selectedMethod,
+                keyController: keyController,
+                showConditionalField: showConditionalField
             ),
-            // endregion
 
-            if (!showConditionalField)
-              const SizedBox(
-                  height:
-                  fieldSpacing * 1.5), // Adjust spacing if field is hidden
 
             // region DecodedText
             myInputfield(
@@ -175,15 +105,15 @@ class _DecodingViewState extends State<DecodingView> {
     );
   }
 
-  void onDecodeChanged(){
+  void onDecodeChange({selectedMethod}){
     int? key = keyController.text.isNotEmpty
         ? int.parse(keyController.text)
         : null;
     plainTextController.text = decodingController.decodeUsing(
         cipherText: cipherTextController.text,
-        method: _selectedMethod,
+        method: selectedMethod,
         key: key);
-    showConditionalField = keyConditionalField(_selectedMethod);
+    showConditionalField = selectedMethod.requiresKey;
     setState(() {});
   }
 

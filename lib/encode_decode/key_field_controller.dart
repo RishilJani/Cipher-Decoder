@@ -5,27 +5,33 @@ class KeyFieldController extends GetxController{
   RxBool showConditionalField = false.obs;
   RxString ans = ''.obs;
 
-  void updateSelectedMethod(EncodeDecodeMethods method, {controller, isEncode = true}){
+  void updateSelectedMethod(EncodeDecodeMethods method, {controller}){
     selectedMethod.value = method;
     showConditionalField.value = method.requiresKey;
 
-    onChange(isEncode: isEncode, controller: controller);
+    onChange( controller: controller );
     update([EncodeDecodeMethods,bool]);
     Get.back();
   }
 
-  void onChange({ controller , bool isEncode = true}){
-    if(isEncode){
+  void onChange({ controller }){
+    if(controller is EncodingController){
       controller.encodeUsing(method: selectedMethod.value);
-      ans.value = selectedMethod.value.explanation(text1: controller.plainTextController.text, text2: controller.cipherTextController.text);
-    }else{
+    }else if(controller is DecodingController){
       controller.decodeUsing(method: selectedMethod.value);
-      ans.value = selectedMethod.value.explanation(text1: controller.cipherTextController.text, text2: controller.cipherTextController.text);
     }
+    changeDescription(controller:controller);
     print(".............Updating.....................");
     print("ans = ${ans.value}");
 
     update([String]);
   }
 
+  void changeDescription({ controller }){
+    if(controller is EncodingController){
+      ans.value = selectedMethod.value.explanation(text1: controller.plainTextController.text, text2: controller.cipherTextController.text);
+    }else if(controller is DecodingController){
+      ans.value = selectedMethod.value.explanation(text1: controller.cipherTextController.text, text2: controller.cipherTextController.text);
+    }
+  }
 }

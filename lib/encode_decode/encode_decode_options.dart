@@ -71,7 +71,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                     controller: controller.keyController,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      keyFieldController.onChange(controller: controller, isEncode: controller.runtimeType == EncodingController);
+                      keyFieldController.onChange(controller: controller);
                     },
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
@@ -112,7 +112,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () { keyFieldController.updateSelectedMethod(method,controller: controller ,isEncode: controller.runtimeType == EncodingController); },
+                onTap: () { keyFieldController.updateSelectedMethod(method,controller: controller); },
                   child: Center(
                     child: Text(
                       method.title!,

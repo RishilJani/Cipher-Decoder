@@ -28,7 +28,6 @@ enum EncodeDecodeTypes {
 }
 // endregion
 
-
 // region Routes
 const String RT_DASHBOARD = "/dashboard";
 const String RT_ENCODING_VIEW = "/encoding_view";

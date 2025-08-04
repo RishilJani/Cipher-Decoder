@@ -29,14 +29,14 @@ class EncodingView extends StatelessWidget{
                 maxLines: 7,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                onChanged: (value) { keyFieldController.onChange(controller: encodingController,isEncode: true, ); },
+                onChanged: (value) { keyFieldController.onChange(controller: encodingController ); },
                 optional: encodingController.cipherTextController,
-                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: keyFieldController.onChange,  isEncode: true)
+                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: keyFieldController.onChange)
             ),
             SizedBox(height: height),
             // endregion
 
-            EncodeDecodeOptions(controller: encodingController,),
+            EncodeDecodeOptions( controller: encodingController,),
 
             // region EncodedText
             myInputfield(

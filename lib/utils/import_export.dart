@@ -11,11 +11,9 @@ export 'package:cipher_decoder/utils/common_functions.dart';
 export 'package:cipher_decoder/dashboard/dashboard.dart';
 
 export 'package:cipher_decoder/encoding/encoding_controller.dart';
-export 'package:cipher_decoder/encoding/encoding_model.dart';
 export 'package:cipher_decoder/encoding/encoding_view.dart';
 
 export 'package:cipher_decoder/decoding/decoding_controller.dart';
-export 'package:cipher_decoder/decoding/decoding_model.dart';
 export 'package:cipher_decoder/decoding/decoding_view.dart';
 
 export 'package:cipher_decoder/encode_decode/encode_decode_methods.dart';

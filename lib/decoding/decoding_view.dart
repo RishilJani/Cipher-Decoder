@@ -29,9 +29,9 @@ class DecodingView extends StatelessWidget{
               maxLines: 7,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
-              onChanged: (value) { keyFieldController.onChange(controller: decodingController,isEncode: false); },
+              onChanged: (value) { keyFieldController.onChange(controller: decodingController); },
               optional: decodingController.plainTextController,
-              suffixIcon: pasteIconButton(controller: decodingController.cipherTextController,onChange: keyFieldController.onChange,isEncode: false),
+              suffixIcon: pasteIconButton(controller: decodingController.cipherTextController,onChange: keyFieldController.onChange),
             ),
             SizedBox(height: height),
             // endregion

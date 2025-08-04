@@ -19,9 +19,9 @@ Widget myInputfield(
     {key,
     required context,
     required String textTitle,
-    hintText,
+    String? hintText,
     suffixIcon,
-    controller,
+    TextEditingController? controller,
     minLines,
     maxLines,
     keyboardType,
@@ -29,8 +29,10 @@ Widget myInputfield(
     inputFormatters,
     onChanged,
     validator,
-    optional,
-    readonly = false}) {
+    TextEditingController? optional,
+    bool readonly = false,
+    encodeDecodeController
+    }) {
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
 
@@ -57,7 +59,7 @@ Widget myInputfield(
             mainAxisSize: MainAxisSize.min,
             children: [
               suffixIcon ?? const SizedBox(width: 0,),
-              clearIconButton(controller: controller,text: "Clear",optional: optional),
+              clearIconButton(controller: controller,text: "Clear",optional: optional,encodeDecodeController: encodeDecodeController),
             ],
           ),
         ),
@@ -88,33 +90,37 @@ void copyText(String txt) {
 }
 
 // to paste text from clipboard
-void pasteText({controller, required Function onChange, bool isEncode = true}) async {
+void pasteText({controller, required Function onChange}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
     controller.text = data.text!;
-    onChange(controller: controller,isEncode: isEncode);
+    onChange(controller: controller);
   } else {
     print("::::PASTE DATA is NULL ::::::");
   }
 }
 
 // paste Icon button
-Widget pasteIconButton({ controller, onChange , isEncode}) {
+Widget pasteIconButton({ controller, onChange}) {
   return IconButton(
       onPressed: () {
-        pasteText(controller: controller, onChange: onChange, isEncode : isEncode);
+        pasteText(controller: controller, onChange: onChange);
       },
       icon: const Icon(Icons.paste)
   );
 }
 
 // clear Icon button
-Widget clearIconButton({controller , text , optional }){
+Widget clearIconButton({TextEditingController? controller , text , TextEditingController? optional , encodeDecodeController}){
+  KeyFieldController? keyFieldController;
+  try{  keyFieldController = Get.find<KeyFieldController>();}
+  catch(e){ keyFieldController = null; }
   return IconButton(
     onPressed: () {
-      controller.clear();
+      controller!.clear();
       if(optional != null){ optional.clear(); }
 
+      if(keyFieldController != null) { keyFieldController.changeDescription(controller: encodeDecodeController); }
     },
     icon: const Icon(Icons.clear),
     tooltip: text,

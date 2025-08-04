@@ -4,6 +4,7 @@ class EncodingController extends GetxController {
   TextEditingController cipherTextController = TextEditingController();
   TextEditingController keyController = TextEditingController(text: '0');
 
+  RxList<dynamic> methods= [].obs;
   void encodeUsing({required EncodeDecodeMethods method}) {
     int? k = keyController.text.isNotEmpty  ? int.parse(keyController.text)  : null;
 

@@ -29,7 +29,7 @@ class EncodingView extends StatelessWidget{
                 maxLines: 7,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                onChanged: (value) { keyFieldController.onChange(controller: encodingController,isEncode: true); },
+                onChanged: (value) { keyFieldController.onChange(controller: encodingController,isEncode: true, ); },
                 optional: encodingController.cipherTextController,
                 suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: keyFieldController.onChange,  isEncode: true)
             ),
@@ -58,11 +58,14 @@ class EncodingView extends StatelessWidget{
 
             // region Description
             Obx(
-              () => description(
+              () {
+                return description(
                   context: context,
+                  controller: keyFieldController,
                   selectedMethod: keyFieldController.selectedMethod.value,
                   text1: encodingController.plainTextController.text,
-                  text2: encodingController.cipherTextController.text)
+                  text2: encodingController.cipherTextController.text);
+              }
             ),
             // endregion
           ],

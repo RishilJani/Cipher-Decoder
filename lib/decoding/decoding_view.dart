@@ -58,9 +58,9 @@ class DecodingView extends StatelessWidget{
 
             // region Description
             Obx(() {
-              print("OBX Called.....");
               return description(
                   context: context,
+                  controller: keyFieldController,
                   selectedMethod: keyFieldController.selectedMethod.value,
                   text1 : decodingController.cipherTextController.text,
                   text2 : decodingController.plainTextController.text

@@ -9,7 +9,7 @@ class EncodeDecodeOptions extends StatelessWidget {
   double fieldSpacing = 20.0;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    ThemeData theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
     return Column(
@@ -49,7 +49,8 @@ class EncodeDecodeOptions extends StatelessWidget {
                       color: theme.primaryColor, size: 28),
                 ],
               ),
-            )),
+            )
+        ),
         //endregion
 
         Obx(
@@ -72,7 +73,10 @@ class EncodeDecodeOptions extends StatelessWidget {
                     onChanged: (value) {
                       keyFieldController.onChange(controller: controller, isEncode: controller.runtimeType == EncodingController);
                     },
-                    suffixIcon: clearIconButton( controller: controller.keyController, text: "Clear Key"))
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+                    ],
+                )
                 : const SizedBox.shrink(key: ValueKey('emptyConditional')),
           ),
         ),
@@ -87,7 +91,8 @@ class EncodeDecodeOptions extends StatelessWidget {
     );
   }
 
-  void showMethodDialog({theme}) {
+  void showMethodDialog({ThemeData? theme}) {
+    TextTheme textTheme = theme!.textTheme;
     Get.defaultDialog(
       title: 'Select an Option',
       content: SizedBox(
@@ -95,12 +100,36 @@ class EncodeDecodeOptions extends StatelessWidget {
         height: 250,
         child: GridView.count(
           shrinkWrap: true,
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 4.5,
+          mainAxisSpacing: 9,
+          childAspectRatio: 3/1,
           children: encodeDecodeMethods.map((method) {
-            return ElevatedButton(
+            return Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.primaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: InkWell(
+                onTap: () { keyFieldController.updateSelectedMethod(method,controller: controller ,isEncode: controller.runtimeType == EncodingController); },
+                  child: Center(
+                    child: Text(
+                      method.title!,
+                      style: textTheme.bodyMedium,
+                    ),
+                  )
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+/*
+ ElevatedButton(
               style: ElevatedButton.styleFrom(
                 // Reduced padding and font size for smaller buttons.
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
@@ -118,9 +147,4 @@ class EncodeDecodeOptions extends StatelessWidget {
                 style: const TextStyle(fontSize: 14), // Smaller font size.
               ),
             );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
+ */

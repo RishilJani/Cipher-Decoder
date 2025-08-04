@@ -26,6 +26,7 @@ Widget myInputfield(
     maxLines,
     keyboardType,
     textInputAction,
+    inputFormatters,
     onChanged,
     validator,
     optional,
@@ -55,7 +56,7 @@ Widget myInputfield(
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              suffixIcon,
+              suffixIcon ?? const SizedBox(width: 0,),
               clearIconButton(controller: controller,text: "Clear",optional: optional),
             ],
           ),
@@ -68,6 +69,7 @@ Widget myInputfield(
         textInputAction: textInputAction,
         onChanged: onChanged,
         validator: validator,
+        inputFormatters: inputFormatters
       ),
       const SizedBox(height: 15.0),
     ],
@@ -112,6 +114,7 @@ Widget clearIconButton({controller , text , optional }){
     onPressed: () {
       controller.clear();
       if(optional != null){ optional.clear(); }
+
     },
     icon: const Icon(Icons.clear),
     tooltip: text,

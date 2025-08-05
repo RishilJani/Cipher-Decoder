@@ -7,7 +7,7 @@ AppBar myAppBar({required String title}) {
     title: Text(
       title,
       style: const TextStyle(
-        fontSize: 20,
+        fontSize: 23,
       ),
     ),
     centerTitle: true,
@@ -50,6 +50,7 @@ Widget myInputfield(
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
+          hintStyle: textTheme.bodySmall?.copyWith( color: Colors.black ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -59,11 +60,12 @@ Widget myInputfield(
             mainAxisSize: MainAxisSize.min,
             children: [
               suffixIcon ?? const SizedBox(width: 0,),
-              clearIconButton(controller: controller,text: "Clear",optional: optional,encodeDecodeController: encodeDecodeController),
+              clearIconButton(controller: controller,optional: optional,encodeDecodeController: encodeDecodeController),
             ],
           ),
+          suffixIconColor: darkSurface
         ),
-        style: textTheme.bodyMedium,
+        style: textTheme.bodyMedium?.copyWith(color: darkElevatedSurface),
         minLines: minLines,
         maxLines: maxLines,
         keyboardType: keyboardType,
@@ -111,19 +113,18 @@ Widget pasteIconButton({ controller, onChange}) {
 }
 
 // clear Icon button
-Widget clearIconButton({TextEditingController? controller , text , TextEditingController? optional , encodeDecodeController}){
+Widget clearIconButton({TextEditingController? controller , TextEditingController? optional , encodeDecodeController}){
   KeyFieldController? keyFieldController;
   try{  keyFieldController = Get.find<KeyFieldController>();}
   catch(e){ keyFieldController = null; }
   return IconButton(
-    onPressed: () {
+    onPressed:  () {
       controller!.clear();
       if(optional != null){ optional.clear(); }
-
       if(keyFieldController != null) { keyFieldController.changeDescription(controller: encodeDecodeController); }
     },
-    icon: const Icon(Icons.clear),
-    tooltip: text,
+    icon: const Icon(Icons.clear, color: darkError,size: 32),
+    tooltip: "Clear",
   );
 }
 

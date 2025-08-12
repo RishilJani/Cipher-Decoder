@@ -4,12 +4,13 @@ abstract class EncodeDecodeMethods {
   String? title;
   String? description;
   bool requiresKey;
+  int? key;
 
-  EncodeDecodeMethods({this.title, this.description, this.requiresKey = false});
+  EncodeDecodeMethods({this.title, this.description, this.requiresKey = false, this.key});
 
-  String encode({required String plainText, int key =  0});
+  String encode({required String plainText});
 
-  String decode({required String cipherText, int key = 0 });
+  String decode({required String cipherText });
 
   String explanation({required String text1 , required String text2});
   
@@ -19,14 +20,13 @@ class CeaseCipher extends EncodeDecodeMethods {
   CeaseCipher()  : super(title: EN_CEASER_CIPHER, description: CEASER_CIPHER_DESC);
 
   @override
-  String encode({required String plainText, int? key}) {
-    return MonoAlphabaticCipher().encode(plainText: plainText, key: 3);
+  String encode({required String plainText}) {
+    return MonoAlphabaticCipher(key: 3).encode(plainText: plainText);
   }
 
   @override
-  String decode({required String cipherText, int? key}) {
-    String str = MonoAlphabaticCipher().decode(cipherText: cipherText, key: 3);
-    return str;
+  String decode({required String cipherText}) {
+    return MonoAlphabaticCipher(key:  3).decode(cipherText: cipherText);
   }
 
   @override
@@ -36,15 +36,17 @@ class CeaseCipher extends EncodeDecodeMethods {
 }
 
 class MonoAlphabaticCipher extends EncodeDecodeMethods {
-  MonoAlphabaticCipher()  : super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
+  MonoAlphabaticCipher({required super.key}):super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
 
   @override
-  String encode({required String plainText, int key = 0}) {
-    if (key % 26 == 0) {
+  String encode({required String plainText, int? optionalKey }) {
+    optionalKey ??= key;
+
+    if (optionalKey! % 26 == 0) {
       return plainText;
     }
 
-    final shift = key % 26;
+    final shift = optionalKey % 26;
     final buffer = StringBuffer();
 
     for (var code in plainText.codeUnits) {
@@ -62,12 +64,14 @@ class MonoAlphabaticCipher extends EncodeDecodeMethods {
         buffer.writeCharCode(code);
       }
     }
+
     return buffer.toString();
   }
 
   @override
-  String decode({required String cipherText, int key = 0}) {
-    return encode(plainText: cipherText, key: 26 - (key % 26));
+  String decode({required String cipherText, int? key}) {
+    key ??=this.key;
+    return encode(plainText: cipherText, optionalKey: 26 - (key! % 26));
   }
 
   @override
@@ -109,10 +113,10 @@ class AtbashCipher extends EncodeDecodeMethods {
 }
 
 class RailFenceCipher extends EncodeDecodeMethods {
-  RailFenceCipher() : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
+  RailFenceCipher({required super.key}) : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
 
   @override
-  String encode({required String plainText, int key = 1}) {
+  String encode({required String plainText}) {
     if (key == 1) {
       return plainText;
     }
@@ -120,14 +124,14 @@ class RailFenceCipher extends EncodeDecodeMethods {
     int ind1 = 0;
     bool isDown = true;
     List<String> strs = [];
-    for (int i = 0; i < key; i++) {
+    for (int i = 0; i < key!; i++) {
       strs.add("");
     }
     for (int i = 0; i < plainText.length; i++) {
       strs[ind1] += plainText[i];
 
       if (isDown) {
-        if (ind1 < key - 1) {
+        if (ind1 < key! - 1) {
           ind1++;
         } else {
           ind1--;
@@ -151,14 +155,14 @@ class RailFenceCipher extends EncodeDecodeMethods {
   }
 
   @override
-  String decode({required String cipherText, int key = 1}) {
+  String decode({required String cipherText}) {
     if (key == 1) {
       return cipherText;
     }
     List<List<String>> rail = [];
 
     // fill the list
-    for (int i = 0; i < key; i++) {
+    for (int i = 0; i < key!; i++) {
       List<String> temp = [];
       for (int j = 0; j < cipherText.length; j++) {
         temp.add(" ");
@@ -172,7 +176,7 @@ class RailFenceCipher extends EncodeDecodeMethods {
       if (row == 0) {
         isDown = true;
       }
-      if (row == key - 1) {
+      if (row == key! - 1) {
         isDown = false;
       }
 
@@ -187,7 +191,7 @@ class RailFenceCipher extends EncodeDecodeMethods {
     }
 
     int ind = 0;
-    for (int i = 0; i < key; i++) {
+    for (int i = 0; i < key!; i++) {
       for (int j = 0; j < cipherText.length; j++) {
         if (rail[i][j] == "*" && ind < cipherText.length) {
           rail[i][j] = cipherText[ind++];
@@ -200,7 +204,7 @@ class RailFenceCipher extends EncodeDecodeMethods {
       if (row == 0) {
         isDown = true;
       }
-      if (row == key - 1) {
+      if (row == key! - 1) {
         isDown = false;
       }
 

@@ -3,8 +3,10 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore:must_be_immutable
 class EncodeDecodeOptions extends StatelessWidget {
   final dynamic controller;
-  KeyFieldController keyFieldController = Get.find<KeyFieldController>();
-  EncodeDecodeOptions({super.key, required this.controller});
+  int? index;
+  EncodeDecodeOptions({super.key, required this.controller, this.index});
+
+  EncodeDecodeOptionsController encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();
 
   double fieldSpacing = 20.0;
   @override
@@ -16,10 +18,18 @@ class EncodeDecodeOptions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // region Custom Dropdown Button
-        Text(
-          'Select method to encode:',
-          style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+        Row(
+          children: [
+            Text( 'Select method to encode:',style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),),
+            encodeDecodeOptionsController.options.length > 1 ? IconButton(
+                onPressed: (){
+                  encodeDecodeOptionsController.removeWidget(index: index,controller: controller);
+                },
+                icon: const Icon(Icons.delete,color: Colors.red,),
+            ): const SizedBox(height: 0,),
+          ],
         ),
+
         const SizedBox(height: 8.0),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -42,7 +52,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    keyFieldController.selectedMethod.value.title!,
+                    encodeDecodeOptionsController.options[index!].title!,
                     style: textTheme.bodyMedium,
                   ),
                   Icon(Icons.arrow_drop_down_circle_sharp,
@@ -62,7 +72,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                 child: FadeTransition(opacity: animation, child: child),
               );
             },
-            child: keyFieldController.showConditionalField.value
+            child: encodeDecodeOptionsController.options[index!].requiresKey
                 ? myInputfield(
                     key: const ValueKey('conditionalField'),
                     context: context,
@@ -71,7 +81,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                     controller: controller.keyController,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      keyFieldController.onChange(controller: controller);
+                      encodeDecodeOptionsController.keyUpdateWidget(index: index,controller: controller);
                     },
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
@@ -83,7 +93,7 @@ class EncodeDecodeOptions extends StatelessWidget {
 
         Obx(
             () => Visibility(
-                visible: !keyFieldController.showConditionalField.value,
+                visible: !encodeDecodeOptionsController.options[index!].requiresKey,
                 child: SizedBox(height: fieldSpacing * 1.5,),
             ),
         ),
@@ -112,13 +122,17 @@ class EncodeDecodeOptions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () { keyFieldController.updateSelectedMethod(method,controller: controller); },
-                  child: Center(
-                    child: Text(
-                      method.title!,
-                      style: textTheme.bodyMedium,
-                    ),
-                  )
+                onTap: () {
+                  // keyFieldController.updateSelectedMethod(method,controller: controller);
+                  encodeDecodeOptionsController.updateWidget(methodObj: method, index: index, controller: controller);
+                  Get.back();
+                },
+                child: Center(
+                  child: Text(
+                    method.title!,
+                    style: textTheme.bodyMedium,
+                  ),
+                )
               ),
             );
           }).toList(),
@@ -127,24 +141,3 @@ class EncodeDecodeOptions extends StatelessWidget {
     );
   }
 }
-
-/*
- ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                // Reduced padding and font size for smaller buttons.
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                backgroundColor: theme.primaryColor,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onPressed: () {
-                keyFieldController.updateSelectedMethod(method,controller: controller ,isEncode: controller.runtimeType == EncodingController);
-              },
-              child: Text(
-                method.title!,
-                style: const TextStyle(fontSize: 14), // Smaller font size.
-              ),
-            );
- */

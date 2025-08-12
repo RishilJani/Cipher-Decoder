@@ -3,7 +3,7 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class DecodingView extends StatelessWidget{
   DecodingController decodingController = DecodingController();
-  KeyFieldController keyFieldController = Get.put(KeyFieldController());
+  EncodeDecodeOptionsController encodeDecodeOptionsController  = Get.put(EncodeDecodeOptionsController());
 
   double height = 10;
   static const double fieldSpacing = 20.0;
@@ -29,14 +29,18 @@ class DecodingView extends StatelessWidget{
               maxLines: 7,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
-              onChanged: (value) { keyFieldController.onChange(controller: decodingController); },
+              onChanged: (value) { encodeDecodeOptionsController.onChange(controller: decodingController); },
               optional: decodingController.plainTextController,
-              suffixIcon: pasteIconButton(controller: decodingController.cipherTextController,onChange: keyFieldController.onChange),
+              suffixIcon: pasteIconButton(controller: decodingController.cipherTextController,onChange: encodeDecodeOptionsController.onChange),
             ),
             SizedBox(height: height),
             // endregion
 
-            EncodeDecodeOptions(controller: decodingController,),
+            getOptionList(controller: decodingController),
+
+            addOptionButton(controller: decodingController),
+
+            const SizedBox(height: fieldSpacing),
 
             // region DecodedText
             myInputfield(
@@ -60,13 +64,9 @@ class DecodingView extends StatelessWidget{
             Obx(() {
               return description(
                   context: context,
-                  controller: keyFieldController,
-                  selectedMethod: keyFieldController.selectedMethod.value,
-                  text1 : decodingController.cipherTextController.text,
-                  text2 : decodingController.plainTextController.text
+                  controller: encodeDecodeOptionsController,
               );
-            }
-            ),
+            }),
             // endregion
           ],
         ),

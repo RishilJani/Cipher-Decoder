@@ -3,8 +3,8 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class EncodingView extends StatelessWidget{
   EncodingController encodingController = EncodingController();
-  KeyFieldController keyFieldController = Get.put(KeyFieldController());
-  
+  EncodeDecodeOptionsController encodeDecodeOptionsController  = Get.put(EncodeDecodeOptionsController());
+
   double height = 10;
   static const double fieldSpacing = 20.0;
 
@@ -29,14 +29,18 @@ class EncodingView extends StatelessWidget{
                 maxLines: 7,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                onChanged: (value) { keyFieldController.onChange(controller: encodingController ); },
+                onChanged: (value) { encodeDecodeOptionsController.onChange(controller: encodingController ); },
                 optional: encodingController.cipherTextController,
-                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: keyFieldController.onChange)
+                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: encodeDecodeOptionsController.onChange)
             ),
             SizedBox(height: height),
             // endregion
 
-            EncodeDecodeOptions( controller: encodingController,),
+            getOptionList(controller: encodingController),
+
+            addOptionButton(controller: encodingController),
+
+            const SizedBox(height: fieldSpacing),
 
             // region EncodedText
             myInputfield(
@@ -61,10 +65,8 @@ class EncodingView extends StatelessWidget{
               () {
                 return description(
                   context: context,
-                  controller: keyFieldController,
-                  selectedMethod: keyFieldController.selectedMethod.value,
-                  text1: encodingController.plainTextController.text,
-                  text2: encodingController.cipherTextController.text);
+                  controller: encodeDecodeOptionsController,
+                );
               }
             ),
             // endregion
@@ -73,4 +75,5 @@ class EncodingView extends StatelessWidget{
       ),
     );
   }
+
 }

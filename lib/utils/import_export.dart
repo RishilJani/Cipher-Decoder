@@ -19,4 +19,4 @@ export 'package:cipher_decoder/decoding/decoding_view.dart';
 
 export 'package:cipher_decoder/encode_decode/encode_decode_methods.dart';
 export 'package:cipher_decoder/encode_decode/encode_decode_options.dart';
-export 'package:cipher_decoder/encode_decode/key_field_controller.dart';
+export 'package:cipher_decoder/encode_decode/encode_decode_options_controller.dart';

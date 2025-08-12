@@ -114,17 +114,42 @@ Widget pasteIconButton({ controller, onChange}) {
 
 // clear Icon button
 Widget clearIconButton({TextEditingController? controller , TextEditingController? optional , encodeDecodeController}){
-  KeyFieldController? keyFieldController;
-  try{  keyFieldController = Get.find<KeyFieldController>();}
-  catch(e){ keyFieldController = null; }
+  EncodeDecodeOptionsController? encodeDecodeOptionsController;
+  try{ encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();}
+  catch(e){ encodeDecodeOptionsController  = null; }
   return IconButton(
     onPressed:  () {
       controller!.clear();
       if(optional != null){ optional.clear(); }
-      if(keyFieldController != null) { keyFieldController.changeDescription(controller: encodeDecodeController); }
+      if(encodeDecodeOptionsController != null) {
+        encodeDecodeController.changeDescription(controller: encodeDecodeController);
+      }
     },
     icon: const Icon(Icons.clear, color: darkError,size: 32),
     tooltip: "Clear",
   );
 }
 
+Widget addOptionButton({ controller }){
+  EncodeDecodeOptionsController encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();
+  return Container(
+    decoration: BoxDecoration(
+      color: darkElevatedSurface,
+      border: Border.all(color: darkAccent,width: 3),
+      borderRadius: BorderRadius.circular(15)
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: IconButton(
+          onPressed: (){
+            encodeDecodeOptionsController.addWidget(methodObj: CeaseCipher(), controller: controller);
+          },
+          hoverColor: Colors.red,
+          icon: const Icon(Icons.add,size: 25,)),
+        )
+      ],
+    ),
+  );
+}

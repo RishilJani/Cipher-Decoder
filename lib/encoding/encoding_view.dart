@@ -13,64 +13,70 @@ class EncodingView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(title: APPBAR_TITLE_ENCODING),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //region Encoding
-            myInputfield(
-                context: context,
-                textTitle: "Enter text to encode",
-                hintText: 'enter text to cipher...',
-                controller: encodingController.plainTextController,
-                minLines: 3,
-                maxLines: 7,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                onChanged: (value) { encodeDecodeOptionsController.onChange(controller: encodingController ); },
-                optional: encodingController.cipherTextController,
-                suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: encodeDecodeOptionsController.onChange)
-            ),
-            SizedBox(height: height),
-            // endregion
-
-            getOptionList(controller: encodingController),
-
-            addOptionButton(controller: encodingController),
-
-            const SizedBox(height: fieldSpacing),
-
-            // region EncodedText
-            myInputfield(
-              context: context,
-              controller: encodingController.cipherTextController,
-              textTitle: "Encoded text:",
-              hintText: "Encoded text...",
-              readonly: true,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  copyText(encodingController.cipherTextController.text);
-                },
-                icon: const Icon(Icons.copy),
-                tooltip: "Copy cipher text",
-              ),
-            ),
-            const SizedBox(height: fieldSpacing * 1.5),
-            // endregion
-
-            // region Description
-            Obx(
-              () {
-                return description(
+      appBar: myAppBar(title: APPBAR_TITLE_ENCODING, context: context),
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        behavior: HitTestBehavior.opaque,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //region Encoding
+              myInputfield(
                   context: context,
-                  controller: encodeDecodeOptionsController,
-                );
-              }
-            ),
-            // endregion
-          ],
+                  textTitle: "Enter text to encode",
+                  hintText: 'enter text to cipher...',
+                  controller: encodingController.plainTextController,
+                  minLines: 3,
+                  maxLines: 7,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  onChanged: (value) { encodeDecodeOptionsController.onChange(controller: encodingController ); },
+                  optional: encodingController.cipherTextController,
+                  suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: encodeDecodeOptionsController.onChange)
+              ),
+              SizedBox(height: height),
+              // endregion
+
+              getOptionList(controller: encodingController),
+
+              addOptionButton(controller: encodingController),
+
+              const SizedBox(height: fieldSpacing),
+
+              // region EncodedText
+              myInputfield(
+                context: context,
+                controller: encodingController.cipherTextController,
+                textTitle: "Encoded text:",
+                hintText: "Encoded text...",
+                readonly: true,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    copyText(encodingController.cipherTextController.text);
+                  },
+                  icon: const Icon(Icons.copy),
+                  tooltip: "Copy cipher text",
+                ),
+              ),
+              const SizedBox(height: fieldSpacing * 1.5),
+              // endregion
+
+              // region Description
+              Obx(
+                () {
+                  return description(
+                    context: context,
+                    controller: encodeDecodeOptionsController,
+                  );
+                }
+              ),
+              // endregion
+            ],
+          ),
         ),
       ),
     );

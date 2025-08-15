@@ -2,13 +2,13 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 
 // custom Appbar
-AppBar myAppBar({required String title}) {
+AppBar myAppBar({required String title, context}) {
+  final theme = Theme.of(context);
+  final textTheme = theme.textTheme;
   return AppBar(
     title: Text(
       title,
-      style: const TextStyle(
-        fontSize: 23,
-      ),
+      style: textTheme.titleLarge
     ),
     centerTitle: true,
   );
@@ -50,7 +50,7 @@ Widget myInputfield(
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: textTheme.bodySmall?.copyWith( color: Colors.black ),
+          hintStyle: textTheme.bodyMedium?.copyWith( color: Colors.black ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -97,9 +97,7 @@ void pasteText({controller, required Function onChange}) async {
   if (data != null) {
     controller.text = data.text!;
     onChange(controller: controller);
-  } else {
-    print("::::PASTE DATA is NULL ::::::");
-  }
+  } else {}
 }
 
 // paste Icon button

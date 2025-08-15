@@ -1,4 +1,3 @@
-import 'package:cipher_decoder/utils/colors.dart';
 import 'package:cipher_decoder/utils/import_export.dart';
 
 void main() {
@@ -58,11 +57,11 @@ class MyApp extends StatelessWidget {
           headlineLarge: TextStyle(color: darkOnSurface),
           headlineMedium: TextStyle(color: darkOnSurface),
           headlineSmall: TextStyle(color: darkOnSurface),
-          titleLarge: TextStyle(color: darkOnSurface),
-          titleMedium: TextStyle(color: darkOnSurface),
+          titleLarge: TextStyle(color: darkPrimary, fontSize: 23),
+          titleMedium: TextStyle(color: darkPrimary, fontSize: 18),
           titleSmall: TextStyle(color: darkOnSurface),
           bodyLarge: TextStyle(color: darkOnSurface),
-          bodyMedium: TextStyle(color: darkOnSurface),
+          bodyMedium: TextStyle(color: darkOnSurface, fontSize: 15),
           bodySmall: TextStyle(color: darkOnSurface),
           labelLarge: TextStyle(color: darkOnSurface),
           labelMedium: TextStyle(color: darkOnSurface),

@@ -96,31 +96,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-/*
-useMaterial3: true,
-        scaffoldBackgroundColor: backgroundColor,
-        primaryColor: primaryColor,
-
-        appBarTheme: AppBarTheme(
-          backgroundColor: surfaceColor,
-          foregroundColor: Colors.black,
-        ),
-        cardColor: surfaceColor,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: primaryColor,
-          surface: surfaceColor,
-        ),
-        textTheme: const TextTheme(
-          titleMedium: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-          bodyLarge: TextStyle(color: Colors.black, fontSize: 20,),
-          bodyMedium: TextStyle(color: Colors.black87, fontSize: 17),
-        ),
- */
 
 /*
-#162139
-#324260
-#526486
-#798fb6
-#a5badd
+
  */

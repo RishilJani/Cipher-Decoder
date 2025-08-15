@@ -1,14 +1,14 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // ignore:must_be_immutable
-class EncodeDecodeOptions extends StatelessWidget {
+class EncryptionDecryptionOptions extends StatelessWidget {
   final dynamic controller;
   int? index;
-  EncodeDecodeOptionsController encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();
+  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
   String txt = '';
 
-  EncodeDecodeOptions({super.key, required this.controller, this.index}){
-    txt = 'Select method to ${controller is EncodingController ? 'encode' : 'decode'}';
+  EncryptionDecryptionOptions({super.key, required this.controller, this.index}){
+    txt = 'Select method to ${controller is EncryptionController ? 'encrypt' : 'decrypt'}';
   }
 
   double fieldSpacing = 20.0;
@@ -130,7 +130,7 @@ class EncodeDecodeOptions extends StatelessWidget {
           crossAxisSpacing: 8,
           mainAxisSpacing: 9,
           childAspectRatio: 3 / 1,
-          children: encodeDecodeMethods.map((method) {
+          children: encryptionDecryptionMethods.map((method) {
             return Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(

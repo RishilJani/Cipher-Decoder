@@ -1,45 +1,41 @@
 import '../utils/import_export.dart';
 
-abstract class EncodeDecodeMethods {
+abstract class EncryptionDecryptionMethods {
   String? title;
   String? description;
   bool requiresKey;
   int? key;
 
-  EncodeDecodeMethods({this.title, this.description, this.requiresKey = false, this.key});
+  EncryptionDecryptionMethods({this.title, this.description, this.requiresKey = false, this.key});
 
-  String encode({required String plainText});
+  String encrypt({required String plainText});
 
-  String decode({required String cipherText });
+  String decrypt({required String cipherText });
 
-  String explanation({required String text1 , required String text2});
+  // String explanation({required String text1 , required String text2});
   
 }
 
-class CeaseCipher extends EncodeDecodeMethods {
+class CeaseCipher extends EncryptionDecryptionMethods {
   CeaseCipher()  : super(title: EN_CEASER_CIPHER, description: CEASER_CIPHER_DESC);
 
   @override
-  String encode({required String plainText}) {
-    return MonoAlphabaticCipher(key: 3).encode(plainText: plainText);
+  String encrypt({required String plainText}) {
+    return MonoAlphabaticCipher(key: 3).encrypt(plainText: plainText);
   }
 
   @override
-  String decode({required String cipherText}) {
-    return MonoAlphabaticCipher(key:  3).decode(cipherText: cipherText);
+  String decrypt({required String cipherText}) {
+    return MonoAlphabaticCipher(key:  3).decrypt(cipherText: cipherText);
   }
 
-  @override
-  String explanation({required String text1, required String text2}) {
-    return dynamicDescription(text1: text1, text2: text2);
-  }
 }
 
-class MonoAlphabaticCipher extends EncodeDecodeMethods {
+class MonoAlphabaticCipher extends EncryptionDecryptionMethods {
   MonoAlphabaticCipher({required super.key}):super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
 
   @override
-  String encode({required String plainText, int? optionalKey }) {
+  String encrypt({required String plainText, int? optionalKey }) {
     optionalKey ??= key;
 
     if (optionalKey! % 26 == 0) {
@@ -69,24 +65,19 @@ class MonoAlphabaticCipher extends EncodeDecodeMethods {
   }
 
   @override
-  String decode({required String cipherText, int? key}) {
+  String decrypt({required String cipherText, int? key}) {
     key ??=this.key;
-    return encode(plainText: cipherText, optionalKey: 26 - (key! % 26));
-  }
-
-  @override
-  String explanation({required String text1, required String text2}) {
-    return dynamicDescription(text1: text1, text2: text2);
+    return encrypt(plainText: cipherText, optionalKey: 26 - (key! % 26));
   }
 
 }
 
-class AtbashCipher extends EncodeDecodeMethods {
+class AtbashCipher extends EncryptionDecryptionMethods {
   AtbashCipher()
       : super(title: EN_ATBASH_CIPHER, description: ATBASH_CIPHER_DESC);
 
   @override
-  String encode({required String plainText, int? key}) {
+  String encrypt({required String plainText, int? key}) {
     StringBuffer cipherText = StringBuffer();
 
     for (var code in plainText.codeUnits) {
@@ -102,21 +93,17 @@ class AtbashCipher extends EncodeDecodeMethods {
   }
 
   @override
-  String decode({required String cipherText, int? key}) {
-    return encode(plainText: cipherText);
+  String decrypt({required String cipherText, int? key}) {
+    return encrypt(plainText: cipherText);
   }
 
-  @override
-  String explanation({required String text1, required String text2}) {
-    return dynamicDescription(text1: text1, text2: text2);
-  }
 }
 
-class RailFenceCipher extends EncodeDecodeMethods {
+class RailFenceCipher extends EncryptionDecryptionMethods {
   RailFenceCipher({required super.key}) : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
 
   @override
-  String encode({required String plainText}) {
+  String encrypt({required String plainText}) {
     if (key == 1) {
       return plainText;
     }
@@ -155,7 +142,7 @@ class RailFenceCipher extends EncodeDecodeMethods {
   }
 
   @override
-  String decode({required String cipherText}) {
+  String decrypt({required String cipherText}) {
     if (key == 1) {
       return cipherText;
     }
@@ -219,8 +206,4 @@ class RailFenceCipher extends EncodeDecodeMethods {
     return ans;
   }
 
-  @override
-  String explanation({required String text1, required String text2}) {
-    return dynamicDescription(text1: text1, text2: text2);
-  }
 }

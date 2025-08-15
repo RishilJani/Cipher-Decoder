@@ -16,8 +16,8 @@ class Dashboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customIconButton(
-                  onPressed: () { Get.toNamed(RT_ENCODING_VIEW); },
-                  child: const Text("Encoding", style: TextStyle(
+                  onPressed: () { Get.toNamed(RT_ENCRYPTION_VIEW); },
+                  child: const Text("Encryption", style: TextStyle(
                     fontSize: 17
                   ),)
                 ),
@@ -29,9 +29,9 @@ class Dashboard extends StatelessWidget {
               children: [
                 customIconButton(
                     onPressed: (){
-                      Get.toNamed(RT_DECODING_VIEW);
+                      Get.toNamed(RT_DECRYPTION_VIEW);
                     },
-                    child: const Text("Decoding",style: TextStyle(
+                    child: const Text("Decryption",style: TextStyle(
                         fontSize: 17
                     ),)
                 ),
@@ -58,21 +58,3 @@ class Dashboard extends StatelessWidget {
   }
 
 }
-
-/*
-Note:
-
-2 copy options : copy only cipher text || copy both plaintext and cipher text
-designing : jevi live karvani che evi
-
-
-ColorCode:
-(Light Mode)
-Bg color #E6E8FA
-primary color #09E88B
-
-(Dark Mode)
-BG color #292626
-primary #FFE100
-
-*/

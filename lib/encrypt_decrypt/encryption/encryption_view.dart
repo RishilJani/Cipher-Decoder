@@ -1,19 +1,17 @@
 import 'package:cipher_decoder/utils/import_export.dart';
-
 // ignore: must_be_immutable
-class EncodingView extends StatelessWidget{
-  EncodingController encodingController = EncodingController();
-  EncodeDecodeOptionsController encodeDecodeOptionsController  = Get.put(EncodeDecodeOptionsController());
+class EncryptionView extends StatelessWidget{
+  EncryptionController encodingController = EncryptionController();
+  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
 
   double height = 10;
   static const double fieldSpacing = 20.0;
 
-  EncodingView({super.key});
+  EncryptionView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(title: APPBAR_TITLE_ENCODING, context: context),
       body: GestureDetector(
         onTap: (){
           FocusScope.of(context).unfocus();
@@ -24,10 +22,10 @@ class EncodingView extends StatelessWidget{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //region Encoding
+              //region Encryption
               myInputfield(
                   context: context,
-                  textTitle: "Enter text to encode",
+                  textTitle: "Enter text to encrypt",
                   hintText: 'enter text to cipher...',
                   controller: encodingController.plainTextController,
                   minLines: 3,
@@ -47,19 +45,19 @@ class EncodingView extends StatelessWidget{
 
               const SizedBox(height: fieldSpacing),
 
-              // region EncodedText
+              // region Encrypted
               myInputfield(
                 context: context,
                 controller: encodingController.cipherTextController,
-                textTitle: "Encoded text:",
-                hintText: "Encoded text...",
+                textTitle: "Encrypted text:",
+                hintText: "Encrypted text...",
                 readonly: true,
                 suffixIcon: IconButton(
                   onPressed: () {
                     copyText(encodingController.cipherTextController.text);
                   },
                   icon: const Icon(Icons.copy),
-                  tooltip: "Copy cipher text",
+                  tooltip: "Copy encrypted text",
                 ),
               ),
               const SizedBox(height: fieldSpacing * 1.5),

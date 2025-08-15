@@ -2,7 +2,7 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 
 // custom Appbar
-AppBar myAppBar({required String title, context}) {
+AppBar myAppBar({ String title = '',required context, bottom}) {
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
   return AppBar(
@@ -11,6 +11,7 @@ AppBar myAppBar({required String title, context}) {
       style: textTheme.titleLarge
     ),
     centerTitle: true,
+    bottom: bottom,
   );
 }
 
@@ -112,8 +113,8 @@ Widget pasteIconButton({ controller, onChange}) {
 
 // clear Icon button
 Widget clearIconButton({TextEditingController? controller , TextEditingController? optional , encodeDecodeController}){
-  EncodeDecodeOptionsController? encodeDecodeOptionsController;
-  try{ encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();}
+  EncryptionDecryptionOptionsController? encodeDecodeOptionsController;
+  try{ encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();}
   catch(e){ encodeDecodeOptionsController  = null; }
   return IconButton(
     onPressed:  () {
@@ -129,7 +130,7 @@ Widget clearIconButton({TextEditingController? controller , TextEditingControlle
 }
 
 Widget addOptionButton({ controller }){
-  EncodeDecodeOptionsController encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();
+  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
   return Container(
     decoration: BoxDecoration(
       color: darkElevatedSurface,

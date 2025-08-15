@@ -1,19 +1,18 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // ignore: must_be_immutable
-class DecodingView extends StatelessWidget{
-  DecodingController decodingController = DecodingController();
-  EncodeDecodeOptionsController encodeDecodeOptionsController  = Get.put(EncodeDecodeOptionsController());
+class DecryptionView extends StatelessWidget{
+  DecryptionController decodingController = DecryptionController();
+  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
 
   double height = 10;
   static const double fieldSpacing = 20.0;
 
-  DecodingView({super.key});
+  DecryptionView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(title: APPBAR_TITLE_DECODING , context: context),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -27,7 +26,7 @@ class DecodingView extends StatelessWidget{
               //region decoding
               myInputfield(
                 context: context,
-                textTitle: "Enter text to decode",
+                textTitle: "Enter text to decrypt",
                 hintText: 'enter text to decipher...',
                 controller: decodingController.cipherTextController,
                 minLines: 3,
@@ -47,19 +46,19 @@ class DecodingView extends StatelessWidget{
 
               const SizedBox(height: fieldSpacing),
 
-              // region DecodedText
+              // region DecryptedText
               myInputfield(
                 context: context,
                 controller: decodingController.plainTextController,
-                textTitle: "Decoded text:",
-                hintText: "Decoded text...",
+                textTitle: "Decrypted text:",
+                hintText: "Decrypted text...",
                 readonly: true,
                 suffixIcon: IconButton(
                   onPressed: () {
                     copyText(decodingController.plainTextController.text);
                   },
                   icon: const Icon(Icons.copy),
-                  tooltip: "Copy decoded text only",
+                  tooltip: "Copy decrypted text",
                 ),
               ),
               const SizedBox(height: fieldSpacing * 1.5),

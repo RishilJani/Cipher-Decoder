@@ -1,13 +1,12 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-class EncodeDecodeOptionsController extends GetxController {
+class EncryptionDecryptionOptionsController extends GetxController {
   final int maxLimit = 5;
   RxString desc = ''.obs;
-  RxList<EncodeDecodeMethods> options =
-      <EncodeDecodeMethods>[CeaseCipher()].obs;
+  RxList<EncryptionDecryptionMethods> options = <EncryptionDecryptionMethods>[CeaseCipher()].obs;
 
   void addWidget(
-      {required EncodeDecodeMethods methodObj, required controller}) {
+      {required EncryptionDecryptionMethods methodObj, required controller}) {
     if (options.length < maxLimit) {
       options.add(methodObj);
       onChange(controller: controller);
@@ -24,21 +23,21 @@ class EncodeDecodeOptionsController extends GetxController {
   void updateWidget({methodObj, index, controller}) {
     options[index] = methodObj;
     onChange(controller: controller);
-    update([EncodeDecodeMethods, bool]);
+    update([EncryptionDecryptionMethods, bool]);
   }
 
   // on change plaint text / cipher text
   void onChange({controller}) {
-    if (controller is EncodingController) {
+    if (controller is EncryptionController) {
       String ans = controller.plainTextController.text;
       for (var met in options) {
-        ans = controller.encodeUsing(method: met, encode: ans)!;
+        ans = controller.encryptUsing(method: met, encrypt: ans)!;
       }
       controller.cipherTextController.text = ans;
-    } else if (controller is DecodingController) {
+    } else if (controller is DecryptionController) {
       String ans = controller.cipherTextController.text;
       for (var met in options) {
-        ans = controller.decodeUsing(method: met, decode: ans)!;
+        ans = controller.decryptUsing(method: met, decrypt: ans)!;
       }
       controller.plainTextController.text = ans;
     }
@@ -49,10 +48,12 @@ class EncodeDecodeOptionsController extends GetxController {
 
   // to change description according to methods
   void changeDescription({controller}) {
-    if (controller is EncodingController) {
-      desc.value = controller.dynamicDescription();
-    } else if (controller is DecodingController) {
-      desc.value = controller.dynamicDescription();
+    if (controller is EncryptionController) {
+      // desc.value = controller.dynamicDescription();
+      desc.value = dynamicDescription(controller: controller);
+    } else if (controller is DecryptionController) {
+      // desc.value = controller.dynamicDescription();
+      desc.value = dynamicDescription(controller: controller);
     }
   }
 
@@ -62,10 +63,10 @@ class EncodeDecodeOptionsController extends GetxController {
           ? int.parse(controller.keyController.text)
           : null;
     }
-    if (controller is EncodingController) {
-      controller.encodeUsing(method: options[index]);
-    } else if (controller is DecodingController) {
-      controller.decodeUsing(method: options[index]);
+    if (controller is EncryptionController) {
+      controller.encryptUsing(method: options[index]);
+    } else if (controller is DecryptionController) {
+      controller.decryptUsing(method: options[index]);
     }
 
     changeDescription(controller: controller);
@@ -79,15 +80,14 @@ class EncodeDecodeOptionsController extends GetxController {
 }
 
 Widget getOptionList({controller}) {
-  // controller == EncodingController || DecodingController
-  var encodeDecodeOptionsController = Get.find<EncodeDecodeOptionsController>();
+  var encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
 
   return Obx(
     () => ListView.builder(
       shrinkWrap: true,
       itemCount: encodeDecodeOptionsController.options.length,
       itemBuilder: (context, index) {
-        return EncodeDecodeOptions(
+        return EncryptionDecryptionOptions(
           controller: controller,
           index: index,
         );

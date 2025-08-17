@@ -1,8 +1,7 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class DashboardEncryptDecrypt extends StatelessWidget {
-  DashboardEncryptDecrypt({super.key});
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController  = Get.put(EncryptionDecryptionOptionsController());
+  const DashboardEncryptDecrypt({super.key});
 
   @override
   Widget build(BuildContext context) {

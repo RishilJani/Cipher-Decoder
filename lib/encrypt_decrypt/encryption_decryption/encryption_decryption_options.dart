@@ -139,7 +139,6 @@ class EncryptionDecryptionOptions extends StatelessWidget {
               ),
               child: InkWell(
                   onTap: () {
-                    // keyFieldController.updateSelectedMethod(method,controller: controller);
                     encodeDecodeOptionsController.updateWidget(
                         methodObj: method,
                         index: index,

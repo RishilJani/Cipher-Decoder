@@ -20,6 +20,7 @@ Widget getDescriptionList({required EncryptionDecryptionOptionsController contro
   return ListView.builder(
     shrinkWrap: true,
     itemCount: controller.options.length,
+    physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (context, index) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +45,7 @@ String dynamicDescription({controller,String? text1, String? text2}) {
       text2 ??= controller.plainTextController.text;
     }
   }
-
+  const int maxLimit = 10;
   String ans = '';
   int count = 0;
   String ignore = "\n ";
@@ -54,10 +55,12 @@ String dynamicDescription({controller,String? text1, String? text2}) {
     if (i == 0) {
       ans = "\ne.g.\n";
     }
+
     if (ignore.contains(l1[i])) {
       continue;
     }
-    if (count == 7) {
+
+    if (count == maxLimit) {
       ans = "$ans...";
       break;
     }
@@ -66,7 +69,6 @@ String dynamicDescription({controller,String? text1, String? text2}) {
   }
   return ans;
 }
-
 
 List<EncryptionDecryptionMethods> _encryptionDecryptionMethods = [];
 

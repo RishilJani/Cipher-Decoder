@@ -35,10 +35,12 @@ class EncryptionDecryptionOptionsController extends GetxController {
       }
       controller.cipherTextController.text = ans;
     } else if (controller is DecryptionController) {
+      print("\nOn Change ::::\n\n");
       String ans = controller.cipherTextController.text;
       for (var met in options) {
         ans = controller.decryptUsing(method: met, decrypt: ans)!;
       }
+      print("\nans ======= $ans\n\n");
       controller.plainTextController.text = ans;
     }
 

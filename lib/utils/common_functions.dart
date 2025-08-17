@@ -1,6 +1,5 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-
 // custom Appbar
 AppBar myAppBar({ String title = '',required context, bottom}) {
   final theme = Theme.of(context);
@@ -12,6 +11,83 @@ AppBar myAppBar({ String title = '',required context, bottom}) {
     ),
     centerTitle: true,
     bottom: bottom,
+  );
+}
+
+Widget myScreen({ context , controller , titleText , methodsController , isEncoding = true}){
+  if(!checkAllTypes(controller: controller)){
+    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
+  }
+  double height = 10;
+  const double fieldSpacing = 20.0;
+
+  return Scaffold(
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // region Encryption
+          myInputfield(
+            context: context,
+            textTitle: titleText,
+            hintText: titleText,
+            controller: isEncoding ?  controller.plainTextController : controller.cipherTextController,
+            minLines: 3,
+            maxLines: 7,
+            keyboardType: TextInputType.multiline,
+            textInputAction: TextInputAction.newline,
+            onChanged: (value) {
+              // on change function here
+              if(controller is EncryptionController || controller is DecryptionController){
+                methodsController.onChange(controller: controller);
+              }
+            },
+            optional: isEncoding ? controller.cipherTextController : controller.plainTextController,
+            suffixIcon: pasteIconButton( controller: controller,  onChange: methodsController.onChange),
+
+          ),
+          SizedBox(height: height),
+          // endregion
+
+          getOptionList(controller: controller),
+
+          addOptionButton(controller: controller),
+
+          const SizedBox(height: fieldSpacing),
+
+          // region Encrypted
+          myInputfield(
+            context: context,
+            controller: isEncoding ?  controller.cipherTextController : controller.plainTextController,
+            textTitle: "Encrypted text:",
+            hintText: "Encrypted text...",
+            readonly: true,
+            suffixIcon: IconButton(
+              onPressed: () {
+                String cpy = isEncoding ?  controller.cipherTextController.text.toString() : controller.plaintextController.text.toString();
+                copyText(cpy);
+              },
+              icon: const Icon(Icons.copy),
+              tooltip: "Copy encrypted text",
+            ),
+          ),
+          const SizedBox(height: fieldSpacing * 1.5),
+          // endregion
+
+          // region Description
+          Obx(
+                  () {
+                return description(
+                  context: context,
+                  controller: methodsController,
+                );
+              }
+          ),
+          // endregion
+        ],
+      ),
+    ),
   );
 }
 
@@ -32,7 +108,8 @@ Widget myInputfield(
     validator,
     TextEditingController? optional,
     bool readonly = false,
-    encodeDecodeController
+    encodeDecodeController,
+    bool isEncode = true,
     }) {
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
@@ -93,10 +170,19 @@ void copyText(String txt) {
 }
 
 // to paste text from clipboard
-void pasteText({controller, required Function onChange}) async {
+void pasteText({ controller ,required Function onChange}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
-    controller.text = data.text!;
+    if(controller is EncodeController || controller is EncryptionController){
+      controller.plainTextController.text = data.text!;
+    }else if(controller is DecodeController || controller is DecryptionController){
+      controller.cipherTextController.text = data.text!;
+    }
+
+    print("::::::DATA is Pasted..... = ${data.text}");
+      print("::::::Controller = ..... = ${controller.runtimeType}");
+      print("::::::Controller = ..... = ${controller.runtimeType}");
+    // controller.text = data.text!;
     onChange(controller: controller);
   } else {}
 }
@@ -152,3 +238,8 @@ Widget addOptionButton({ controller }){
     ),
   );
 }
+
+bool checkAllTypes({controller}){
+  return controller is EncryptionController || controller is DecryptionController || controller is EncodeController || controller is DecodeController;
+}
+

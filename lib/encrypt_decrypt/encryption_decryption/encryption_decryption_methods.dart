@@ -1,4 +1,4 @@
-import '../utils/import_export.dart';
+import 'package:cipher_decoder/utils/string_constants.dart';
 
 abstract class EncryptionDecryptionMethods {
   String? title;

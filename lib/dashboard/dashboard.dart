@@ -16,8 +16,8 @@ class Dashboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customIconButton(
-                  onPressed: () { Get.toNamed(RT_ENCRYPTION_VIEW); },
-                  child: const Text("Encryption", style: TextStyle(
+                  onPressed: () { Get.toNamed(RT_DASHBOARD_ENCODE_DECODE); },
+                  child: const Text("Encode-Decode" , style: TextStyle(
                     fontSize: 17
                   ),)
                 ),
@@ -29,9 +29,9 @@ class Dashboard extends StatelessWidget {
               children: [
                 customIconButton(
                     onPressed: (){
-                      Get.toNamed(RT_DECRYPTION_VIEW);
+                      Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
                     },
-                    child: const Text("Decryption",style: TextStyle(
+                    child: const Text("Encryption - Decryption",style: TextStyle(
                         fontSize: 17
                     ),)
                 ),
@@ -50,7 +50,7 @@ class Dashboard extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           height: 150,
-          width: 150,
+          width: 200,
           child: child,
         ),
       ),

@@ -1,9 +1,8 @@
 import 'package:cipher_decoder/utils/import_export.dart';
-
 // ignore: must_be_immutable
 class DecryptionView extends StatelessWidget{
-  DecryptionController decodingController = DecryptionController();
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
+  DecryptionController decryptionController = DecryptionController();
+  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.put(EncryptionDecryptionOptionsController());
 
   double height = 10;
   static const double fieldSpacing = 20.0;
@@ -12,7 +11,17 @@ class DecryptionView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return myScreen(
+      context: context,
+      controller: decryptionController,
+      methodsController: encodeDecodeOptionsController,
+      titleText: "Enter Text to decrypt",
+      isEncoding: false
+    );
+  }
+}
+/*
+Scaffold(
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -77,5 +86,4 @@ class DecryptionView extends StatelessWidget{
         ),
       ),
     );
-  }
-}
+ */

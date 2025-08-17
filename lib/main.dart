@@ -6,17 +6,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // final Color backgroundColor = const Color(0xFFE0F7FA);
-  // final Color surfaceColor = const Color(0xFFD6E4E5);
-  // final Color primaryColor = const Color(0xFFBCCCDC);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+
+      // theme of application
       theme: ThemeData(
         brightness: Brightness.dark,
 
+        // region colorscheme
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch:  MaterialColor(darkPrimary.value,const <int,Color>{
             50 : darkPrimary,
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           error: darkError,
           onError: darkOnSurface,
         ),
+        // endregion
 
         scaffoldBackgroundColor: darkSurface,
         cardColor: darkElevatedSurface,
@@ -51,21 +52,25 @@ class MyApp extends StatelessWidget {
         iconTheme: const IconThemeData(color: darkOnSurface),
 
         textTheme: const TextTheme(
-          displayLarge: TextStyle(color: darkOnSurface),
-          displayMedium: TextStyle(color: darkOnSurface),
-          displaySmall: TextStyle(color: darkOnSurface),
-          headlineLarge: TextStyle(color: darkOnSurface),
-          headlineMedium: TextStyle(color: darkOnSurface),
-          headlineSmall: TextStyle(color: darkOnSurface),
-          titleLarge: TextStyle(color: darkPrimary, fontSize: 23),
+          // displayLarge: TextStyle(color: darkOnSurface),
+          // displayMedium: TextStyle(color: darkOnSurface),
+          // displaySmall: TextStyle(color: darkOnSurface),
+          // headlineLarge: TextStyle(color: darkOnSurface),
+          // headlineMedium: TextStyle(color: darkOnSurface),
+          // headlineSmall: TextStyle(color: darkOnSurface),
+
+          // titleSmall: TextStyle(color: darkOnSurface),
+
+          // bodyLarge: TextStyle(color: darkOnSurface),
+          // bodySmall: TextStyle(color: darkOnSurface),
+
+          // labelLarge: TextStyle(color: darkOnSurface),
+          // labelMedium: TextStyle(color: darkOnSurface),
+          // labelSmall: TextStyle(color: darkOnSurface),
+
+          titleLarge: TextStyle(color: darkPrimary, fontSize: 25),
           titleMedium: TextStyle(color: darkPrimary, fontSize: 18),
-          titleSmall: TextStyle(color: darkOnSurface),
-          bodyLarge: TextStyle(color: darkOnSurface),
-          bodyMedium: TextStyle(color: darkOnSurface, fontSize: 15),
-          bodySmall: TextStyle(color: darkOnSurface),
-          labelLarge: TextStyle(color: darkOnSurface),
-          labelMedium: TextStyle(color: darkOnSurface),
-          labelSmall: TextStyle(color: darkOnSurface),
+          bodyMedium: TextStyle(color: darkOnSurface, fontSize: 16),
         ),
 
         appBarTheme: const AppBarTheme(
@@ -91,6 +96,18 @@ class MyApp extends StatelessWidget {
           foregroundColor: darkSurface
         )
       ),
+
+      // to close the keyboard whenever clicked anywhere on screen
+      builder: (context, child) {
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: child!,
+        );
+      },
+
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,
     );

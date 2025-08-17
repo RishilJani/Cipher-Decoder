@@ -1,8 +1,8 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class EncryptionView extends StatelessWidget{
-  EncryptionController encodingController = EncryptionController();
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
+  EncryptionController encryptionController = EncryptionController();
+  EncryptionDecryptionOptionsController encryptionDecryptionOptionsController = Get.put(EncryptionDecryptionOptionsController());
 
   double height = 10;
   static const double fieldSpacing = 20.0;
@@ -11,8 +11,18 @@ class EncryptionView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
+    return myScreen(
+      context: context,
+      controller: encryptionController,
+      methodsController: encryptionDecryptionOptionsController,
+      titleText: "Enter Text to encrypt",
+      isEncoding: true,
+    );
+  }
+
+}
+/*
+GestureDetector(
         onTap: (){
           FocusScope.of(context).unfocus();
         },
@@ -32,9 +42,9 @@ class EncryptionView extends StatelessWidget{
                   maxLines: 7,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
-                  onChanged: (value) { encodeDecodeOptionsController.onChange(controller: encodingController ); },
+                  onChanged: (value) { encryptionDecryptionOptionsController.onChange(controller: encodingController ); },
                   optional: encodingController.cipherTextController,
-                  suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: encodeDecodeOptionsController.onChange)
+                  suffixIcon: pasteIconButton( controller: encodingController.plainTextController,  onChange: encryptionDecryptionOptionsController.onChange)
               ),
               SizedBox(height: height),
               // endregion
@@ -68,7 +78,7 @@ class EncryptionView extends StatelessWidget{
                 () {
                   return description(
                     context: context,
-                    controller: encodeDecodeOptionsController,
+                    controller: encryptionDecryptionOptionsController,
                   );
                 }
               ),
@@ -76,8 +86,5 @@ class EncryptionView extends StatelessWidget{
             ],
           ),
         ),
-      ),
-    );
-  }
-
-}
+      )
+ */

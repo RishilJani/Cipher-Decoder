@@ -31,10 +31,18 @@ enum EncryptionDecryptionTypes {
 }
 // endregion
 
+// region Encode Methods
+const String EN_BASE64 = "Base64";
+// endregion
 
 // region Routes
 const String RT_DASHBOARD = "/dashboard";
 const String RT_DASHBOARD_ENCRYPT_DECRYPT = "/dashboard_encrypt_decrypt";
+const String RT_DASHBOARD_ENCODE_DECODE = "/dashboard_encode_decode";
+
+const String RT_ENCODING_VIEW = "/encoding_view";
+const String RT_DECODING_VIEW = "/decoding_views";
+
 const String RT_ENCRYPTION_VIEW = "/encryption_view";
 const String RT_DECRYPTION_VIEW = "/decryption_views";
 // endregion

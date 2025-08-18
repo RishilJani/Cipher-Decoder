@@ -3,10 +3,9 @@ import 'package:cipher_decoder/utils/import_export.dart';
 class EncryptionDecryptionOptionsController extends GetxController {
   final int maxLimit = 5;
   RxString desc = ''.obs;
-  RxList<EncryptionDecryptionMethods> options = <EncryptionDecryptionMethods>[CeaseCipher()].obs;
+  RxList<EncryptionDecryptionModel> options = <EncryptionDecryptionModel>[CeaseCipher()].obs;
 
-  void addWidget(
-      {required EncryptionDecryptionMethods methodObj, required controller}) {
+  void addWidget({required EncryptionDecryptionModel methodObj, required controller}) {
     if (options.length < maxLimit) {
       options.add(methodObj);
       onChange(controller: controller);
@@ -20,10 +19,10 @@ class EncryptionDecryptionOptionsController extends GetxController {
   }
 
   // on method change
-  void updateWidget({methodObj, index, controller}) {
+  void updateWidget({required EncryptionDecryptionModel methodObj, index, controller}) {
     options[index] = methodObj;
     onChange(controller: controller);
-    update([EncryptionDecryptionMethods, bool]);
+    update([EncryptionDecryptionModel]);
   }
 
   // on change plaint text / cipher text
@@ -34,14 +33,16 @@ class EncryptionDecryptionOptionsController extends GetxController {
         ans = controller.encryptUsing(method: met, encrypt: ans)!;
       }
       controller.cipherTextController.text = ans;
-    } else if (controller is DecryptionController) {
-      print("\nOn Change ::::\n\n");
+    }
+    else if (controller is DecryptionController) {
       String ans = controller.cipherTextController.text;
       for (var met in options) {
         ans = controller.decryptUsing(method: met, decrypt: ans)!;
       }
-      print("\nans ======= $ans\n\n");
       controller.plainTextController.text = ans;
+    }
+    else{
+      throw ControllerTypeException(message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
 
     changeDescription(controller: controller);
@@ -53,9 +54,13 @@ class EncryptionDecryptionOptionsController extends GetxController {
     if (controller is EncryptionController) {
       // desc.value = controller.dynamicDescription();
       desc.value = dynamicDescription(controller: controller);
-    } else if (controller is DecryptionController) {
+    }
+    else if (controller is DecryptionController) {
       // desc.value = controller.dynamicDescription();
       desc.value = dynamicDescription(controller: controller);
+    }
+    else{
+      throw ControllerTypeException(message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
   }
 
@@ -79,21 +84,22 @@ class EncryptionDecryptionOptionsController extends GetxController {
     options.removeAt(index);
     onChange(controller: controller);
   }
+
+  Widget getOptionList({controller}) {
+    return Obx(
+          () => ListView.builder(
+        shrinkWrap: true,
+        itemCount: options.length,
+        itemBuilder: (context, index) {
+          return EncryptionDecryptionOptions(
+            controller: controller,
+            encryptionDecryptionOptionController: this,
+            index: index,
+          );
+        },
+      ),
+    );
+  }
 }
 
-Widget getOptionList({controller}) {
-  var encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
 
-  return Obx(
-    () => ListView.builder(
-      shrinkWrap: true,
-      itemCount: encodeDecodeOptionsController.options.length,
-      itemBuilder: (context, index) {
-        return EncryptionDecryptionOptions(
-          controller: controller,
-          index: index,
-        );
-      },
-    ),
-  );
-}

@@ -1,25 +1,51 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // custom Appbar
-AppBar myAppBar({ String title = '',required context, bottom}) {
+AppBar myAppBar({String title = '', required context, bottom}) {
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
   return AppBar(
-    title: Text(
-      title,
-      style: textTheme.titleLarge
-    ),
+    title: Text(title, style: textTheme.titleLarge),
     centerTitle: true,
     bottom: bottom,
   );
 }
 
-Widget myScreen({ context , controller , titleText , methodsController , isEncoding = true}){
-  if(!checkAllTypes(controller: controller)){
-    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
+Widget myScreen({required BuildContext context,
+    controller,
+    titleText,
+    methodsController,
+    bool? isEncoding = true,
+    bool? isEncryption = true}) {
+  if (methodsController is! EncryptionDecryptionOptionsController && methodsController is! EncodeDecodeOptionController) {
+    throw ControllerTypeException(
+        message:
+            "Method Controller is Not right ::: ${controller.runtimeType}");
   }
-  double height = 10;
+
+  String textTitle;
+  String hintText;
+  const double height = 10;
   const double fieldSpacing = 20.0;
+
+  if (controller is EncryptionController) {
+    textTitle = "Encrypted Text";
+  }
+  else if (controller is DecryptionController) {
+    textTitle = "Decrypted Text";
+  }
+  else if (controller is EncodeController) {
+    textTitle = "Encoded Text";
+  }
+  else if (context is DecodeController) {
+    textTitle = "Decoded Text";
+  }
+  else {
+    throw ControllerTypeException(
+        message: "Controller is Not right ::: ${controller.runtimeType}");
+  }
+
+  hintText = "$textTitle....";
 
   return Scaffold(
     body: SingleChildScrollView(
@@ -27,63 +53,70 @@ Widget myScreen({ context , controller , titleText , methodsController , isEncod
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // region Encryption
+          // region Encryption-Decryption
           myInputfield(
-            context: context,
-            textTitle: titleText,
-            hintText: titleText,
-            controller: isEncoding ?  controller.plainTextController : controller.cipherTextController,
-            minLines: 3,
-            maxLines: 7,
-            keyboardType: TextInputType.multiline,
-            textInputAction: TextInputAction.newline,
-            onChanged: (value) {
-              // on change function here
-              if(controller is EncryptionController || controller is DecryptionController){
-                methodsController.onChange(controller: controller);
-              }
-            },
-            optional: isEncoding ? controller.cipherTextController : controller.plainTextController,
-            suffixIcon: pasteIconButton( controller: controller,  onChange: methodsController.onChange),
-
-          ),
-          SizedBox(height: height),
+              controller: controller,
+              context: context,
+              textTitle: titleText,
+              hintText: titleText,
+              minLines: 3,
+              maxLines: 7,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              onChanged: (value) {
+                // on change function here
+                if (controller is EncryptionController ||
+                    controller is DecryptionController) {
+                  methodsController.onChange(controller: controller);
+                }
+              },
+              suffixIcon: pasteIconButton(
+                  controller: controller, onChange: methodsController.onChange),
+              isEncode: isEncoding!,
+              methodController: methodsController),
+          const SizedBox(height: height),
           // endregion
 
-          getOptionList(controller: controller),
+          isEncryption!
+              ? methodsController.getOptionList( controller: controller)
+              : const SizedBox(
+                  height: 0,
+                ),
 
-          addOptionButton(controller: controller),
+          addOptionButton(controller: controller, methodController: methodsController),
 
           const SizedBox(height: fieldSpacing),
 
-          // region Encrypted
+          // region Encrypted-Decrypted
           myInputfield(
+            controller: controller,
             context: context,
-            controller: isEncoding ?  controller.cipherTextController : controller.plainTextController,
-            textTitle: "Encrypted text:",
-            hintText: "Encrypted text...",
+            textTitle: textTitle,
+            hintText: hintText,
             readonly: true,
+            methodController: methodsController,
             suffixIcon: IconButton(
               onPressed: () {
-                String cpy = isEncoding ?  controller.cipherTextController.text.toString() : controller.plaintextController.text.toString();
+                String cpy = isEncoding
+                    ? controller.cipherTextController.text.toString()
+                    : controller.plaintextController.text.toString();
                 copyText(cpy);
               },
               icon: const Icon(Icons.copy),
               tooltip: "Copy encrypted text",
             ),
+            isEncode: !isEncoding,
           ),
           const SizedBox(height: fieldSpacing * 1.5),
           // endregion
 
           // region Description
-          Obx(
-                  () {
-                return description(
-                  context: context,
-                  controller: methodsController,
-                );
-              }
-          ),
+          Obx(() {
+            return description(
+              context: context,
+              controller: methodsController,
+            );
+          }),
           // endregion
         ],
       ),
@@ -98,7 +131,7 @@ Widget myInputfield(
     required String textTitle,
     String? hintText,
     suffixIcon,
-    TextEditingController? controller,
+    required controller,
     minLines,
     maxLines,
     keyboardType,
@@ -106,13 +139,30 @@ Widget myInputfield(
     inputFormatters,
     onChanged,
     validator,
-    TextEditingController? optional,
     bool readonly = false,
-    encodeDecodeController,
     bool isEncode = true,
-    }) {
+    methodController}) {
+  if (!checkAllTypes(controller: controller)) {
+    throw ControllerTypeException(
+        message: "Controller is Not right ::: ${controller.runtimeType}");
+  }
+
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
+  TextEditingController ctr;
+  if (isEncode) {
+    print(
+        "IF :::::::: controller === ${controller.runtimeType} ::::: $isEncode");
+    if (key != null) {
+      ctr = controller.keyController;
+    } else {
+      ctr = controller.plainTextController;
+    }
+  } else {
+    print(
+        "ELSE :::::::: controller === ${controller.runtimeType} ::::: $isEncode");
+    ctr = controller.cipherTextController;
+  }
 
   return Column(
     key: key,
@@ -124,35 +174,38 @@ Widget myInputfield(
       ),
       const SizedBox(height: 10.0),
       TextFormField(
-        readOnly: readonly,
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: textTheme.bodyMedium?.copyWith( color: Colors.black ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          filled: true,
-          fillColor: Colors.grey[100],
-          suffixIcon: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              suffixIcon ?? const SizedBox(width: 0,),
-              clearIconButton(controller: controller,optional: optional,encodeDecodeController: encodeDecodeController),
-            ],
-          ),
-          suffixIconColor: darkSurface
-        ),
-        style: textTheme.bodyMedium?.copyWith(color: darkElevatedSurface),
-        minLines: minLines,
-        maxLines: maxLines,
-        keyboardType: keyboardType,
-        enableInteractiveSelection: true,
-        textInputAction: textInputAction,
-        onChanged: onChanged,
-        validator: validator,
-        inputFormatters: inputFormatters
-      ),
+          readOnly: readonly,
+          controller: ctr,
+          decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: textTheme.bodyMedium?.copyWith(color: Colors.black),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              filled: true,
+              fillColor: Colors.grey[100],
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  suffixIcon ?? const SizedBox(width: 0),
+                  isEncode
+                      ? clearIconButton(
+                          controller: controller,
+                          encryptionDecryptionOptionsController:
+                              methodController)
+                      : const SizedBox(width: 0),
+                ],
+              ),
+              suffixIconColor: darkSurface),
+          style: textTheme.bodyMedium?.copyWith(color: darkElevatedSurface),
+          minLines: minLines,
+          maxLines: maxLines,
+          keyboardType: keyboardType,
+          enableInteractiveSelection: true,
+          textInputAction: textInputAction,
+          onChanged: onChanged,
+          validator: validator,
+          inputFormatters: inputFormatters),
       const SizedBox(height: 15.0),
     ],
   );
@@ -170,76 +223,110 @@ void copyText(String txt) {
 }
 
 // to paste text from clipboard
-void pasteText({ controller ,required Function onChange}) async {
+void pasteText({controller, required Function onChange}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
-    if(controller is EncodeController || controller is EncryptionController){
+    if (controller is EncodeController || controller is EncryptionController) {
       controller.plainTextController.text = data.text!;
-    }else if(controller is DecodeController || controller is DecryptionController){
+    } else if (controller is DecodeController ||
+        controller is DecryptionController) {
       controller.cipherTextController.text = data.text!;
     }
-
-    print("::::::DATA is Pasted..... = ${data.text}");
-      print("::::::Controller = ..... = ${controller.runtimeType}");
-      print("::::::Controller = ..... = ${controller.runtimeType}");
-    // controller.text = data.text!;
     onChange(controller: controller);
-  } else {}
+  }
 }
 
 // paste Icon button
-Widget pasteIconButton({ controller, onChange}) {
+Widget pasteIconButton({controller, onChange}) {
   return IconButton(
       onPressed: () {
         pasteText(controller: controller, onChange: onChange);
       },
-      icon: const Icon(Icons.paste)
-  );
+      icon: const Icon(Icons.paste));
 }
 
 // clear Icon button
-Widget clearIconButton({TextEditingController? controller , TextEditingController? optional , encodeDecodeController}){
-  EncryptionDecryptionOptionsController? encodeDecodeOptionsController;
-  try{ encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();}
-  catch(e){ encodeDecodeOptionsController  = null; }
+Widget clearIconButton(
+    {controller, required encryptionDecryptionOptionsController}) {
   return IconButton(
-    onPressed:  () {
-      controller!.clear();
-      if(optional != null){ optional.clear(); }
-      if(encodeDecodeOptionsController != null) {
-        encodeDecodeController.changeDescription(controller: encodeDecodeController);
+    onPressed: () {
+      controller!.plainTextController.clear();
+      controller!.cipherTextController.clear();
+      if (encryptionDecryptionOptionsController != null) {
+        // encryptionDecryptionOptionsController.changeDescription(controller: controller);
+        encryptionDecryptionOptionsController.desc.value = '';
       }
     },
-    icon: const Icon(Icons.clear, color: darkError,size: 32),
+    icon: const Icon(Icons.clear, color: darkError, size: 32),
     tooltip: "Clear",
   );
 }
 
-Widget addOptionButton({ controller }){
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
+Widget addOptionButton({controller, required methodController}) {
   return Container(
     decoration: BoxDecoration(
-      color: darkElevatedSurface,
-      border: Border.all(color: darkAccent,width: 3),
-      borderRadius: BorderRadius.circular(15)
-    ),
+        color: darkElevatedSurface,
+        border: Border.all(color: darkAccent, width: 3),
+        borderRadius: BorderRadius.circular(15)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: IconButton(
-          onPressed: (){
-            encodeDecodeOptionsController.addWidget(methodObj: CeaseCipher(), controller: controller);
-          },
-          hoverColor: Colors.red,
-          icon: const Icon(Icons.add,size: 25,)),
+              onPressed: () {
+                methodController.addWidget( methodObj: CeaseCipher(), controller: controller);
+              },
+              hoverColor: Colors.red,
+              icon: const Icon( Icons.add,  size: 25, )
+          ),
         )
       ],
     ),
   );
 }
 
-bool checkAllTypes({controller}){
-  return controller is EncryptionController || controller is DecryptionController || controller is EncodeController || controller is DecodeController;
+bool checkAllTypes({controller}) {
+  return controller is EncryptionController ||
+      controller is DecryptionController ||
+      controller is EncodeController ||
+      controller is DecodeController;
 }
 
+String dynamicDescription({controller,String? text1, String? text2}) {
+
+  if(controller is EncryptionController || controller is EncodeController){
+    text1 ??= controller.plainTextController.text;
+    text2 ??= controller.cipherTextController.text;
+  }
+  else if(controller is DecryptionController || controller is DecodeController){
+    text1 ??= controller.cipherTextController.text;
+    text2 ??= controller.plainTextController.text;
+  }
+  else{
+    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
+  }
+
+  const int maxLimit = 10;
+  String ans = '';
+  int count = 0;
+  String ignore = "\n ";
+  var l1 = text1!.split('');
+  var l2 = text2!.split('');
+  for (int i = 0; i < l1.length; i++) {
+    if (i == 0) {
+      ans = "\ne.g.\n";
+    }
+
+    if (ignore.contains(l1[i])) {
+      continue;
+    }
+
+    if (count == maxLimit) {
+      ans = "$ans...";
+      break;
+    }
+    ans = "$ans${l1[i]} -> ${l2[i]}\n";
+    count++;
+  }
+  return ans;
+}

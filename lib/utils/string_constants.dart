@@ -29,10 +29,16 @@ enum EncryptionDecryptionTypes {
   Mono_Alphabatic_Cipher,
   Rail_Fence_Cipher
 }
+
+enum EncodeDecodeTypes{
+  Base64
+}
 // endregion
 
 // region Encode Methods
 const String EN_BASE64 = "Base64";
+
+const String BASE64_DESC = "This is Base64";
 // endregion
 
 // region Routes
@@ -45,4 +51,13 @@ const String RT_DECODING_VIEW = "/decoding_views";
 
 const String RT_ENCRYPTION_VIEW = "/encryption_view";
 const String RT_DECRYPTION_VIEW = "/decryption_views";
+// endregion
+
+
+// region Get Tags
+const String TAG_ENCRYPT = "encrypt";
+const String TAG_DECRYPT = "decrypt";
+
+const String TAG_ENCODE = "encode";
+const String TAG_DECODE = "decode";
 // endregion

@@ -1,12 +1,12 @@
 import 'package:cipher_decoder/utils/string_constants.dart';
 
-abstract class EncryptionDecryptionMethods {
+abstract class EncryptionDecryptionModel {
   String? title;
   String? description;
   bool requiresKey;
   int? key;
 
-  EncryptionDecryptionMethods({this.title, this.description, this.requiresKey = false, this.key});
+  EncryptionDecryptionModel({this.title, this.description, this.requiresKey = false, this.key});
 
   String encrypt({required String plainText});
 
@@ -16,7 +16,7 @@ abstract class EncryptionDecryptionMethods {
   
 }
 
-class CeaseCipher extends EncryptionDecryptionMethods {
+class CeaseCipher extends EncryptionDecryptionModel {
   CeaseCipher()  : super(title: EN_CEASER_CIPHER, description: CEASER_CIPHER_DESC);
 
   @override
@@ -31,7 +31,7 @@ class CeaseCipher extends EncryptionDecryptionMethods {
 
 }
 
-class MonoAlphabaticCipher extends EncryptionDecryptionMethods {
+class MonoAlphabaticCipher extends EncryptionDecryptionModel {
   MonoAlphabaticCipher({required super.key}):super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
 
   @override
@@ -72,7 +72,7 @@ class MonoAlphabaticCipher extends EncryptionDecryptionMethods {
 
 }
 
-class AtbashCipher extends EncryptionDecryptionMethods {
+class AtbashCipher extends EncryptionDecryptionModel {
   AtbashCipher()
       : super(title: EN_ATBASH_CIPHER, description: ATBASH_CIPHER_DESC);
 
@@ -99,7 +99,7 @@ class AtbashCipher extends EncryptionDecryptionMethods {
 
 }
 
-class RailFenceCipher extends EncryptionDecryptionMethods {
+class RailFenceCipher extends EncryptionDecryptionModel {
   RailFenceCipher({required super.key}) : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
 
   @override

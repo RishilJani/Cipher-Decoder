@@ -1,5 +1,5 @@
 class ControllerTypeException implements Exception{
-  String? message;
+  String? message ;
 
   ControllerTypeException({required this.message});
 

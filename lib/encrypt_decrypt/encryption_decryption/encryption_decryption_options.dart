@@ -1,22 +1,21 @@
 import 'package:cipher_decoder/utils/import_export.dart';
-
 // ignore:must_be_immutable
 class EncryptionDecryptionOptions extends StatelessWidget {
-  final dynamic controller;
-  int? index;
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.find<EncryptionDecryptionOptionsController>();
-  String txt = '';
-
-  EncryptionDecryptionOptions({super.key, required this.controller, this.index}){
+  EncryptionDecryptionOptions({super.key, required this.controller, this.index, required this.encryptionDecryptionOptionController}){
     txt = 'Select method to ${controller is EncryptionController ? 'encrypt' : 'decrypt'}';
   }
+
+  final dynamic controller;
+  int? index;
+  EncryptionDecryptionOptionsController encryptionDecryptionOptionController;
+  String txt = '';
 
   double fieldSpacing = 20.0;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    int n = encodeDecodeOptionsController.options.length;
+    int n = encryptionDecryptionOptionController.options.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,7 +30,7 @@ class EncryptionDecryptionOptions extends StatelessWidget {
              n > 1
                 ? IconButton(
                     onPressed: () {
-                      encodeDecodeOptionsController.removeWidget(index: index, controller: controller);
+                      encryptionDecryptionOptionController.removeWidget(index: index, controller: controller);
                     },
                     icon: const Icon(
                       Icons.delete,
@@ -66,7 +65,7 @@ class EncryptionDecryptionOptions extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    encodeDecodeOptionsController.options[index!].title!,
+                    encryptionDecryptionOptionController.options[index!].title!,
                     style: textTheme.bodyMedium,
                   ),
                   Icon(Icons.arrow_drop_down_circle_sharp,
@@ -85,16 +84,16 @@ class EncryptionDecryptionOptions extends StatelessWidget {
                 child: FadeTransition(opacity: animation, child: child),
               );
             },
-            child: encodeDecodeOptionsController.options[index!].requiresKey
+            child: encryptionDecryptionOptionController.options[index!].requiresKey
                 ? myInputfield(
                     key: const ValueKey('conditionalField'),
                     context: context,
                     textTitle: 'Enter Key:',
                     hintText: 'Enter Integer Key...',
-                    controller: controller.keyController,
+                    controller: controller,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      encodeDecodeOptionsController.keyUpdateWidget(
+                      encryptionDecryptionOptionController.keyUpdateWidget(
                           index: index, controller: controller);
                     },
                     inputFormatters: [
@@ -107,7 +106,7 @@ class EncryptionDecryptionOptions extends StatelessWidget {
 
         Obx(
           () => Visibility(
-            visible: !encodeDecodeOptionsController.options[index!].requiresKey,
+            visible: !encryptionDecryptionOptionController.options[index!].requiresKey,
             child: SizedBox(
               height: fieldSpacing * 1.5,
             ),
@@ -131,6 +130,7 @@ class EncryptionDecryptionOptions extends StatelessWidget {
           mainAxisSpacing: 9,
           childAspectRatio: 3 / 1,
           children: encryptionDecryptionMethods.map((method) {
+            EncryptionDecryptionModel encryptionDecryptionModel = getMethod(element: method);
             return Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
@@ -139,18 +139,19 @@ class EncryptionDecryptionOptions extends StatelessWidget {
               ),
               child: InkWell(
                   onTap: () {
-                    encodeDecodeOptionsController.updateWidget(
-                        methodObj: method,
+                    encryptionDecryptionOptionController.updateWidget(
+                        methodObj: encryptionDecryptionModel,
                         index: index,
                         controller: controller);
                     Get.back();
                   },
                   child: Center(
                     child: Text(
-                      method.title!,
+                      encryptionDecryptionModel.title!,
                       style: textTheme.bodyMedium,
                     ),
-                  )),
+                  )
+              ),
             );
           }).toList(),
         ),

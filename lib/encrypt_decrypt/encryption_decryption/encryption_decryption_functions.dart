@@ -34,53 +34,18 @@ Widget getDescriptionList({required EncryptionDecryptionOptionsController contro
   );
 }
 
-String dynamicDescription({controller,String? text1, String? text2}) {
-  if(controller != null){
-    if(controller is EncryptionController){
-      text1 ??= controller.plainTextController.text;
-      text2 ??= controller.cipherTextController.text;
-    }
-    else{
-      text1 ??= controller.cipherTextController.text;
-      text2 ??= controller.plainTextController.text;
-    }
-  }
-  const int maxLimit = 10;
-  String ans = '';
-  int count = 0;
-  String ignore = "\n ";
-  var l1 = text1!.split('');
-  var l2 = text2!.split('');
-  for (int i = 0; i < l1.length; i++) {
-    if (i == 0) {
-      ans = "\ne.g.\n";
-    }
+List<EncryptionDecryptionTypes> encryptionDecryptionMethods = EncryptionDecryptionTypes.values;
 
-    if (ignore.contains(l1[i])) {
-      continue;
-    }
-
-    if (count == maxLimit) {
-      ans = "$ans...";
-      break;
-    }
-    ans = "$ans${l1[i]} -> ${l2[i]}\n";
-    count++;
+EncryptionDecryptionModel getMethod({required EncryptionDecryptionTypes element}){
+  EncryptionDecryptionModel res;
+  if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ res = CeaseCipher();}
+  else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ res = AtbashCipher();}
+  else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){
+    res = MonoAlphabaticCipher(key: 1);
   }
-  return ans;
+  else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ res = RailFenceCipher(key: 1);}
+  else{
+    res = CeaseCipher();
+  }
+  return res;
 }
-
-List<EncryptionDecryptionMethods> _encryptionDecryptionMethods = [];
-
-List<EncryptionDecryptionMethods> get encryptionDecryptionMethods {
-  if(_encryptionDecryptionMethods.isEmpty){
-    for (EncryptionDecryptionTypes element in EncryptionDecryptionTypes.values) {
-      if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ _encryptionDecryptionMethods.add(CeaseCipher());}
-      else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ _encryptionDecryptionMethods.add(AtbashCipher());}
-      else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ _encryptionDecryptionMethods.add(MonoAlphabaticCipher(key: 1));}
-      else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ _encryptionDecryptionMethods.add(RailFenceCipher(key: 1));}
-    }
-  }
-  return _encryptionDecryptionMethods;
-}
-

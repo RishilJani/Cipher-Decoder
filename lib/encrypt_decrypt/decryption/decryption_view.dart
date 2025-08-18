@@ -2,7 +2,7 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class DecryptionView extends StatelessWidget{
   DecryptionController decryptionController = DecryptionController();
-  EncryptionDecryptionOptionsController encodeDecodeOptionsController = Get.put(EncryptionDecryptionOptionsController());
+  EncryptionDecryptionOptionsController encryptionDecryptionOptionsController = Get.put(EncryptionDecryptionOptionsController(),tag: TAG_DECRYPT);
 
   double height = 10;
   static const double fieldSpacing = 20.0;
@@ -14,7 +14,7 @@ class DecryptionView extends StatelessWidget{
     return myScreen(
       context: context,
       controller: decryptionController,
-      methodsController: encodeDecodeOptionsController,
+      methodsController: encryptionDecryptionOptionsController,
       titleText: "Enter Text to decrypt",
       isEncoding: false
     );

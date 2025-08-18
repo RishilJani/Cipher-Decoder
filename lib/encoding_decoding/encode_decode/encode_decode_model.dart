@@ -3,8 +3,9 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 abstract class EncodeDecodeModel{
   String? title;
+  String? description;
 
-  EncodeDecodeModel({this.title});
+  EncodeDecodeModel({this.title, this.description});
 
   String encode({required String plainText});
 
@@ -12,13 +13,12 @@ abstract class EncodeDecodeModel{
 }
 
 class Base64 extends EncodeDecodeModel{
-  Base64() : super(title: EN_BASE64);
+  Base64() : super(title: EN_BASE64,description: BASE64_DESC);
 
   @override
   String encode({required String plainText}) {
     String encoded = base64Encode(utf8.encode(plainText));
     print(":::: base64 encoded = $encoded :::::::::::::::");
-
     return encoded;
   }
 

@@ -2,12 +2,11 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class EncryptionView extends StatelessWidget{
   EncryptionController encryptionController = EncryptionController();
-  EncryptionDecryptionOptionsController encryptionDecryptionOptionsController = Get.put(EncryptionDecryptionOptionsController());
-
-  double height = 10;
-  static const double fieldSpacing = 20.0;
-
+  EncryptionDecryptionOptionsController encryptionDecryptionOptionsController = Get.put(EncryptionDecryptionOptionsController(),tag: TAG_ENCRYPT);
   EncryptionView({super.key});
+
+  // double height = 10;
+  // static const double fieldSpacing = 20.0;
 
   @override
   Widget build(BuildContext context) {

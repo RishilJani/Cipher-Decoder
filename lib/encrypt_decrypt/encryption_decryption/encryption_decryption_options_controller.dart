@@ -72,12 +72,12 @@ class EncryptionDecryptionOptionsController extends GetxController {
     }
     if (controller is EncryptionController) {
       controller.encryptUsing(method: options[index]);
-    } else if (controller is DecryptionController) {
+    }
+    else if (controller is DecryptionController) {
       controller.decryptUsing(method: options[index]);
     }
 
-    changeDescription(controller: controller);
-    update([String]);
+    onChange(controller: controller);
   }
 
   void removeWidget({index, controller}) {

@@ -9,9 +9,166 @@ class EncodeDecodeOptions extends StatelessWidget{
   int? index;
   EncodeDecodeOptionController encodeDecodeOptionController;
   String txt = '';
+  double fieldSpacing = 20.0;
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    ThemeData theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    int n = encodeDecodeOptionController.options.length;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // region Custom Dropdown Button
+        Row(
+          children: [
+            Text(
+              '${n > 1 ? '${index! + 1}.) ' : ''}$txt',
+              style:
+              textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            n > 1
+                ? IconButton(
+              onPressed: () {
+                encodeDecodeOptionController.removeWidget(index: index, controller: controller);
+              },
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            )
+                : const SizedBox(
+              height: 0,
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 8.0),
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize:
+              const Size.fromHeight(60), // Makes the button fill width
+              backgroundColor: Colors.grey[100],
+              foregroundColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                side: BorderSide(color: Colors.grey[400]!),
+              ),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            ),
+            onPressed: () {
+              showMethodDialog(theme: theme);
+            },
+            child: Obx(
+                  () => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    encodeDecodeOptionController.options[index!].title!,
+                    style: textTheme.bodyMedium,
+                  ),
+                  Icon(Icons.arrow_drop_down_circle_sharp,
+                      color: theme.primaryColor, size: 28),
+                ],
+              ),
+            )
+        ),
+        //endregion
+
+        SizedBox(
+          height: fieldSpacing * 1.5,
+        ),
+
+        /*
+        Obx(
+            () => AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) {
+              return SizeTransition(
+                sizeFactor: animation,
+                child: FadeTransition(opacity: animation, child: child),
+              );
+            },
+            child: encodeDecodeOptionController.options[index!].requiresKey
+                ? myInputfield(
+              key: const ValueKey('conditionalField'),
+              context: context,
+              textTitle: 'Enter Key:',
+              hintText: 'Enter Integer Key...',
+              controller: controller,
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                encryptionDecryptionOptionController.keyUpdateWidget(
+                    index: index, controller: controller);
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+              ],
+            )
+                : const SizedBox.shrink(key: ValueKey('emptyConditional')),
+          ),
+        ),
+
+
+        Obx(
+            () => Visibility(
+            visible: !controller.options[index!].requiresKey,
+            child: SizedBox(
+              height: fieldSpacing * 1.5,
+            ),
+          ),
+        ),
+
+         */
+      ],
+    );
   }
+
+  void showMethodDialog({ThemeData? theme}) {
+    TextTheme textTheme = theme!.textTheme;
+
+    Get.defaultDialog(
+      title: 'Select an Option',
+      content: SizedBox(
+        width: double.maxFinite,
+        height: 200,
+        child: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 9,
+          childAspectRatio: 3 / 1,
+          children: encodeDecodeMethods.map((method) {
+            EncodeDecodeModel encodeDecodeModel = getMethod(element: method);
+            return Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.primaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: InkWell(
+                  onTap: () {
+                    encodeDecodeOptionController.updateWidget(
+                        methodObj: encodeDecodeModel,
+                        index: index,
+                        controller: controller);
+                    Get.back();
+                  },
+                  child: Center(
+                    child: Text(
+                      encodeDecodeModel.title!,
+                      style: textTheme.bodyMedium,
+                    ),
+                  )
+              ),
+            );
+          },).toList(),
+        ),
+      ),
+    );
+  }
+
 }
+
+

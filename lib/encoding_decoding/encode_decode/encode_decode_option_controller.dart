@@ -2,7 +2,7 @@ import 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_opt
 import 'package:cipher_decoder/utils/import_export.dart';
 
 class EncodeDecodeOptionController extends GetxController{
-    final int maxLimit = 1;
+    final int maxLimit = 2;
     RxString desc = ''.obs;
     RxList<EncodeDecodeModel> options = <EncodeDecodeModel>[Base64()].obs;
 
@@ -18,6 +18,7 @@ class EncodeDecodeOptionController extends GetxController{
     }
 
     void onChange({controller}){
+      print("ON CHANGED::::::: ..........");
       if(controller is EncodeController){
         String ans = controller.plainTextController.text;
         for(var method in options){
@@ -28,14 +29,20 @@ class EncodeDecodeOptionController extends GetxController{
       else if(controller is DecodeController){
         String ans = controller.cipherTextController.text;
         for(var method in options){
-          ans = controller.decodeUsing(method: method, decode: ans)!;
+          try {
+            ans = controller.decodeUsing(method: method, decode: ans)!;
+          }catch(e){
+            print("\n\n::::::::::::: ERROR :::::::::::\n\n");
+          }
         }
+        print("ANS ==== $ans");
         controller.plainTextController.text = ans;
       }
       else{
         throw ControllerTypeException(message: "Encode Decode Controller is Not right ::: ${controller.runtimeType}");
       }
 
+      // print("ON CHANGED::::::: ..........");
       changeDescription(controller: controller);
       update([String]);
 
@@ -53,6 +60,9 @@ class EncodeDecodeOptionController extends GetxController{
       }
     }
 
+    void removeWidget({index , controller}){
+
+    }
 
     Widget getOptionList({controller}) {
       return Obx(

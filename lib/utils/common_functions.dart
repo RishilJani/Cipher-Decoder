@@ -37,7 +37,7 @@ Widget myScreen({required BuildContext context,
   else if (controller is EncodeController) {
     textTitle = "Encoded Text";
   }
-  else if (context is DecodeController) {
+  else if (controller is DecodeController) {
     textTitle = "Decoded Text";
   }
   else {
@@ -53,7 +53,7 @@ Widget myScreen({required BuildContext context,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // region Encryption-Decryption
+          // region Encryption-Encoding
           myInputfield(
               controller: controller,
               context: context,
@@ -64,24 +64,16 @@ Widget myScreen({required BuildContext context,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               onChanged: (value) {
-                // on change function here
-                if (controller is EncryptionController ||
-                    controller is DecryptionController) {
+                  // on change function here
                   methodsController.onChange(controller: controller);
-                }
               },
-              suffixIcon: pasteIconButton(
-                  controller: controller, onChange: methodsController.onChange),
+              suffixIcon: pasteIconButton(controller: controller, onChange: methodsController.onChange),
               isEncode: isEncoding!,
               methodController: methodsController),
           const SizedBox(height: height),
           // endregion
 
-          isEncryption!
-              ? methodsController.getOptionList( controller: controller)
-              : const SizedBox(
-                  height: 0,
-                ),
+          methodsController.getOptionList( controller: controller),
 
           addOptionButton(controller: controller, methodController: methodsController),
 
@@ -151,16 +143,14 @@ Widget myInputfield(
   final textTheme = theme.textTheme;
   TextEditingController ctr;
   if (isEncode) {
-    print(
-        "IF :::::::: controller === ${controller.runtimeType} ::::: $isEncode");
     if (key != null) {
       ctr = controller.keyController;
-    } else {
+    }
+    else {
       ctr = controller.plainTextController;
     }
-  } else {
-    print(
-        "ELSE :::::::: controller === ${controller.runtimeType} ::::: $isEncode");
+  }
+  else {
     ctr = controller.cipherTextController;
   }
 
@@ -211,57 +201,6 @@ Widget myInputfield(
   );
 }
 
-// to copy text into clipboard
-void copyText(String txt) {
-  Clipboard.setData(ClipboardData(text: txt)).then(
-    (value) {
-      Get.snackbar("Success", "Cipher text copied successfully",
-          backgroundColor: Colors.greenAccent,
-          snackPosition: SnackPosition.BOTTOM);
-    },
-  );
-}
-
-// to paste text from clipboard
-void pasteText({controller, required Function onChange}) async {
-  ClipboardData? data = await Clipboard.getData('text/plain');
-  if (data != null) {
-    if (controller is EncodeController || controller is EncryptionController) {
-      controller.plainTextController.text = data.text!;
-    } else if (controller is DecodeController ||
-        controller is DecryptionController) {
-      controller.cipherTextController.text = data.text!;
-    }
-    onChange(controller: controller);
-  }
-}
-
-// paste Icon button
-Widget pasteIconButton({controller, onChange}) {
-  return IconButton(
-      onPressed: () {
-        pasteText(controller: controller, onChange: onChange);
-      },
-      icon: const Icon(Icons.paste));
-}
-
-// clear Icon button
-Widget clearIconButton(
-    {controller, required encryptionDecryptionOptionsController}) {
-  return IconButton(
-    onPressed: () {
-      controller!.plainTextController.clear();
-      controller!.cipherTextController.clear();
-      if (encryptionDecryptionOptionsController != null) {
-        // encryptionDecryptionOptionsController.changeDescription(controller: controller);
-        encryptionDecryptionOptionsController.desc.value = '';
-      }
-    },
-    icon: const Icon(Icons.clear, color: darkError, size: 32),
-    tooltip: "Clear",
-  );
-}
-
 Widget addOptionButton({controller, required methodController}) {
   return Container(
     decoration: BoxDecoration(
@@ -294,13 +233,15 @@ bool checkAllTypes({controller}) {
 
 String dynamicDescription({controller,String? text1, String? text2}) {
 
-  if(controller is EncryptionController || controller is EncodeController){
+  if(controller is EncryptionController){
     text1 ??= controller.plainTextController.text;
     text2 ??= controller.cipherTextController.text;
   }
-  else if(controller is DecryptionController || controller is DecodeController){
+  else if(controller is DecryptionController){
     text1 ??= controller.cipherTextController.text;
     text2 ??= controller.plainTextController.text;
+  }else if(controller is DecodeController || controller is EncodeController){
+    return '';
   }
   else{
     throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
@@ -310,8 +251,8 @@ String dynamicDescription({controller,String? text1, String? text2}) {
   String ans = '';
   int count = 0;
   String ignore = "\n ";
-  var l1 = text1!.split('');
-  var l2 = text2!.split('');
+  var l1 = text1.split('');
+  var l2 = text2.split('');
   for (int i = 0; i < l1.length; i++) {
     if (i == 0) {
       ans = "\ne.g.\n";
@@ -329,4 +270,19 @@ String dynamicDescription({controller,String? text1, String? text2}) {
     count++;
   }
   return ans;
+}
+
+dynamic getMethod({required  element}){
+  if(element is EncryptionDecryptionTypes){
+    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return CeaseCipher();}
+    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return AtbashCipher();}
+    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return MonoAlphabaticCipher(key: 1); }
+    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return RailFenceCipher(key: 1);}
+  }
+  else if(element is EncodeDecodeTypes){
+    if(element == EncodeDecodeTypes.Base64){ return Base64(); }
+  }
+  else{
+    throw ControllerTypeException(message: "encrypt decrypt element is not right ${element.runtimeType}");
+  }
 }

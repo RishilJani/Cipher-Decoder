@@ -122,7 +122,7 @@ class EncryptionDecryptionOptions extends StatelessWidget {
       title: 'Select an Option',
       content: SizedBox(
         width: double.maxFinite,
-        height: 250,
+        height: 200,
         child: GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,

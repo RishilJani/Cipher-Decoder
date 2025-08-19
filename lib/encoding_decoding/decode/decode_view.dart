@@ -6,10 +6,15 @@ class DecodeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DecodeController decodeController = DecodeController();
-    return const Scaffold(
-      body: Center(
-        child: Text("Decoding",style: TextStyle(fontSize: 18),),
-      ),
+    EncodeDecodeOptionController encodeDecodeOptionController = Get.put(EncodeDecodeOptionController() , tag: TAG_DECODE);
+
+    return myScreen(
+      context: context,
+      controller: decodeController,
+      methodsController: encodeDecodeOptionController,
+      titleText: "Enter text to decode",
+      isEncoding: false,
+      isEncryption: false,
     );
   }
 }

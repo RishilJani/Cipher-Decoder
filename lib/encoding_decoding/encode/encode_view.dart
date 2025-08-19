@@ -14,7 +14,7 @@ class EncodeView extends StatelessWidget {
       methodsController: encodeDecodeOptionController,
       titleText: "Enter text to encode",
       isEncoding: true,
-      isEncryption: false
+      isEncryption: false,
     );
   }
 }

@@ -10,7 +10,7 @@ export 'package:cipher_decoder/utils/app_routes.dart';
 export 'package:cipher_decoder/utils/common_functions.dart';
 export 'package:cipher_decoder/utils/colors.dart';
 export 'package:cipher_decoder/utils/custom_exceptions.dart';
-
+export 'package:cipher_decoder/utils/utils.dart';
 // endregion
 
 // region Encrypt Decrypt

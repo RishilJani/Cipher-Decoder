@@ -24,9 +24,21 @@ class Base64 extends EncodeDecodeModel{
 
   @override
   String decode({required String encodedText}){
-    String originalText = utf8.decode(base64Decode(encodedText));
-    print(":::: base64 decode = $originalText :::::::::::::::");
+
+    String originalText = '';
+    try{
+       originalText = utf8.decode(base64Decode(encodedText));
+      print(":::: base64 decode = $originalText :::::::::::::::");
+    }catch(e){
+      print("HELLOOOOO0000 ERROR:::::::::::::;;");
+      originalText = encodedText;
+    }
 
     return originalText;
   }
 }
+
+// class Base32 extends EncodeDecodeModel{
+//   Base32() : super(title: EN_BASE32,description: BASE32_DESC);
+//
+// }

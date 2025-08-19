@@ -5,6 +5,27 @@ class DashboardEncodeDecode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: myAppBar(
+            context: context,
+            title: APPLICATION_NAME,
+            bottom: const TabBar(
+                tabs: [
+                  Tab(text: "Encode",),
+                  Tab(text: "Decode",),
+                ]
+            )
+          ),
+
+          body: const TabBarView(
+              children: [
+                EncodeView(),
+                DecodeView(),
+              ]
+          ),
+        )
+    );
   }
 }

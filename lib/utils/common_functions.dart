@@ -68,8 +68,10 @@ Widget myScreen({required BuildContext context,
                   methodsController.onChange(controller: controller);
               },
               suffixIcon: pasteIconButton(controller: controller, onChange: methodsController.onChange),
-              isEncode: isEncoding!,
-              methodController: methodsController),
+              isEncode: true,
+              isPlain: isEncoding!,
+              methodController: methodsController
+          ),
           const SizedBox(height: height),
           // endregion
 
@@ -80,25 +82,29 @@ Widget myScreen({required BuildContext context,
           const SizedBox(height: fieldSpacing),
 
           // region Encrypted-Decrypted
-          myInputfield(
-            controller: controller,
-            context: context,
-            textTitle: textTitle,
-            hintText: hintText,
-            readonly: true,
-            methodController: methodsController,
-            suffixIcon: IconButton(
-              onPressed: () {
-                String cpy = isEncoding
-                    ? controller.cipherTextController.text.toString()
-                    : controller.plaintextController.text.toString();
-                copyText(cpy);
-              },
-              icon: const Icon(Icons.copy),
-              tooltip: "Copy encrypted text",
+            myInputfield(
+              controller: controller,
+              context: context,
+              textTitle: textTitle,
+              hintText: hintText,
+              readonly: true,
+              methodController: methodsController,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  String cpy = isEncoding!
+                      ? controller.cipherTextController.text.toString()
+                      : controller.plaintextController.text.toString();
+
+                  // print("Controller ===== ${controller.runtimeType}");
+                  copyText(cpy);
+                },
+                icon: const Icon(Icons.copy),
+                tooltip: "Copy encrypted text",
+              ),
+              isEncode: false,
+              isPlain: !isEncoding
             ),
-            isEncode: !isEncoding,
-          ),
+          showDecodeLengthException(methodController: methodsController, controller: controller),
           const SizedBox(height: fieldSpacing * 1.5),
           // endregion
 
@@ -133,6 +139,7 @@ Widget myInputfield(
     validator,
     bool readonly = false,
     bool isEncode = true,
+    bool isPlain  = true,
     methodController}) {
   if (!checkAllTypes(controller: controller)) {
     throw ControllerTypeException(
@@ -142,7 +149,7 @@ Widget myInputfield(
   final theme = Theme.of(context);
   final textTheme = theme.textTheme;
   TextEditingController ctr;
-  if (isEncode) {
+  if (isPlain) {
     if (key != null) {
       ctr = controller.keyController;
     }
@@ -281,8 +288,22 @@ dynamic getMethod({required  element}){
   }
   else if(element is EncodeDecodeTypes){
     if(element == EncodeDecodeTypes.Base64){ return Base64(); }
+    if(element == EncodeDecodeTypes.Base32){ return Base32(); }
   }
   else{
     throw ControllerTypeException(message: "encrypt decrypt element is not right ${element.runtimeType}");
   }
+}
+
+Widget showDecodeLengthException({controller , methodController}){
+  if(methodController is EncodeDecodeOptionController && controller is DecodeController){
+    try{
+      methodController.onChange(controller: controller);
+      return const SizedBox(height: 0,);
+    } on DecodeStringSizeException  {
+      String message = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";
+      return Text( message, style: const TextStyle(color: Colors.red, fontSize: 15),);
+    }
+  }
+  return const SizedBox(height: 0,);
 }

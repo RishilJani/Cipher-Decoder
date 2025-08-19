@@ -15,11 +15,15 @@ void copyText(String txt) {
 void pasteText({controller, required Function onChange}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
+
     if (controller is EncodeController || controller is EncryptionController) {
       controller.plainTextController.text = data.text!;
-    } else if (controller is DecodeController ||
-        controller is DecryptionController) {
+    }
+    else if (controller is DecodeController || controller is DecryptionController) {
+      print("Controller ==== ${controller.runtimeType}");
       controller.cipherTextController.text = data.text!;
+    }else{
+      throw ControllerTypeException(message: "Controller is not right in pasteText ${controller.runtimeType}");
     }
     onChange(controller: controller);
   }
@@ -31,7 +35,8 @@ Widget pasteIconButton({controller, onChange}) {
       onPressed: () {
         pasteText(controller: controller, onChange: onChange);
       },
-      icon: const Icon(Icons.paste));
+      icon: const Icon(Icons.paste)
+  );
 }
 
 // clear Icon button

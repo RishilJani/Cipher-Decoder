@@ -29,16 +29,29 @@ class Base64 extends EncodeDecodeModel{
     try{
        originalText = utf8.decode(base64Decode(encodedText));
       print(":::: base64 decode = $originalText :::::::::::::::");
+      print(":::: encodedText = $encodedText :::::::::::::::");
     }catch(e){
-      print("HELLOOOOO0000 ERROR:::::::::::::;;");
+      print("HELLOED0000 ERROR:::::::::::::");
       originalText = encodedText;
+      throw DecodeStringSizeException();
     }
 
     return originalText;
   }
 }
 
-// class Base32 extends EncodeDecodeModel{
-//   Base32() : super(title: EN_BASE32,description: BASE32_DESC);
-//
-// }
+class Base32 extends EncodeDecodeModel{
+  Base32() : super(title: EN_BASE32,description: BASE32_DESC);
+
+  @override
+  String encode({required String plainText}) {
+
+    return '';
+  }
+
+  @override
+  String decode({required String encodedText}) {
+
+    return '';
+  }
+}

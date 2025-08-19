@@ -31,7 +31,8 @@ enum EncryptionDecryptionTypes {
 }
 
 enum EncodeDecodeTypes{
-  Base64
+  Base64,
+  Base32,
 }
 
 
@@ -68,3 +69,5 @@ const String TAG_DECRYPT = "decrypt";
 const String TAG_ENCODE = "encode";
 const String TAG_DECODE = "decode";
 // endregion
+
+const String DECODE_ERROR = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";

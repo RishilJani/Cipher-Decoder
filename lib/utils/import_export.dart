@@ -41,5 +41,5 @@ export 'package:cipher_decoder/encoding_decoding/decode/decode_view.dart';
 
 export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_model.dart';
 export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_option_controller.dart';
-
+export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
 // endregion

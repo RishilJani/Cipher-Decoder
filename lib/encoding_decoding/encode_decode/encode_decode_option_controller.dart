@@ -1,4 +1,3 @@
-import 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
 import 'package:cipher_decoder/utils/import_export.dart';
 
 class EncodeDecodeOptionController extends GetxController{
@@ -17,7 +16,7 @@ class EncodeDecodeOptionController extends GetxController{
       update([EncodeDecodeModel]);
     }
 
-    void onChange({controller}){
+    void onChange({controller}) {
       print("ON CHANGED::::::: ..........");
       if(controller is EncodeController){
         String ans = controller.plainTextController.text;
@@ -27,13 +26,14 @@ class EncodeDecodeOptionController extends GetxController{
         controller.cipherTextController.text = ans;
       }
       else if(controller is DecodeController){
+
         String ans = controller.cipherTextController.text;
+        if(ans.length == 1){
+          print("_________ Ans = $ans ____________");
+          throw DecodeStringSizeException(message: "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed");
+        }
         for(var method in options){
-          try {
-            ans = controller.decodeUsing(method: method, decode: ans)!;
-          }catch(e){
-            print("\n\n::::::::::::: ERROR :::::::::::\n\n");
-          }
+          ans = controller.decodeUsing(method: method, decode: ans)!;
         }
         print("ANS ==== $ans");
         controller.plainTextController.text = ans;
@@ -65,8 +65,7 @@ class EncodeDecodeOptionController extends GetxController{
     }
 
     Widget getOptionList({controller}) {
-      return Obx(
-            () => ListView.builder(
+      return Obx(() => ListView.builder(
           shrinkWrap: true,
           itemCount: options.length,
           itemBuilder: (context, index) {

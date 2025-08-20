@@ -70,4 +70,11 @@ const String TAG_ENCODE = "encode";
 const String TAG_DECODE = "decode";
 // endregion
 
-const String DECODE_ERROR = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";
+const String DECODE_LENGTH_ERROR = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";
+
+// region RegExp
+
+var base64RegExp = RegExp(r'^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$');
+var base32RegExp = RegExp(r'^(?:[A-Z2-7]{8})*(?:[A-Z2-7]{2}======|[A-Z2-7]{4}====|[A-Z2-7]{5}===|[A-Z2-7]{7}=)?$' );
+
+// endregion

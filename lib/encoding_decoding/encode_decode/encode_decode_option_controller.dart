@@ -4,9 +4,15 @@ class EncodeDecodeOptionController extends GetxController{
     final int maxLimit = 2;
     RxString desc = ''.obs;
     RxList<EncodeDecodeModel> options = <EncodeDecodeModel>[Base64()].obs;
+    RxBool showError = false.obs;
 
     void addWidget({required EncodeDecodeModel methodObj, required controller}){
-
+      if (options.length < maxLimit) {
+        options.add(methodObj);
+        onChange(controller: controller);
+      }else{
+        showSnackBar();
+      }
     }
 
     void updateWidget({required EncodeDecodeModel methodObj , index,  controller}){
@@ -17,7 +23,6 @@ class EncodeDecodeOptionController extends GetxController{
     }
 
     void onChange({controller}) {
-      print("ON CHANGED::::::: ..........");
       if(controller is EncodeController){
         String ans = controller.plainTextController.text;
         for(var method in options){
@@ -28,24 +33,28 @@ class EncodeDecodeOptionController extends GetxController{
       else if(controller is DecodeController){
 
         String ans = controller.cipherTextController.text;
-        if(ans.length == 1){
-          print("_________ Ans = $ans ____________");
-          throw DecodeStringSizeException(message: "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed");
+        try {
+          for (var method in options) {
+            if(!method.validRegexp!.hasMatch(ans)){
+              throw DecodeStringSizeException();
+            }
+            ans = controller.decodeUsing(method: method, decode: ans)!;
+          }
+
+          controller.plainTextController.text = ans;
+          showError.value = false;
+        } catch(e){
+          showError.value = true;
+          update([bool]);
+          return;
         }
-        for(var method in options){
-          ans = controller.decodeUsing(method: method, decode: ans)!;
-        }
-        print("ANS ==== $ans");
-        controller.plainTextController.text = ans;
       }
       else{
         throw ControllerTypeException(message: "Encode Decode Controller is Not right ::: ${controller.runtimeType}");
       }
 
-      // print("ON CHANGED::::::: ..........");
       changeDescription(controller: controller);
-      update([String]);
-
+      update([String, bool]);
     }
 
     void changeDescription({controller}){
@@ -65,7 +74,8 @@ class EncodeDecodeOptionController extends GetxController{
     }
 
     Widget getOptionList({controller}) {
-      return Obx(() => ListView.builder(
+      return Obx(
+            () => ListView.builder(
           shrinkWrap: true,
           itemCount: options.length,
           itemBuilder: (context, index) {

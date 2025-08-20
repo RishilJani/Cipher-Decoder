@@ -10,11 +10,7 @@ class EncryptionDecryptionOptionsController extends GetxController {
       options.add(methodObj);
       onChange(controller: controller);
     } else {
-      Get.snackbar("Max Limit Reached", "Can't add more methods",
-          duration: const Duration(seconds: 5),
-          backgroundColor: darkError,
-          colorText: darkPrimary,
-          snackPosition: SnackPosition.BOTTOM);
+      showSnackBar();
     }
   }
 

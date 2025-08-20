@@ -20,7 +20,6 @@ void pasteText({controller, required Function onChange}) async {
       controller.plainTextController.text = data.text!;
     }
     else if (controller is DecodeController || controller is DecryptionController) {
-      print("Controller ==== ${controller.runtimeType}");
       controller.cipherTextController.text = data.text!;
     }else{
       throw ControllerTypeException(message: "Controller is not right in pasteText ${controller.runtimeType}");
@@ -53,5 +52,15 @@ Widget clearIconButton(
     },
     icon: const Icon(Icons.clear, color: darkError, size: 32),
     tooltip: "Clear",
+  );
+}
+
+
+void showSnackBar(){
+  Get.snackbar("Max Limit Reached", "Can't add more methods",
+      duration: const Duration(seconds: 5),
+      backgroundColor: darkError,
+      colorText: darkPrimary,
+      snackPosition: SnackPosition.BOTTOM
   );
 }

@@ -14,7 +14,7 @@ class ControllerTypeException implements Exception{
 class DecodeStringSizeException implements Exception{
   String? message;
 
-  DecodeStringSizeException({this.message = DECODE_ERROR});
+  DecodeStringSizeException({this.message = DECODE_LENGTH_ERROR});
 
   @override
   String toString() {

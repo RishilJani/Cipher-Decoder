@@ -75,9 +75,11 @@ Widget myScreen({required BuildContext context,
           const SizedBox(height: height),
           // endregion
 
-          methodsController.getOptionList( controller: controller),
+          methodsController.getOptionList(controller: controller),
 
-          addOptionButton(controller: controller, methodController: methodsController),
+          methodsController is EncryptionDecryptionOptionsController ?
+              addOptionButton(controller: controller, methodController: methodsController)
+              : const SizedBox(height: 0,),
 
           const SizedBox(height: fieldSpacing),
 
@@ -91,7 +93,7 @@ Widget myScreen({required BuildContext context,
               methodController: methodsController,
               suffixIcon: IconButton(
                 onPressed: () {
-                  String cpy = isEncoding!
+                  String cpy = isEncoding
                       ? controller.cipherTextController.text.toString()
                       : controller.plaintextController.text.toString();
 
@@ -297,13 +299,13 @@ dynamic getMethod({required  element}){
 
 Widget showDecodeLengthException({controller , methodController}){
   if(methodController is EncodeDecodeOptionController && controller is DecodeController){
-    try{
-      methodController.onChange(controller: controller);
-      return const SizedBox(height: 0,);
-    } on DecodeStringSizeException  {
-      String message = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";
-      return Text( message, style: const TextStyle(color: Colors.red, fontSize: 15),);
-    }
+    return Obx(() {
+      if(methodController.showError.value){
+        return const Text("Invalid Format", style: TextStyle(color: Colors.red, fontSize: 16) );
+      }else{
+        return const SizedBox(height: 0);
+      }
+    },);
   }
-  return const SizedBox(height: 0,);
+  return const SizedBox(height: 0);
 }

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      // theme of application
+      /* // region theme of application
       theme: ThemeData(
         brightness: Brightness.dark,
 
@@ -96,6 +96,8 @@ class MyApp extends StatelessWidget {
           foregroundColor: darkSurface
         )
       ),
+      // endregion */
+
 
       // to close the keyboard whenever clicked anywhere on screen
       builder: (context, child) {

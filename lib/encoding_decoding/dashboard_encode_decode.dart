@@ -8,10 +8,13 @@ class DashboardEncodeDecode extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          backgroundColor: cyberpunkPurple,
           appBar: myAppBar(
             context: context,
             title: APPLICATION_NAME,
             bottom: const TabBar(
+                indicatorColor: cyberpunkPurple,
+                indicatorSize: TabBarIndicatorSize.tab,
                 tabs: [
                   Tab(text: "Encode",),
                   Tab(text: "Decode",),

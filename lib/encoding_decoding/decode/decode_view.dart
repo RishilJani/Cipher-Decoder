@@ -8,7 +8,7 @@ class DecodeView extends StatelessWidget {
     DecodeController decodeController = DecodeController();
     EncodeDecodeOptionController encodeDecodeOptionController = Get.put(EncodeDecodeOptionController() , tag: TAG_DECODE);
 
-    return myScreen(
+    return modernScreenLayout(
       context: context,
       controller: decodeController,
       methodsController: encodeDecodeOptionController,

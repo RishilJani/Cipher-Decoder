@@ -11,12 +11,13 @@ class DecryptionView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return myScreen(
+    return modernScreenLayout(
       context: context,
       controller: decryptionController,
       methodsController: encryptionDecryptionOptionsController,
       titleText: "Enter Text to decrypt",
-      isEncoding: false
+      isEncoding: false,
+      isEncryption: true,
     );
   }
 }

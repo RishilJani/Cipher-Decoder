@@ -1,5 +1,62 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 import 'dart:math' as math;
+
+class MatrixChar {
+  final String char;
+  final double x;
+  final double speed;
+  final double delay;
+
+  MatrixChar({
+    required this.char,
+    required this.x,
+    required this.speed,
+    required this.delay,
+  });
+}
+
+class MatrixPainter extends CustomPainter {
+  final List<MatrixChar> chars;
+  final double animationValue;
+
+  MatrixPainter(this.chars, this.animationValue);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const textStyle = TextStyle(
+      color: Color(0xFF00FF41),
+      fontSize: 12,
+      fontFamily: 'monospace',
+    );
+
+    for (final char in chars) {
+      final y = ((animationValue * char.speed + char.delay) % 1) *
+              (size.height + 100) -
+          50;
+      if (y > -50 && y < size.height + 50) {
+        final opacity = math.max(0.1, 1.0 - (y / size.height));
+        final textPainter = TextPainter(
+          text: TextSpan(
+            text: char.char,
+            style: textStyle.copyWith(
+              color: textStyle.color!.withOpacity(opacity * 0.3),
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        );
+        textPainter.layout();
+        textPainter.paint(
+          canvas,
+          Offset(char.x * size.width, y),
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
 class MyBackgroundAnimation extends StatefulWidget {
   const MyBackgroundAnimation({super.key});
 
@@ -57,12 +114,14 @@ class _MyBackgroundAnimationState extends State<MyBackgroundAnimation> with Tick
 }
 
 
+
 // to copy text into clipboard
 void copyText(String txt) {
   Clipboard.setData(ClipboardData(text: txt)).then(
         (value) {
       Get.snackbar("Success", "Cipher text copied successfully",
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: cyberpunkGreenLight,
+          colorText: cyberpunkGrayDark,
           snackPosition: SnackPosition.BOTTOM);
     },
   );

@@ -1,5 +1,4 @@
 import 'package:cipher_decoder/utils/import_export.dart';
-import 'dart:math' as math;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -9,198 +8,174 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
-  // late AnimationController _matrixController;
-  late AnimationController _glowController;
-  // final List<MatrixChar> _matrixChars = [];
+  late AnimationController _fadeController;
+  late AnimationController _slideController;
+  late AnimationController _pulseController;
+  
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _pulseAnimation;
 
   @override
   void initState() {
     super.initState();
-    // _matrixController = AnimationController(
-    //   duration: const Duration(seconds: 20),
-    //   vsync: this,
-    // )..repeat();
-
-    _glowController = AnimationController(
-      duration: const Duration(seconds: 2),
+    
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..repeat(reverse: true);
+    );
+    
+    _slideController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    
+    _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
 
-    // _generateMatrixChars();
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeOutCubic,
+    ));
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slideController,
+      curve: Curves.easeOutCubic,
+    ));
+
+    _pulseAnimation = Tween<double>(
+      begin: 0.95,
+      end: 1.05,
+    ).animate(CurvedAnimation(
+      parent: _pulseController,
+      curve: Curves.easeInOut,
+    ));
+
+    if(mounted){
+      _fadeController.forward();
+      _pulseController.repeat(reverse: true);
+      _slideController.forward();
+    }
   }
 
-  // void _generateMatrixChars() {
-  //   const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-  //   final random = math.Random();
-  //   for (int i = 0; i < 30; i++) {
-  //     _matrixChars.add(MatrixChar(
-  //       char: chars[random.nextInt(chars.length)],
-  //       x: random.nextDouble(),
-  //       speed: 0.3 + random.nextDouble() * 1.5,
-  //       delay: random.nextDouble() * 5,
-  //
-  //     ));
-  //   }
-  // }
+  @override
+  void dispose() {
+    _fadeController.stop();
+    _slideController.stop();
+    _pulseController.stop();
+
+    _fadeController.dispose();
+    _slideController.dispose();
+    _pulseController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: cyberpunkPurple,
-      appBar: _cyberpunkAppBar(title: APPBAR_TITLE_DASHBOARD, context: context),
-      body: Container(
-        decoration: const BoxDecoration(
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            _buildWelcomeSection(),
+            const SizedBox(height: 32),
+            _buildActionCards(),
+            // const SizedBox(height: 32),
+            // _buildInfoSection(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection() {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF0A0A0A),
-              Color(0xFF1A0B2E),
-              Color(0xFF16213E),
+              cyberpunkPurple.withOpacity(0.2),
+              cyberpunkCyan.withOpacity(0.1),
             ],
           ),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: cyberpunkPurple.withOpacity(0.4),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: cyberpunkPurple.withOpacity(0.2),
+              blurRadius: 20,
+              spreadRadius: 2,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
-        child: Stack(
+        child: Column(
           children: [
-            // Matrix background animation
-            const MyBackgroundAnimation(),
-            /*
-            // AnimatedBuilder(
-            //   animation: _matrixController,
-            //   builder: (context, child) {
-            //     return CustomPaint(
-            //       size: Size.infinite,
-            //       painter: MatrixPainter(_matrixChars, _matrixController.value),
-            //     );
-            //   },
-            // ), */
-
-
-            // Main content
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Cyberpunk logo section
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 60),
-                      child: Column(
-                        children: [
-                          AnimatedBuilder(
-                            animation: _glowController,
-                            builder: (context, child) {
-                              return Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: RadialGradient(
-                                    colors: [
-                                      const Color(0xFF00FF41).withOpacity(0.3 * _glowController.value),
-                                      const Color(0xFF00FFFF).withOpacity(0.1 * _glowController.value),
-                                      Colors.transparent,
-                                    ],
-                                  ),
-                                  border: Border.all(
-                                    color: const Color(0xFF00FF41).withOpacity(0.5 + 0.5 * _glowController.value),
-                                    width: 2,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.security,
-                                  size: 60,
-                                  color: Color(0xFF00FF41),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          const Text(
-                            '> SYSTEM ONLINE\n> PROTOCOLS ACTIVE',
-                            style: TextStyle(
-                              fontFamily: 'monospace',
-                              fontSize: 11,
-                              color: Color(0xFF00FFFF),
-                              height: 1.5,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+            AnimatedBuilder(
+              animation: _pulseAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _pulseAnimation.value,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: cyberpunkCyan.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: cyberpunkCyan.withOpacity(0.4),
+                        width: 1,
                       ),
                     ),
-
-                    // Encode-Decode Button
-                    _cyberpunkButton(
-                      onPressed: () {
-                        Get.toNamed(RT_DASHBOARD_ENCODE_DECODE);
-                      },
-                      child: const Text(
-                        "ENCODE - DECODE",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF00FF41),
-                          fontFamily: 'monospace',
-                          letterSpacing: 1.2,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    child: const Icon(
+                      Icons.security,
+                      size: 48,
+                      color: cyberpunkCyan,
                     ),
-
-                    const SizedBox(height: 40),
-
-                    // Encryption-Decryption Button
-                    _cyberpunkButton(
-                      onPressed: () {
-                        Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
-                      },
-                      child: const Text(
-                        "ENCRYPTION - DECRYPTION",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF00FF41),
-                          fontFamily: 'monospace',
-                          letterSpacing: 1.2,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-
-                    const SizedBox(height: 60),
-
-                    // // Footer warning
-                    // Container(
-                    //   padding: const EdgeInsets.all(16),
-                    //   decoration: BoxDecoration(
-                    //     border: Border.all(
-                    //       color: const Color(0xFFFF0040).withOpacity(0.3),
-                    //       width: 1,
-                    //     ),
-                    //     borderRadius: BorderRadius.circular(8),
-                    //     gradient: LinearGradient(
-                    //       colors: [
-                    //         const Color(0xFFFF0040).withOpacity(0.05),
-                    //         Colors.transparent,
-                    //       ],
-                    //     ),
-                    //   ),
-                    //   child: const Text(
-                    //     '⚠ UNAUTHORIZED ACCESS DETECTED\n⚠ SECURITY PROTOCOLS ACTIVE',
-                    //     style: TextStyle(
-                    //       fontFamily: 'monospace',
-                    //       fontSize: 10,
-                    //       color: Color(0xFFFF0040),
-                    //       height: 1.5,
-                    //     ),
-                    //     textAlign: TextAlign.center,
-                    //   ),
-                    // ),
-                  ],
-                ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Welcome to the Future of Data Security',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                fontFamily: 'monospace',
+                letterSpacing: 0.8,
+                height: 1.3,
               ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Choose your operation below to begin your cryptographic journey',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[300],
+                fontFamily: 'monospace',
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -208,159 +183,178 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
     );
   }
 
-  Widget _cyberpunkButton({required VoidCallback onPressed, required Widget child}) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return GestureDetector(
-          onTap: onPressed,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: 140,
-            width: 280,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  const Color(0xFF00FF41).withOpacity(0.01),
-                  const Color(0xFF00FFFF).withOpacity(0.01),
-                ],
-              ),
-              border: Border.all(
-                color: const Color(0xFF00FF41),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF00FF41).withOpacity(0.1),
-                  blurRadius: 8,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.black.withOpacity(0.3),
-                    Colors.black.withOpacity(0.1),
-                  ],
-                ),
-              ),
-              child: Center(child: child),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  Widget _buildActionCards() {
 
-  AppBar _cyberpunkAppBar({String title = '', required context, bottom}) {
-    return AppBar(
-      title: Column(
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Column(
         children: [
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFF00FF41), Color(0xFF00FFFF)],
-            ).createShader(bounds),
-            child: Text(
-              title.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'monospace',
-                letterSpacing: 2,
-              ),
-            ),
+          _buildActionCard(
+            icon: Icons.transform,
+            title: "Encode / Decode",
+            description: "Transform text and files with various encoding schemes",
+            subtitle: "BASE64, BASE32, and more",
+            accentColor: cyberpunkCyan,
+            gradientColors: [
+              cyberpunkCyan.withOpacity(0.25),
+              cyberpunkCyan.withOpacity(0.08)
+            ],
+            onTap: () {
+              // Get.toNamed(RT_DASHBOARD_ENCODE_DECODE);
+            },
           ),
-          const Text(
-            'v2.1.0 - CLASSIFIED',
-            style: TextStyle(
-              fontSize: 10,
-              color: Color(0xFF00FFFF),
-              fontFamily: 'monospace',
-              letterSpacing: 1,
-            ),
+          const SizedBox(height: 24),
+          _buildActionCard(
+            icon: Icons.lock_outline,
+            title: "Encrypt / Decrypt",
+            description: "Secure your data with strong encryption algorithms",
+            subtitle: "Caesar, Atbash, Rail Fence, and more",
+            accentColor: cyberpunkGreen,
+            gradientColors: [
+              cyberpunkGreen.withOpacity(0.25),
+              cyberpunkGreen.withOpacity(0.08)
+            ],
+            onTap: () {
+              Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
+            },
           ),
         ],
       ),
-      centerTitle: true,
-      bottom: bottom,
-      backgroundColor: const Color(0xFF0A0A0A),
-      elevation: 0,
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF0A0A0A), Color(0xFF1A0B2E)],
+    );
+  }
+
+  Widget _buildActionCard({
+    required IconData icon,
+    required String title,
+    required String description,
+    required String subtitle,
+    required Color accentColor,
+    required List<Color> gradientColors,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: gradientColors,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: accentColor.withOpacity(0.4),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withOpacity(0.15),
+            blurRadius: 20,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          // onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: accentColor.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: accentColor.withOpacity(0.4),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 40,
+                    color: accentColor,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                    fontFamily: 'monospace',
+                    letterSpacing: 0.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: accentColor.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: accentColor.withOpacity(0.4),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: accentColor,
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[200],
+                    fontFamily: 'monospace',
+                    height: 1.4,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                // const SizedBox(height: 20),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                //   decoration: BoxDecoration(
+                //     color: accentColor.withOpacity(0.25),
+                //     borderRadius: BorderRadius.circular(20),
+                //     border: Border.all(
+                //       color: accentColor.withOpacity(0.5),
+                //       width: 1,
+                //     ),
+                //   ),
+                //   child: Text(
+                //     'SELECT',
+                //     style: TextStyle(
+                //       fontSize: 13,
+                //       color: accentColor,
+                //       fontFamily: 'monospace',
+                //       fontWeight: FontWeight.w700,
+                //       letterSpacing: 1.5,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _glowController.dispose();
-    super.dispose();
-    // _matrixController.dispose();
-  }
 }
 
-class MatrixChar {
-  final String char;
-  final double x;
-  final double speed;
-  final double delay;
 
-  MatrixChar({
-    required this.char,
-    required this.x,
-    required this.speed,
-    required this.delay,
-  });
-}
-
-class MatrixPainter extends CustomPainter {
-  final List<MatrixChar> chars;
-  final double animationValue;
-
-  MatrixPainter(this.chars, this.animationValue);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    const textStyle = TextStyle(
-      color: Color(0xFF00FF41),
-      fontSize: 12,
-      fontFamily: 'monospace',
-    );
-
-    for (final char in chars) {
-      final y = ((animationValue * char.speed + char.delay) % 1) * (size.height + 100) - 50;
-      if (y > -50 && y < size.height + 50) {
-        final opacity = math.max(0.1, 1.0 - (y / size.height));
-        final textPainter = TextPainter(
-          text: TextSpan(
-            text: char.char,
-            style: textStyle.copyWith(
-              color: textStyle.color!.withOpacity(opacity * 0.3),
-            ),
-          ),
-          textDirection: TextDirection.ltr,
-        );
-        textPainter.layout();
-        textPainter.paint(
-          canvas,
-          Offset(char.x * size.width, y),
-        );
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}

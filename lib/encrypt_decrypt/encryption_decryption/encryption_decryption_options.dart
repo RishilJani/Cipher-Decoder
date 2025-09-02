@@ -233,12 +233,12 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
         //endregion
 
         Obx(
-            () => Visibility(
+              () => Visibility(
             visible: !widget.encryptionDecryptionOptionController.options[widget.index!].requiresKey,
             child: SizedBox(
               height: fieldSpacing * 1.5,
             ),
-      ),
+          ),
         ),
       ],
     );
@@ -614,69 +614,3 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
     super.dispose();
   }
 }
-
-
-/*
-TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
-            onChanged: onChanged,
-            inputFormatters: inputFormatters,
-            style: const TextStyle(
-              color: Color(0xFF00FFFF),
-              fontFamily: 'monospace',
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: TextStyle(
-                color: const Color(0xFF00FFFF).withOpacity(0.5),
-                fontFamily: 'monospace',
-                fontSize: 12,
-              ),
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              suffixIcon: Container(
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xFF9D00FF).withOpacity(0.3),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(4),
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xFF9D00FF).withOpacity(0.1),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-                child: Icon(
-                  Icons.security,
-                  color: const Color(0xFF9D00FF).withOpacity(0.7),
-                  size: 16,
-                ),
-              ),
-            ),
-          )
-
- */
-
-/*
-_cyberpunkInputField(
-                context: context,
-                textTitle: 'ENTER SECURITY KEY:',
-                hintText: 'INPUT CIPHER KEY...',
-                controller: widget.controller,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  widget.encryptionDecryptionOptionController.keyUpdateWidget(
-                      index: widget.index, controller: widget.controller);
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
-                ],
-              )
- */

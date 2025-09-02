@@ -12,17 +12,20 @@ Widget description({required context, controller}){
         getDescriptionList(controller: controller,context: context),
          // Text(controller.desc.value)
 
-        Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.only(top: 12),
-          child: Text(
-            controller.desc.value,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Color(0xFF00FFFF),
-              fontFamily: 'monospace',
-              height: 1.4,
-              letterSpacing: 0.3,
+        Visibility(
+          visible: controller.desc.value != '',
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(top: 12),
+            child: Text(
+              controller.desc.value,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Color(0xFF00FFFF),
+                fontFamily: 'monospace',
+                height: 1.4,
+                letterSpacing: 0.3,
+              ),
             ),
           ),
         ),

@@ -44,9 +44,9 @@ class _DashboardEncodeDecodeState extends State<DashboardEncodeDecode>
           ),
           child: TabBarView(
             controller: _tabController,
-            children: const [
+            children: [
               EncodeView(),
-              DecodeView(),
+               DecodeView(),
             ],
           ),
         ),
@@ -137,7 +137,7 @@ class _DashboardEncodeDecodeState extends State<DashboardEncodeDecode>
     return PreferredSize(
       preferredSize: const Size.fromHeight(80),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [

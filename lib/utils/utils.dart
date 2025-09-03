@@ -144,31 +144,31 @@ void pasteText({controller, required Function onChange}) async {
   }
 }
 
-// paste Icon button
-Widget pasteIconButton({controller, onChange}) {
-  return IconButton(
-      onPressed: () {
-        pasteText(controller: controller, onChange: onChange);
-      },
-      icon: const Icon(Icons.paste)
-  );
-}
+// // paste Icon button
+// Widget pasteIconButton({controller, onChange}) {
+//   return IconButton(
+//       onPressed: () {
+//         pasteText(controller: controller, onChange: onChange);
+//       },
+//       icon: const Icon(Icons.paste)
+//   );
+// }
 
-// clear Icon button
-Widget clearIconButton(
-    {controller, required encryptionDecryptionOptionsController}) {
-  return IconButton(
-    onPressed: () {
-      controller!.plainTextController.clear();
-      controller!.cipherTextController.clear();
-      if (encryptionDecryptionOptionsController != null) {
-        encryptionDecryptionOptionsController.desc.value = '';
-      }
-    },
-    icon: const Icon(Icons.clear, color: cyberpunkRed, size: 32),
-    tooltip: "Clear",
-  );
-}
+// // clear Icon button
+// Widget clearIconButton(
+//     {controller, required encryptionDecryptionOptionsController}) {
+//   return IconButton(
+//     onPressed: () {
+//       controller!.plainTextController.clear();
+//       controller!.cipherTextController.clear();
+//       if (encryptionDecryptionOptionsController != null) {
+//         encryptionDecryptionOptionsController.desc.value = '';
+//       }
+//     },
+//     icon: const Icon(Icons.clear, color: cyberpunkRed, size: 32),
+//     tooltip: "Clear",
+//   );
+// }
 
 
 void showSnackBar(){

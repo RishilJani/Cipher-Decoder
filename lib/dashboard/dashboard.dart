@@ -88,11 +88,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            _buildWelcomeSection(),
-            const SizedBox(height: 32),
             _buildActionCards(),
-            // const SizedBox(height: 32),
-            // _buildInfoSection(),
           ],
         ),
       ),
@@ -184,11 +180,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   }
 
   Widget _buildActionCards() {
-
     return SlideTransition(
       position: _slideAnimation,
       child: Column(
         children: [
+          _buildWelcomeSection(),
+          const SizedBox(height: 32),
           _buildActionCard(
             icon: Icons.transform,
             title: "Encode / Decode",
@@ -262,22 +259,31 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(28),
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: accentColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: accentColor.withOpacity(0.4),
-                      width: 1,
-                    ),
-                  ),
-                  child: Icon(
-                    icon,
-                    size: 40,
-                    color: accentColor,
-                  ),
+                AnimatedBuilder(
+                  animation: _pulseAnimation,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _pulseAnimation.value,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: accentColor.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: accentColor.withOpacity(0.4),
+                            width: 1,
+                          ),
+                        ),
+                        child: Icon(
+                          icon,
+                          size: 40,
+                          color: accentColor,
+                        ),
+                      ),
+                    );
+                  },
                 ),
+
                 const SizedBox(height: 20),
                 Text(
                   title,

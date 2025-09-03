@@ -10,32 +10,28 @@ Widget modernScreenLayout({
 }) {
   return Scaffold(
     backgroundColor: cyberpunkDark,
-    body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0A0A0A),
-            Color(0xFF1A1A2E),
-            cyberpunkDark,
-            Color(0xFF16213E),
-          ],
-          stops: [0.0, 0.3, 0.7, 1.0],
+    body: GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF0A0A0A),
+              Color(0xFF1A1A2E),
+              cyberpunkDark,
+              Color(0xFF16213E),
+            ],
+            stops: [0.0, 0.3, 0.7, 1.0],
+          ),
         ),
-      ),
-      child: SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            // Close keyboard when tapping anywhere on screen
-            FocusScope.of(context).unfocus();
-            SystemChannels.textInput.invokeMethod('TextInput.hide');
-          },
+        child: SafeArea(
           child: Column(
             children: [
-              // 🔄 MAIN CONTENT WITH RESPONSIVE CARDS
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -43,30 +39,30 @@ Widget modernScreenLayout({
                   child: Column(
                     children: [
                       const SizedBox(height: 10),
-                      
+
                       // 🎯 INPUT CARD
                       _buildHorizontalInputCard(controller, context, titleText, methodsController, isEncoding!),
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // 🎯 METHODS CARD
                       _buildHorizontalMethodsCard(methodsController, controller),
-                      
+
                       if (isEncryption!) ...[
                         const SizedBox(height: 20),
                         _buildHorizontalAddCard(controller, methodsController),
                       ],
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // 🎯 OUTPUT CARD
                       _buildHorizontalOutputCard(controller, context, methodsController, isEncoding),
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // 🎯 INFO CARD
                       _buildHorizontalInfoCard(methodsController),
-                      
+
                       const SizedBox(height: 32),
                     ],
                   ),
@@ -108,6 +104,7 @@ Widget modernScreenLayout({
 // }
 
 // 🎯 HORIZONTAL INPUT CARD
+
 Widget _buildHorizontalInputCard(controller, context, String titleText, methodsController, bool isEncoding) {
   return Container(
     decoration: BoxDecoration(
@@ -140,7 +137,7 @@ Widget _buildHorizontalInputCard(controller, context, String titleText, methodsC
             onChanged: (value) {
               methodsController.onChange(controller: controller);
             },
-            suffixIcon: _buildMobilePasteButton(),
+            suffixIcon: _buildMobilePasteButton(controller: controller,onChange: methodsController.onChange),
             isEncode: true,
             isPlain: isEncoding,
             methodController: methodsController,
@@ -458,9 +455,11 @@ Widget _buildHorizontalInfoCard(methodsController) {
 }
 
 // 🎯 MOBILE PASTE BUTTON
-Widget _buildMobilePasteButton() {
+Widget _buildMobilePasteButton({controller, onChange}) {
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+    height: 40,
+    width: 40,
+    margin: const EdgeInsets.only(left: 5, right: 5),
     decoration: BoxDecoration(
       border: Border.all(color: cyberpunkCyan.withOpacity(0.4), width: 1),
       borderRadius: BorderRadius.circular(6),
@@ -470,31 +469,20 @@ Widget _buildMobilePasteButton() {
           cyberpunkCyan.withOpacity(0.1),
         ],
       ),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkCyan.withOpacity(0.2),
-          blurRadius: 6,
-          spreadRadius: 1,
-          offset: const Offset(0, 2),
-        ),
-      ],
+      // boxShadow: [
+      //   BoxShadow(
+      //     color: cyberpunkCyan.withOpacity(0.2),
+      //     blurRadius: 6,
+      //     spreadRadius: 1,
+      //     offset: const Offset(0, 2),
+      //   ),
+      // ],
     ),
-    child: const Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(Icons.paste, color: cyberpunkCyan, size: 14),
-        SizedBox(width: 4),
-        Text(
-          'PASTE',
-          style: TextStyle(
-            fontSize: 9,
-            color: cyberpunkCyan,
-            fontFamily: 'monospace',
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
+    child: InkWell(
+      child: const Icon(Icons.paste, color: cyberpunkCyan, size: 19),
+      onTap:(){
+        pasteText(controller: controller, onChange: onChange);
+      }
     ),
   );
 }
@@ -562,4 +550,3 @@ String _getOutputTitle(controller) {
   }
   return "PROCESSED";
 }
-

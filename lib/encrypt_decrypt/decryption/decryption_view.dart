@@ -3,10 +3,6 @@ import 'package:cipher_decoder/utils/import_export.dart';
 class DecryptionView extends StatelessWidget{
   DecryptionController decryptionController = DecryptionController();
   EncryptionDecryptionOptionsController encryptionDecryptionOptionsController = Get.put(EncryptionDecryptionOptionsController(),tag: TAG_DECRYPT);
-
-  double height = 10;
-  static const double fieldSpacing = 20.0;
-
   DecryptionView({super.key});
 
   @override

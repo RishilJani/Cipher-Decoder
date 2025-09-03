@@ -1,218 +1,220 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // Enhanced Cyberpunk AppBar with better visual design
-AppBar myAppBar({String title = '', required context, bottom}) {
-  return AppBar(
-    title: Column(
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [cyberpunkGreen, cyberpunkCyan],
-          ).createShader(bounds),
-          child: Text(
-            title.toUpperCase(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              fontFamily: 'monospace',
-              letterSpacing: 2.0,
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          decoration: BoxDecoration(
-            color: cyberpunkGreen.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: cyberpunkGreen.withOpacity(0.4),
-              width: 1,
-            ),
-          ),
-          child: const Text(
-            '> TERMINAL ACTIVE',
-            style: TextStyle(
-              fontSize: 9,
-              color: cyberpunkGreen,
-              fontFamily: 'monospace',
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
-    ),
-    centerTitle: true,
-    bottom: bottom,
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    leading: _enhancedCyberpunkIconButton(
-      icon: Icons.arrow_back,
-      onPressed: () => Get.back(),
-      tooltip: "RETURN TO PREVIOUS",
-      minHeight: 40,
-      minWidth: 40,
-      color: cyberpunkCyan,
-    ),
-    flexibleSpace: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            cyberpunkDark,
-            cyberpunkDarkElevated,
-          ],
-        ),
-      ),
-    ),
-  );
-}
+// AppBar myAppBar({String title = '', required context, bottom}) {
+//   return AppBar(
+//     title: Column(
+//       children: [
+//         ShaderMask(
+//           shaderCallback: (bounds) => const LinearGradient(
+//             colors: [cyberpunkGreen, cyberpunkCyan],
+//           ).createShader(bounds),
+//           child: Text(
+//             title.toUpperCase(),
+//             style: const TextStyle(
+//               fontSize: 20,
+//               fontWeight: FontWeight.w900,
+//               color: Colors.white,
+//               fontFamily: 'monospace',
+//               letterSpacing: 2.0,
+//             ),
+//           ),
+//         ),
+//         Container(
+//           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//           decoration: BoxDecoration(
+//             color: cyberpunkGreen.withOpacity(0.2),
+//             borderRadius: BorderRadius.circular(12),
+//             border: Border.all(
+//               color: cyberpunkGreen.withOpacity(0.4),
+//               width: 1,
+//             ),
+//           ),
+//           child: const Text(
+//             '> TERMINAL ACTIVE',
+//             style: TextStyle(
+//               fontSize: 9,
+//               color: cyberpunkGreen,
+//               fontFamily: 'monospace',
+//               letterSpacing: 1.2,
+//               fontWeight: FontWeight.w700,
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//     centerTitle: true,
+//     bottom: bottom,
+//     backgroundColor: Colors.transparent,
+//     elevation: 0,
+//     leading: _enhancedCyberpunkIconButton(
+//       icon: Icons.arrow_back,
+//       onPressed: () => Get.back(),
+//       tooltip: "RETURN TO PREVIOUS",
+//       minHeight: 40,
+//       minWidth: 40,
+//       color: cyberpunkCyan,
+//     ),
+//     flexibleSpace: Container(
+//       decoration: const BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.topCenter,
+//           end: Alignment.bottomCenter,
+//           colors: [
+//             cyberpunkDark,
+//             cyberpunkDarkElevated,
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
-Widget myScreen({required BuildContext context,
-  controller,
-  titleText,
-  methodsController,
-  bool? isEncoding = true,
-  bool? isEncryption = true}) {
-  if (methodsController is! EncryptionDecryptionOptionsController && methodsController is! EncodeDecodeOptionController)
-  {
-    throw ControllerTypeException(
-        message:
-        "Method Controller is Not right ::: ${controller.runtimeType}");
-  }
-
-  String textTitle;
-  String hintText;
-
-  if (controller is EncryptionController) {
-    textTitle = "ENCRYPTED DATA";
-  }
-  else if (controller is DecryptionController) {
-    textTitle = "DECRYPTED DATA";
-  }
-  else if (controller is EncodeController) {
-    textTitle = "ENCODED DATA";
-  }
-  else if (controller is DecodeController) {
-    textTitle = "DECODED DATA";
-  }
-  else {
-    throw ControllerTypeException(
-        message: "Controller is Not right ::: ${controller.runtimeType}");
-  }
-
-  hintText = "$textTitle OUTPUT...";
-
-  return Scaffold(
-    backgroundColor: cyberpunkDark,
-    body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            cyberpunkDark,
-            cyberpunkDarkElevated,
-            Color(0xFF16213E),
-          ],
-        ),
-      ),
-      child: Stack(
-        children: [
-          const MyBackgroundAnimation(),
-
-          SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Input Section
-                  // _enhancedCyberpunkSectionHeader('> ${titleText.toUpperCase()}', Icons.input),
-                  // const SizedBox(height: 16),
-                  myInputfield(
-                      controller: controller,
-                      context: context,
-                      textTitle: titleText,
-                      hintText: 'ENTER DATA FOR PROCESSING...',
-                      minLines: 4,
-                      maxLines: 8,
-                      keyboardType: TextInputType.multiline,
-                      textInputAction: TextInputAction.newline,
-                      onChanged: (value) {
-                        methodsController.onChange(controller: controller);
-                      },
-                      suffixIcon: pasteIconButton(controller: controller, onChange: methodsController.onChange),
-                      isEncode: true,
-                      isPlain: isEncoding!,
-                      methodController: methodsController
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Methods Section
-                  const SizedBox(height: 16),
-                  methodsController.getOptionList(controller: controller),
-
-                  // add button
-                  Visibility(
-                    visible: methodsController is EncryptionDecryptionOptionsController ,
-                    child: _enhancedAddOptionButton(controller: controller, methodController: methodsController)
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // Output Section
-                  // _enhancedCyberpunkSectionHeader('> OUTPUT ${textTitle.toUpperCase()}', Icons.output),
-                  // const SizedBox(height: 16),
-                  myInputfield(
-                      controller: controller,
-                      context: context,
-                      textTitle: textTitle,
-                      hintText: hintText,
-                      readonly: true,
-                      methodController: methodsController,
-                      suffixIcon: _enhancedCyberpunkIconButton(
-                        icon: Icons.copy,
-                        onPressed: () {
-                          String cpy = isEncoding
-                              ? controller.cipherTextController.text.toString()
-                              : controller.plaintextController.text.toString();
-                          copyText(cpy);
-                        },
-                        tooltip: "COPY DATA",
-                        color: cyberpunkPurple,
-                        minWidth: 44,
-                        minHeight: 44,
-                      ),
-                      isEncode: false,
-                      isPlain: !isEncoding
-                  ),
-                  _enhancedShowDecodeLengthException(methodController: methodsController, controller: controller),
-                  const SizedBox(height: 32),
-
-                  // Description
-                  Obx(() {
-                    return description(
-                      context: context,
-                      controller: methodsController,
-                    );
-                  }),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Widget myScreen({required BuildContext context,
+//   controller,
+//   titleText,
+//   methodsController,
+//   bool? isEncoding = true,
+//   bool? isEncryption = true})
+// {
+//   if (methodsController is! EncryptionDecryptionOptionsController && methodsController is! EncodeDecodeOptionController)
+//   {
+//     throw ControllerTypeException(
+//         message:
+//         "Method Controller is Not right ::: ${controller.runtimeType}");
+//   }
+//
+//   String textTitle;
+//   String hintText;
+//
+//   if (controller is EncryptionController) {
+//     textTitle = "ENCRYPTED DATA";
+//   }
+//   else if (controller is DecryptionController) {
+//     textTitle = "DECRYPTED DATA";
+//   }
+//   else if (controller is EncodeController) {
+//     textTitle = "ENCODED DATA";
+//   }
+//   else if (controller is DecodeController) {
+//     textTitle = "DECODED DATA";
+//   }
+//   else {
+//     throw ControllerTypeException(
+//         message: "Controller is Not right ::: ${controller.runtimeType}");
+//   }
+//
+//   hintText = "$textTitle OUTPUT...";
+//
+//   return Scaffold(
+//     backgroundColor: cyberpunkDark,
+//     body: Container(
+//       width: double.infinity,
+//       height: double.infinity,
+//       decoration: const BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.topLeft,
+//           end: Alignment.bottomRight,
+//           colors: [
+//             cyberpunkDark,
+//             cyberpunkDarkElevated,
+//             Color(0xFF16213E),
+//           ],
+//         ),
+//       ),
+//       child: Stack(
+//         children: [
+//           const MyBackgroundAnimation(),
+//
+//           SafeArea(
+//             child: SingleChildScrollView(
+//               physics: const BouncingScrollPhysics(),
+//               padding: const EdgeInsets.all(20.0),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   // Input Section
+//                   // _enhancedCyberpunkSectionHeader('> ${titleText.toUpperCase()}', Icons.input),
+//                   // const SizedBox(height: 16),
+//                   myInputfield(
+//                       controller: controller,
+//                       context: context,
+//                       textTitle: titleText,
+//                       hintText: 'ENTER DATA FOR PROCESSING...',
+//                       minLines: 4,
+//                       maxLines: 8,
+//                       keyboardType: TextInputType.multiline,
+//                       textInputAction: TextInputAction.newline,
+//                       onChanged: (value) {
+//                         methodsController.onChange(controller: controller);
+//                       },
+//                       suffixIcon: pasteIconButton(controller: controller, onChange: methodsController.onChange),
+//                       isEncode: true,
+//                       isPlain: isEncoding!,
+//                       methodController: methodsController
+//                   ),
+//                   const SizedBox(height: 24),
+//
+//                   // Methods Section
+//                   const SizedBox(height: 16),
+//                   methodsController.getOptionList(controller: controller),
+//
+//                   // add button
+//                   Visibility(
+//                     visible: methodsController is EncryptionDecryptionOptionsController ,
+//                     child: _enhancedAddOptionButton(controller: controller, methodController: methodsController)
+//                   ),
+//
+//                   const SizedBox(height: 32),
+//
+//                   // Output Section
+//                   // _enhancedCyberpunkSectionHeader('> OUTPUT ${textTitle.toUpperCase()}', Icons.output),
+//                   // const SizedBox(height: 16),
+//                   myInputfield(
+//                       controller: controller,
+//                       context: context,
+//                       textTitle: textTitle,
+//                       hintText: hintText,
+//                       readonly: true,
+//                       methodController: methodsController,
+//                       suffixIcon: _enhancedCyberpunkIconButton(
+//                         icon: Icons.copy,
+//                         onPressed: () {
+//                           String cpy = isEncoding
+//                               ? controller.cipherTextController.text.toString()
+//                               : controller.plaintextController.text.toString();
+//                           copyText(cpy);
+//                         },
+//                         tooltip: "COPY DATA",
+//                         color: cyberpunkPurple,
+//                         minWidth: 44,
+//                         minHeight: 44,
+//                       ),
+//                       isEncode: false,
+//                       isPlain: !isEncoding
+//                   ),
+//                   _enhancedShowDecodeLengthException(methodController: methodsController, controller: controller),
+//                   const SizedBox(height: 32),
+//
+//                   // Description
+//                   Obx(() {
+//                     return description(
+//                       context: context,
+//                       controller: methodsController,
+//                     );
+//                   }),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 // Enhanced cyberpunk styled text input field
+
 Widget myInputfield(
     {key,
       required context,
@@ -382,222 +384,87 @@ Widget myInputfield(
   );
 }
 
-Widget _enhancedAddOptionButton({controller, required methodController}) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 16),
-    height: 48,
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          cyberpunkCyan.withOpacity(0.2),
-          cyberpunkPurple.withOpacity(0.1),
-        ],
-      ),
-      border: Border.all(color: cyberpunkCyan.withOpacity(0.4), width: 1),
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkCyan.withOpacity(0.2),
-          blurRadius: 12,
-          spreadRadius: 2,
-          offset: const Offset(0, 4),
-        ),
-      ],
-    ),
-    child: Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          methodController.addWidget( methodObj: CeaseCipher(), controller: controller);
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add_circle_outline,
-              size: 20,
-              color: cyberpunkCyan,
-            ),
-            SizedBox(width: 8),
-            Text(
-              'ADD CIPHER PROTOCOL',
-              style: TextStyle(
-                fontSize: 12,
-                color: cyberpunkCyan,
-                fontFamily: 'monospace',
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.0,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _enhancedCyberpunkIconButton({
-  required IconData icon,
-  required VoidCallback onPressed,
-  required String tooltip,
-  Color color = cyberpunkPurple,
-  double minWidth = 44,
-  double minHeight = 44,
-}) {
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 4),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(8),
-      gradient: LinearGradient(
-        colors: [
-          color.withOpacity(0.2),
-          color.withOpacity(0.1),
-        ],
-      ),
-      border: Border.all(
-        color: color.withOpacity(0.4),
-        width: 1,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: color.withOpacity(0.2),
-          blurRadius: 8,
-          spreadRadius: 1,
-          offset: const Offset(0, 2),
-        ),
-      ],
-    ),
-    child: IconButton(
-      icon: Icon(icon, color: color, size: 20),
-      onPressed: onPressed,
-      tooltip: tooltip,
-      constraints: BoxConstraints(
-        minWidth: minWidth,
-        minHeight: minHeight,
-      ),
-    ),
-  );
-}
+// Widget _enhancedCyberpunkIconButton({
+//   required IconData icon,
+//   required VoidCallback onPressed,
+//   required String tooltip,
+//   Color color = cyberpunkPurple,
+//   double minWidth = 44,
+//   double minHeight = 44,
+// }) {
+//   return Container(
+//     margin: const EdgeInsets.symmetric(horizontal: 5),
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(8),
+//       gradient: LinearGradient(
+//         colors: [
+//           color.withOpacity(0.2),
+//           color.withOpacity(0.1),
+//         ],
+//       ),
+//       border: Border.all(
+//         color: color.withOpacity(0.4),
+//         width: 1,
+//       ),
+//       boxShadow: [
+//         BoxShadow(
+//           color: color.withOpacity(0.2),
+//           blurRadius: 8,
+//           spreadRadius: 1,
+//           offset: const Offset(0, 2),
+//         ),
+//       ],
+//     ),
+//     child: IconButton(
+//       icon: Icon(icon, color: color, size: 20),
+//       onPressed: onPressed,
+//       tooltip: tooltip,
+//       constraints: BoxConstraints(
+//         minWidth: minWidth,
+//         minHeight: minHeight,
+//       ),
+//     ),
+//   );
+// }
 
 Widget _enhancedClearIconButton({
   required controller,
   required encryptionDecryptionOptionsController,
 }) {
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 4),
+    height: 40,
+    width: 40,
+    margin: const EdgeInsets.only(left: 5,right: 10),
     decoration: BoxDecoration(
       border: Border.all(color: cyberpunkRed.withOpacity(0.4), width: 1),
       borderRadius: BorderRadius.circular(8),
       gradient: LinearGradient(
-        colors: [
-          cyberpunkRed.withOpacity(0.2),
-          cyberpunkRed.withOpacity(0.1),
+        colors: [ cyberpunkRed.withOpacity(0.2),  cyberpunkRed.withOpacity(0.1),
         ],
       ),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkRed.withOpacity(0.2),
-          blurRadius: 8,
-          spreadRadius: 1,
-          offset: const Offset(0, 2),
-        ),
-      ],
+      // boxShadow: [
+      //   BoxShadow(
+      //     color: cyberpunkRed.withOpacity(0.2),
+      //     blurRadius: 8,
+      //     spreadRadius: 1,
+      //     offset: const Offset(0, 2),
+      //   ),
+      // ],
     ),
     child: IconButton(
-      icon: const Icon(Icons.clear, color: cyberpunkRed, size: 18),
+      icon: const Icon(Icons.clear, color: cyberpunkRed, size: 19),
       onPressed: () {
         controller.plainTextController.clear();
         controller.cipherTextController.clear();
         encryptionDecryptionOptionsController.onChange(controller: controller);
       },
       tooltip: 'CLEAR ALL DATA',
-      constraints: const BoxConstraints(
-        minWidth: 44,
-        minHeight: 44,
-      ),
+      // constraints: const BoxConstraints(
+      //   minWidth: 44,
+      //   minHeight: 44,
+      // ),
     ),
   );
-}
-
-Widget _enhancedShowDecodeLengthException({controller, methodController}) {
-  if(methodController is EncodeDecodeOptionController && controller is DecodeController){
-    return Obx(() {
-      if(methodController.showError.value){
-        return Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.only(top: 12),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                cyberpunkRed.withOpacity(0.15),
-                cyberpunkRed.withOpacity(0.05),
-              ],
-            ),
-            border: Border.all(
-              color: cyberpunkRed.withOpacity(0.4),
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: cyberpunkRed.withOpacity(0.2),
-                blurRadius: 12,
-                spreadRadius: 2,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: cyberpunkRed.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.error_outline,
-                  color: cyberpunkRed,
-                  size: 18,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "⚠ INVALID FORMAT DETECTED",
-                      style: TextStyle(
-                        color: cyberpunkRed,
-                        fontSize: 12,
-                        fontFamily: 'monospace',
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Please check your input format and try again",
-                      style: TextStyle(
-                        color: cyberpunkRed.withOpacity(0.8),
-                        fontSize: 11,
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      } else {
-        return const SizedBox(height: 0);
-      }
-    });
-  }
-  return const SizedBox(height: 0);
 }
 
 bool checkAllTypes({controller}) {

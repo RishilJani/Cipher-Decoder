@@ -1,7 +1,8 @@
+/*
 import 'package:cipher_decoder/utils/import_export.dart';
 
 // Modern Enhanced Screen Layout with sophisticated UI/UX
-Widget enhancedScreenLayout({
+ Widget enhancedScreenLayout({
   required BuildContext context,
   required controller,
   required String titleText,
@@ -49,74 +50,70 @@ Widget enhancedScreenLayout({
           ],
         ),
       ),
-      child: Stack(
-        children: [
-          const MyBackgroundAnimation(),
-          
-          SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Enhanced Header Section
-                  _buildModernHeader(titleText),
-                  const SizedBox(height: 32),
-                  
-                  // Enhanced Input Section
-                  _buildModernInputSection(
-                    controller: controller,
-                    context: context,
-                    titleText: titleText,
-                    hintText: 'ENTER DATA FOR PROCESSING...',
-                    minLines: 5,
-                    maxLines: 10,
-                    keyboardType: TextInputType.multiline,
-                    textInputAction: TextInputAction.newline,
-                    onChanged: (value) {
-                      methodsController.onChange(controller: controller);
-                    },
-                    suffixIcon: _buildModernPasteButton(controller: controller, onChange: methodsController.onChange),
-                    isEncode: true,
-                    isPlain: isEncoding!,
-                    methodController: methodsController
-                  ),
-                  const SizedBox(height: 32),
-                  
-                  // Enhanced Methods Section
-                  _buildModernMethodsSection(methodsController, controller),
-                  
-                  if (methodsController is EncryptionDecryptionOptionsController)
-                    _buildModernAddOptionButton(controller: controller, methodController: methodsController),
-                  
-                  const SizedBox(height: 40),
-                  
-                  // Enhanced Output Section
-                  _buildModernOutputSection(
-                    controller: controller,
-                    context: context,
-                    textTitle: textTitle,
-                    hintText: hintText,
-                    readonly: true,
-                    methodController: methodsController,
-                    isEncoding: isEncoding,
-                  ),
-                  
-                  _buildModernErrorDisplay(methodController: methodsController, controller: controller),
-                  const SizedBox(height: 40),
-                  
-                  // Enhanced Description Section
-                  _buildModernDescriptionSection(methodsController),
-                ],
+      child: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Enhanced Header Section
+              _buildModernHeader(titleText),
+              const SizedBox(height: 32),
+
+              // Enhanced Input Section
+              _buildModernInputSection(
+                controller: controller,
+                context: context,
+                titleText: titleText,
+                hintText: 'ENTER DATA FOR PROCESSING...',
+                minLines: 5,
+                maxLines: 10,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                onChanged: (value) {
+                  methodsController.onChange(controller: controller);
+                },
+                suffixIcon: _buildModernPasteButton(controller: controller, onChange: methodsController.onChange),
+                isEncode: true,
+                isPlain: isEncoding!,
+                methodController: methodsController
               ),
-            ),
+              const SizedBox(height: 32),
+
+              // Enhanced Methods Section
+              _buildModernMethodsSection(methodsController, controller),
+
+              if (methodsController is EncryptionDecryptionOptionsController)
+                _buildModernAddOptionButton(controller: controller, methodController: methodsController),
+
+              const SizedBox(height: 40),
+
+              // Enhanced Output Section
+              _buildModernOutputSection(
+                controller: controller,
+                context: context,
+                textTitle: textTitle,
+                hintText: hintText,
+                readonly: true,
+                methodController: methodsController,
+                isEncoding: isEncoding,
+              ),
+
+              _buildModernErrorDisplay(methodController: methodsController, controller: controller),
+              const SizedBox(height: 40),
+
+              // Enhanced Description Section
+              _buildModernDescriptionSection(methodsController),
+            ],
           ),
-        ],
+        ),
       ),
     ),
   );
 }
+
+//
 
 Widget _buildModernHeader(String titleText) {
   return Container(
@@ -481,6 +478,7 @@ Widget _buildModernOutputSection({
   );
 }
 
+
 Widget _buildModernCopyButton({required controller, required bool isEncoding}) {
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -708,3 +706,4 @@ Widget _buildModernErrorDisplay({controller, methodController}) {
   }
   return const SizedBox(height: 0);
 }
+*/

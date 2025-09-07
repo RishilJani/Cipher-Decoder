@@ -1,5 +1,6 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
+// to write description for all screens
 Widget description({required context, controller}){
   if(controller is EncodeController || controller is DecodeController){
     return const SizedBox(height: 0,);
@@ -9,9 +10,9 @@ Widget description({required context, controller}){
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        getDescriptionList(controller: controller,context: context),
-         // Text(controller.desc.value)
+        _getDescriptionList(controller: controller,context: context),
 
+        // character mapping for encryption decryption
         Visibility(
           visible: controller.desc.value != '',
           child: Container(
@@ -34,13 +35,22 @@ Widget description({required context, controller}){
   );
 }
 
-
-Widget getDescriptionList({ controller , context}){
+// to write multiple descriptions for encryption decryption
+Widget _getDescriptionList({ controller , context}){
   return ListView.builder(
     shrinkWrap: true,
-    itemCount: controller.options.length,
+    itemCount: controller is EncryptionDecryptionOptionsController ? controller.options.length : 1,
     physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (context, index) {
+      String txt1;
+      String description;
+      if(controller is EncodeDecodeOptionController){
+         txt1= controller.selectedMethod.value.title!.toUpperCase();
+         description = controller.selectedMethod.value.description!;
+      }else{
+        txt1 = '${index + 1}. ${controller.options[index].title!.toUpperCase()}';
+        description = controller.options[index].description!;
+      }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +74,7 @@ Widget getDescriptionList({ controller , context}){
               ),
               Expanded(
                 child: Text(
-                  '${index + 1}. ${controller.options[index].title!.toUpperCase()}',
+                  controller is EncryptionDecryptionOptionsController ? txt1 : "",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -117,7 +127,7 @@ Widget getDescriptionList({ controller , context}){
               ),
             ),
             child: Text(
-              controller.options[index].description!,
+              description,
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xFF00FFFF),

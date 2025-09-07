@@ -5,9 +5,19 @@ Widget modernScreenLayout({
   required controller,
   required String titleText,
   required methodsController,
-  bool? isEncoding = true,
-  bool? isEncryption = true,
+  bool isEncoding = true,
+  bool isEncryption = true,
 }) {
+  if (!checkAllTypes(controller: controller)) {
+    throw ControllerTypeException(
+        message: "Controller Type is not right at modernScreenLayout");
+  }
+
+  if (methodsController is! EncodeDecodeOptionController &&
+      methodsController is! EncryptionDecryptionOptionsController) {
+    throw ControllerTypeException(
+        message: "methodController Type is not right at modernScreenLayout");
+  }
   return Scaffold(
     backgroundColor: cyberpunkDark,
     body: GestureDetector(
@@ -35,20 +45,22 @@ Widget modernScreenLayout({
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     children: [
                       const SizedBox(height: 10),
 
                       // 🎯 INPUT CARD
-                      _buildHorizontalInputCard(controller, context, titleText, methodsController, isEncoding!),
+                      _buildHorizontalInputCard(controller, context, titleText,
+                          methodsController, isEncoding),
 
                       const SizedBox(height: 20),
 
                       // 🎯 METHODS CARD
                       _buildHorizontalMethodsCard(methodsController, controller),
 
-                      if (isEncryption!) ...[
+                      if (isEncryption) ...[
                         const SizedBox(height: 20),
                         _buildHorizontalAddCard(controller, methodsController),
                       ],
@@ -56,7 +68,8 @@ Widget modernScreenLayout({
                       const SizedBox(height: 20),
 
                       // 🎯 OUTPUT CARD
-                      _buildHorizontalOutputCard(controller, context, methodsController, isEncoding),
+                      _buildHorizontalOutputCard(
+                          controller, context, methodsController, isEncoding),
 
                       const SizedBox(height: 20),
 
@@ -76,36 +89,9 @@ Widget modernScreenLayout({
   );
 }
 
-// 🎯 TAB ITEM
-// Widget _buildTabItem(String text, Color color, bool isActive) {
-//   return Expanded(
-//     child: Container(
-//       padding: const EdgeInsets.symmetric(vertical: 8),
-//       decoration: BoxDecoration(
-//         color: isActive ? color.withOpacity(0.2) : Colors.transparent,
-//         borderRadius: BorderRadius.circular(8),
-//         border: Border.all(
-//           color: isActive ? color.withOpacity(0.5) : color.withOpacity(0.2),
-//           width: 1,
-//         ),
-//       ),
-//       child: Text(
-//         text,
-//         textAlign: TextAlign.center,
-//         style: TextStyle(
-//           fontSize: 11,
-//           color: isActive ? color : color.withOpacity(0.7),
-//           fontFamily: 'monospace',
-//           fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-//         ),
-//       ),
-//     ),
-//   );
-// }
 
-// 🎯 HORIZONTAL INPUT CARD
-
-Widget _buildHorizontalInputCard(controller, context, String titleText, methodsController, bool isEncoding) {
+Widget _buildHorizontalInputCard(
+    controller, context, String titleText, methodsController, bool isEncoding) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(16),
@@ -137,7 +123,8 @@ Widget _buildHorizontalInputCard(controller, context, String titleText, methodsC
             onChanged: (value) {
               methodsController.onChange(controller: controller);
             },
-            suffixIcon: _buildMobilePasteButton(controller: controller,onChange: methodsController.onChange),
+            suffixIcon: buildMobilePasteButton(
+                controller: controller, onChange: methodsController.onChange),
             isEncode: true,
             isPlain: isEncoding,
             methodController: methodsController,
@@ -226,7 +213,6 @@ Widget _buildHorizontalMethodsCard(methodsController, controller) {
           ],
         ),
         const SizedBox(height: 12),
-        
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
@@ -271,9 +257,7 @@ Widget _buildHorizontalAddCard(controller, methodsController) {
       child: InkWell(
         onTap: () {
           methodsController.addWidget(
-            methodObj: CeaseCipher(), 
-            controller: controller
-          );
+              methodObj: CeaseCipher(), controller: controller);
         },
         borderRadius: BorderRadius.circular(12),
         child: Row(
@@ -310,46 +294,52 @@ Widget _buildHorizontalAddCard(controller, methodsController) {
 }
 
 // 🎯 HORIZONTAL OUTPUT CARD
-Widget _buildHorizontalOutputCard(controller, context, methodsController, bool isEncoding) {
+Widget _buildHorizontalOutputCard(
+    controller, context, methodsController, bool isEncoding) {
   final textTitle = _getOutputTitle(controller);
   final hintText = "$textTitle...";
 
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkPurple.withOpacity(0.15),
-          blurRadius: 16,
-          spreadRadius: 1,
-          offset: const Offset(0, 4),
+  return Column(
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: cyberpunkPurple.withOpacity(0.15),
+              blurRadius: 16,
+              spreadRadius: 1,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-      ],
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        
-        Container(
-          decoration: const BoxDecoration(
-            color: cyberpunkDarkElevated,
-          ),
-          child: myInputfield(
-            controller: controller,
-            context: context,
-            textTitle: textTitle,
-            hintText: hintText,
-            readonly: true,
-            methodController: methodsController,
-            suffixIcon: _buildMobileCopyButton(controller, isEncoding),
-            isEncode: false,
-            isPlain: !isEncoding,
-            minLines: 3,
-            maxLines: 6,
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: cyberpunkDarkElevated,
+              ),
+              child: myInputfield(
+                controller: controller,
+                context: context,
+                textTitle: textTitle,
+                hintText: hintText,
+                readonly: true,
+                methodController: methodsController,
+                suffixIcon: buildMobileCopyButton(controller, isEncoding),
+                isEncode: false,
+                minLines: 3,
+                maxLines: 6,
+                isPlain: !isEncoding,
+              ),
+            ),
+          ],
         ),
-      ],
-    ),
+      ),
+      showDecodeLengthException(
+          controller: controller, methodController: methodsController),
+    ],
   );
 }
 
@@ -431,7 +421,6 @@ Widget _buildHorizontalInfoCard(methodsController) {
           ],
         ),
         const SizedBox(height: 12),
-        
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -443,6 +432,8 @@ Widget _buildHorizontalInfoCard(methodsController) {
             ),
           ),
           child: Obx(() {
+            print("Details Obx........................ ");
+
             return description(
               context: null,
               controller: methodsController,
@@ -454,89 +445,6 @@ Widget _buildHorizontalInfoCard(methodsController) {
   );
 }
 
-// 🎯 MOBILE PASTE BUTTON
-Widget _buildMobilePasteButton({controller, onChange}) {
-  return Container(
-    height: 40,
-    width: 40,
-    margin: const EdgeInsets.only(left: 5, right: 5),
-    decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkCyan.withOpacity(0.4), width: 1),
-      borderRadius: BorderRadius.circular(6),
-      gradient: LinearGradient(
-        colors: [
-          cyberpunkCyan.withOpacity(0.2),
-          cyberpunkCyan.withOpacity(0.1),
-        ],
-      ),
-      // boxShadow: [
-      //   BoxShadow(
-      //     color: cyberpunkCyan.withOpacity(0.2),
-      //     blurRadius: 6,
-      //     spreadRadius: 1,
-      //     offset: const Offset(0, 2),
-      //   ),
-      // ],
-    ),
-    child: InkWell(
-      child: const Icon(Icons.paste, color: cyberpunkCyan, size: 19),
-      onTap:(){
-        pasteText(controller: controller, onChange: onChange);
-      }
-    ),
-  );
-}
-
-// 🎯 MOBILE COPY BUTTON
-Widget _buildMobileCopyButton(controller, bool isEncoding) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-    decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkPurple.withOpacity(0.4), width: 1),
-      borderRadius: BorderRadius.circular(6),
-      gradient: LinearGradient(
-        colors: [
-          cyberpunkPurple.withOpacity(0.2),
-          cyberpunkPurple.withOpacity(0.1),
-        ],
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkPurple.withOpacity(0.2),
-          blurRadius: 6,
-          spreadRadius: 1,
-          offset: const Offset(0, 2),
-        ),
-      ],
-    ),
-    child: InkWell(
-      onTap: () {
-        String cpy = isEncoding
-            ? controller.cipherTextController.text.toString()
-            : controller.plaintextController.text.toString();
-        copyText(cpy);
-      },
-      borderRadius: BorderRadius.circular(6),
-      child: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.copy, color: cyberpunkPurple, size: 14),
-          SizedBox(width: 4),
-          Text(
-            'COPY',
-            style: TextStyle(
-              fontSize: 9,
-              color: cyberpunkPurple,
-              fontFamily: 'monospace',
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 
 String _getOutputTitle(controller) {
   if (controller is EncryptionController) {
@@ -549,4 +457,21 @@ String _getOutputTitle(controller) {
     return "DECODED";
   }
   return "PROCESSED";
+}
+
+Widget showDecodeLengthException({controller, methodController}) {
+  if (methodController is EncodeDecodeOptionController &&
+      controller is DecodeController) {
+    return Obx(
+      () {
+        if (methodController.showError.value) {
+          return const Text("Invalid Format to decode",
+              style: TextStyle(color: Colors.red, fontSize: 16));
+        } else {
+          return const SizedBox(height: 0);
+        }
+      },
+    );
+  }
+  return const SizedBox(height: 0);
 }

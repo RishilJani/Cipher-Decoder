@@ -2,7 +2,8 @@ import 'package:cipher_decoder/utils/import_export.dart';
 // ignore: must_be_immutable
 class DecodeView extends StatelessWidget {
   DecodeController decodeController = DecodeController();
-  EncodeDecodeOptionController encodeDecodeOptionController = Get.put(EncodeDecodeOptionController() , tag: TAG_DECODE);
+  // EncodeDecodeOptionController encodeDecodeOptionController = Get.put(EncodeDecodeOptionController() , tag: TAG_DECODE);
+  EncodeDecodeOptionController encodeDecodeOptionController = EncodeDecodeOptionController();
   DecodeView({super.key});
 
   @override

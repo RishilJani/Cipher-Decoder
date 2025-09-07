@@ -59,11 +59,14 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    if(mounted){
-      _fadeController.forward();
-      _pulseController.repeat(reverse: true);
-      _slideController.forward();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if(mounted){
+        _fadeController.forward();
+        _pulseController.repeat(reverse: true);
+        _slideController.forward();
+      }
+    },);
+
   }
 
   @override

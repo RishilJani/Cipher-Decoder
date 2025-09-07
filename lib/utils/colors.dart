@@ -16,6 +16,7 @@ const Color cyberpunkCyanLight = Color(0xFF33FFFF);
 const Color cyberpunkCyanDark = Color(0xFF00CCCC);
 const Color cyberpunkPurpleLight = Color(0xFFB366FF);
 const Color cyberpunkPurpleDark = Color(0xFF7A00CC);
+const Color cyberpunkLightRed = Color(0xFFFF5482);
 const Color cyberpunkRedLight = Color(0xFFFF3366);
 const Color cyberpunkRedDark = Color(0xFFCC0033);
 
@@ -63,3 +64,4 @@ const List<Color> cyberpunkSurfaceGradient = [
   cyberpunkLightElevated,
   cyberpunkDark,
 ];
+var c = const Color(0xFF00F3F3);

@@ -64,7 +64,8 @@ class MyBackgroundAnimation extends StatefulWidget {
   State<MyBackgroundAnimation> createState() => _MyBackgroundAnimationState();
 }
 
-class _MyBackgroundAnimationState extends State<MyBackgroundAnimation> with TickerProviderStateMixin{
+class _MyBackgroundAnimationState extends State<MyBackgroundAnimation>
+    with TickerProviderStateMixin {
   late AnimationController _matrixController;
   final List<MatrixChar> _matrixChars = [];
 
@@ -88,7 +89,6 @@ class _MyBackgroundAnimationState extends State<MyBackgroundAnimation> with Tick
         x: random.nextDouble(),
         speed: 0.3 + random.nextDouble() * 1.5,
         delay: random.nextDouble() * 5,
-
       ));
     }
   }
@@ -113,65 +113,51 @@ class _MyBackgroundAnimationState extends State<MyBackgroundAnimation> with Tick
   }
 }
 
-
-
 // to copy text into clipboard
 void copyText(String txt) {
-  Clipboard.setData(ClipboardData(text: txt)).then(
-        (value) {
-      Get.snackbar("Success", "Cipher text copied successfully",
-          backgroundColor: cyberpunkGreenLight,
-          colorText: cyberpunkGrayDark,
-          snackPosition: SnackPosition.BOTTOM);
-    },
-  );
+  if (txt.isEmpty) {
+    Get.snackbar("Empty Field", "There is nothing to copy.",
+        backgroundColor: cyberpunkLightRed,
+        colorText: cyberpunkGrayDark,
+        snackPosition: SnackPosition.BOTTOM);
+  } else {
+    Clipboard.setData(ClipboardData(text: txt)).then(
+      (value) {
+        Get.snackbar("Success", "Cipher text copied successfully",
+            backgroundColor: cyberpunkGreenLight,
+            colorText: cyberpunkDarkElevated,
+            snackPosition: SnackPosition.BOTTOM);
+      },
+    );
+  }
 }
 
 // to paste text from clipboard
 void pasteText({controller, required Function onChange}) async {
   ClipboardData? data = await Clipboard.getData('text/plain');
   if (data != null) {
-
     if (controller is EncodeController || controller is EncryptionController) {
       controller.plainTextController.text = data.text!;
-    }
-    else if (controller is DecodeController || controller is DecryptionController) {
+    } else if (controller is DecodeController ||
+        controller is DecryptionController) {
       controller.cipherTextController.text = data.text!;
-    }else{
-      throw ControllerTypeException(message: "Controller is not right in pasteText ${controller.runtimeType}");
+    } else {
+      throw ControllerTypeException(
+          message:
+              "Controller is not right in pasteText ${controller.runtimeType}");
     }
     onChange(controller: controller);
   }
 }
 
-// // paste Icon button
-// Widget pasteIconButton({controller, onChange}) {
-//   return IconButton(
-//       onPressed: () {
-//         pasteText(controller: controller, onChange: onChange);
-//       },
-//       icon: const Icon(Icons.paste)
-//   );
-// }
+bool checkAllTypes({controller}) {
+  return controller is EncryptionController ||
+      controller is DecryptionController ||
+      controller is EncodeController ||
+      controller is DecodeController;
+}
 
-// // clear Icon button
-// Widget clearIconButton(
-//     {controller, required encryptionDecryptionOptionsController}) {
-//   return IconButton(
-//     onPressed: () {
-//       controller!.plainTextController.clear();
-//       controller!.cipherTextController.clear();
-//       if (encryptionDecryptionOptionsController != null) {
-//         encryptionDecryptionOptionsController.desc.value = '';
-//       }
-//     },
-//     icon: const Icon(Icons.clear, color: cyberpunkRed, size: 32),
-//     tooltip: "Clear",
-//   );
-// }
-
-
-void showSnackBar(){
+void showSnackBar({title , message,  backgroundColor, colorText}) {
   Get.snackbar("Max Limit Reached", "Can't add more methods",
       duration: const Duration(seconds: 5),
       backgroundColor: cyberpunkDarkElevated,

@@ -8,7 +8,7 @@ class EncodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return modernScreenLayout(
+    return commonScreenLayout(
       context: context,
       controller: encodeController,
       methodsController: encodeDecodeOptionController,

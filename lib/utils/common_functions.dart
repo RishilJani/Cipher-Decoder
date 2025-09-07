@@ -19,15 +19,14 @@ Widget myInputfield(
       bool isPlain  = true,
       methodController})
 {
-  if (!checkAllTypes(controller: controller)) {
-    throw ControllerTypeException(
-        message: "Controller is Not right ::: ${controller.runtimeType}");
+  if (!checkAllTypes(controller: controller) && controller is! TextEditingController) {
+    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
   }
 
   TextEditingController ctr;
   if (isPlain) {
     if (key != null) {
-      ctr = controller.keyController;
+      ctr = controller;
     }
     else {
       ctr = controller.plainTextController;
@@ -169,6 +168,165 @@ Widget myInputfield(
   );
 }
 
+Widget description({required context, controller}){
+  if(controller is EncodeController || controller is DecodeController){
+    return const SizedBox(height: 0,);
+  }
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _getDescriptionList(controller: controller,context: context),
+
+        // character mapping for encryption decryption
+        Visibility(
+          visible: controller.desc.value != '',
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(top: 12),
+            child: Text(
+              controller.desc.value,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Color(0xFF00FFFF),
+                fontFamily: 'monospace',
+                height: 1.4,
+                letterSpacing: 0.3,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// to write multiple descriptions for encryption decryption
+Widget _getDescriptionList({ controller , context}){
+  List<String> temp = [];
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: controller is EncryptionDecryptionOptionsController ? controller.options.length : 1,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      bool isCame = false;
+      String txt1;
+      String description = "";
+      if(controller is EncodeDecodeOptionController){
+        txt1 = controller.selectedMethod.value.title!.toUpperCase();
+        if(temp.contains(txt1)){
+          isCame = true;
+        }else{
+          temp.add(txt1);
+          description = controller.selectedMethod.value.description!;
+        }
+      }else{
+        String name = controller.options[index].title!.toUpperCase();
+        txt1 = '${index + 1}. $name';
+        if(temp.contains(name)){
+          isCame = true;
+        }else{
+          temp.add(name);
+          description = controller.options[index].description!;
+        }
+      }
+      return Visibility(
+        visible: !isCame,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  margin: const EdgeInsets.only(right: 12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF00FF41),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF00FF41).withOpacity(0.6),
+                        blurRadius: 6,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    controller is EncryptionDecryptionOptionsController ? txt1 : "",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF00FF41),
+                      fontFamily: 'monospace',
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(0xFF00FF41).withOpacity(0.5),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(3),
+                    gradient: LinearGradient(
+                      colors: [
+                        const Color(0xFF00FF41).withOpacity(0.1),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  child: const Text(
+                    'ACTIVE',
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Color(0xFF00FF41),
+                      fontFamily: 'monospace',
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            // Description with terminal-style divider
+            Container(
+              padding: const EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: const Color(0xFF00FFFF).withOpacity(0.3),
+                    width: 2,
+                  ),
+                ),
+              ),
+              child: Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF00FFFF),
+                  fontFamily: 'monospace',
+                  height: 1.5,
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+
 String dynamicDescription({controller,String? text1, String? text2}) {
 
   if(controller is EncryptionController){
@@ -212,10 +370,10 @@ String dynamicDescription({controller,String? text1, String? text2}) {
 
 dynamic getMethod({required  element}){
   if(element is EncryptionDecryptionTypes){
-    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return CeaseCipher();}
-    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return AtbashCipher();}
-    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return MonoAlphabaticCipher(key: 1); }
-    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return RailFenceCipher(key: 1);}
+    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return new CeaseCipher();}
+    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return new AtbashCipher();}
+    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return new MonoAlphabaticCipher(); }
+    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return new RailFenceCipher();}
   }
   else if(element is EncodeDecodeTypes){
     if(element == EncodeDecodeTypes.Base64){ return Base64(); }
@@ -226,7 +384,7 @@ dynamic getMethod({required  element}){
   }
 }
 
-// region Icons
+// region IconButton
 
 // CLEAR BUTTON
 Widget enhancedClearIconButton({

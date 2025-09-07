@@ -11,7 +11,7 @@ export 'package:cipher_decoder/utils/colors.dart';
 export 'package:cipher_decoder/utils/custom_exceptions.dart';
 export 'package:cipher_decoder/utils/utils.dart';
 export 'package:cipher_decoder/utils/enhanced_screen_layout.dart';
-export 'package:cipher_decoder/utils/modern_screen_layout.dart';
+export 'package:cipher_decoder/utils/screen_layout.dart';
 // endregion
 
 // region Encrypt Decrypt
@@ -24,7 +24,6 @@ export 'package:cipher_decoder/encrypt_decrypt/encryption/encryption_view.dart';
 export 'package:cipher_decoder/encrypt_decrypt/decryption/decryption_controller.dart';
 export 'package:cipher_decoder/encrypt_decrypt/decryption/decryption_view.dart';
 
-export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_functions.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_model.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_options.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_options_controller.dart';

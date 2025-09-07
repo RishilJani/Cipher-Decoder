@@ -7,7 +7,7 @@ class DecryptionView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return modernScreenLayout(
+    return commonScreenLayout(
       context: context,
       controller: decryptionController,
       methodsController: encryptionDecryptionOptionsController,

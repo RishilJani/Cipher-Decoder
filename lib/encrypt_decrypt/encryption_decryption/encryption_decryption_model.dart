@@ -1,19 +1,17 @@
-import 'package:cipher_decoder/utils/string_constants.dart';
+import 'package:cipher_decoder/utils/import_export.dart';
 
 abstract class EncryptionDecryptionModel {
   String? title;
   String? description;
   bool requiresKey;
-  int? key;
+  TextEditingController? keyController;
 
-  EncryptionDecryptionModel({this.title, this.description, this.requiresKey = false, this.key});
+  EncryptionDecryptionModel({this.title, this.description, this.requiresKey = false, this.keyController = null});
 
   String encrypt({required String plainText});
 
   String decrypt({required String cipherText });
 
-  // String explanation({required String text1 , required String text2});
-  
 }
 
 class CeaseCipher extends EncryptionDecryptionModel {
@@ -21,24 +19,25 @@ class CeaseCipher extends EncryptionDecryptionModel {
 
   @override
   String encrypt({required String plainText}) {
-    return MonoAlphabaticCipher(key: 3).encrypt(plainText: plainText);
+    return MonoAlphabaticCipher().encrypt(plainText: plainText, optionalKey: 3);
   }
 
   @override
   String decrypt({required String cipherText}) {
-    return MonoAlphabaticCipher(key:  3).decrypt(cipherText: cipherText);
+    return MonoAlphabaticCipher().decrypt(cipherText: cipherText, key: 3);
   }
 
 }
 
 class MonoAlphabaticCipher extends EncryptionDecryptionModel {
-  MonoAlphabaticCipher({required super.key}):super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true);
+  MonoAlphabaticCipher():super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true, keyController: new TextEditingController());
 
   @override
   String encrypt({required String plainText, int? optionalKey }) {
-    optionalKey ??= key;
+    int k = keyController!.text.isEmpty ? 0 : int.parse(keyController!.text);
+    optionalKey ??= k;
 
-    if (optionalKey! % 26 == 0) {
+    if (optionalKey % 26 == 0) {
       return plainText;
     }
 
@@ -66,8 +65,8 @@ class MonoAlphabaticCipher extends EncryptionDecryptionModel {
 
   @override
   String decrypt({required String cipherText, int? key}) {
-    key ??=this.key;
-    return encrypt(plainText: cipherText, optionalKey: 26 - (key! % 26));
+    key ??= keyController!.text.isEmpty ? 0 : int.parse(keyController!.text);
+    return encrypt(plainText: cipherText, optionalKey: 26 - (key % 26));
   }
 
 }
@@ -100,25 +99,26 @@ class AtbashCipher extends EncryptionDecryptionModel {
 }
 
 class RailFenceCipher extends EncryptionDecryptionModel {
-  RailFenceCipher({required super.key}) : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true);
+  RailFenceCipher() : super(title: EN_RAIL_FENCE, description: RAIL_FENCE_DESC, requiresKey: true, keyController: new TextEditingController());
 
   @override
   String encrypt({required String plainText}) {
-    if (key == 1) {
+    int k = keyController!.text.isEmpty ?  1 : int.parse(keyController!.text);
+    if (k == 1 || k == 0) {
       return plainText;
     }
 
     int ind1 = 0;
     bool isDown = true;
     List<String> strs = [];
-    for (int i = 0; i < key!; i++) {
+    for (int i = 0; i < k; i++) {
       strs.add("");
     }
     for (int i = 0; i < plainText.length; i++) {
       strs[ind1] += plainText[i];
 
       if (isDown) {
-        if (ind1 < key! - 1) {
+        if (ind1 < k - 1) {
           ind1++;
         } else {
           ind1--;
@@ -143,13 +143,14 @@ class RailFenceCipher extends EncryptionDecryptionModel {
 
   @override
   String decrypt({required String cipherText}) {
-    if (key == 1) {
+    int k = keyController!.text.isEmpty ? 0 : int.parse(keyController!.text);
+    if (k == 1) {
       return cipherText;
     }
     List<List<String>> rail = [];
 
     // fill the list
-    for (int i = 0; i < key!; i++) {
+    for (int i = 0; i < k; i++) {
       List<String> temp = [];
       for (int j = 0; j < cipherText.length; j++) {
         temp.add(" ");
@@ -163,7 +164,7 @@ class RailFenceCipher extends EncryptionDecryptionModel {
       if (row == 0) {
         isDown = true;
       }
-      if (row == key! - 1) {
+      if (row == k - 1) {
         isDown = false;
       }
 
@@ -178,7 +179,7 @@ class RailFenceCipher extends EncryptionDecryptionModel {
     }
 
     int ind = 0;
-    for (int i = 0; i < key!; i++) {
+    for (int i = 0; i < k; i++) {
       for (int j = 0; j < cipherText.length; j++) {
         if (rail[i][j] == "*" && ind < cipherText.length) {
           rail[i][j] = cipherText[ind++];
@@ -191,7 +192,7 @@ class RailFenceCipher extends EncryptionDecryptionModel {
       if (row == 0) {
         isDown = true;
       }
-      if (row == key! - 1) {
+      if (row == k - 1) {
         isDown = false;
       }
 

@@ -5,7 +5,8 @@ class EncryptionDecryptionOptionsController extends GetxController {
   RxString desc = ''.obs;
   RxList<EncryptionDecryptionModel> options = <EncryptionDecryptionModel>[CeaseCipher()].obs;
 
-  void addWidget({required EncryptionDecryptionModel methodObj, required controller}) {
+  void addWidget({required controller}) {
+    EncryptionDecryptionModel methodObj = CeaseCipher();
     if (options.length < maxLimit) {
       options.add(methodObj);
       onChange(controller: controller);
@@ -16,6 +17,7 @@ class EncryptionDecryptionOptionsController extends GetxController {
 
   // on method change
   void updateWidget({required EncryptionDecryptionModel methodObj, index, controller}) {
+
     options[index] = methodObj;
     onChange(controller: controller);
     update([EncryptionDecryptionModel]);
@@ -36,9 +38,9 @@ class EncryptionDecryptionOptionsController extends GetxController {
         ans = controller.decryptUsing(method: met, decrypt: ans)!;
       }
       controller.plainTextController.text = ans;
-    }
-    else{
-      throw ControllerTypeException(message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
+    } else {
+      throw ControllerTypeException(
+          message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
 
     changeDescription(controller: controller);
@@ -50,26 +52,17 @@ class EncryptionDecryptionOptionsController extends GetxController {
     if (controller is EncryptionController) {
       // desc.value = controller.dynamicDescription();
       desc.value = dynamicDescription(controller: controller);
-    }
-    else if (controller is DecryptionController) {
-      // desc.value = controller.dynamicDescription();
+    } else if (controller is DecryptionController) {
       desc.value = dynamicDescription(controller: controller);
-    }
-    else{
+    } else {
       throw ControllerTypeException(message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
   }
 
   void keyUpdateWidget({required index, controller}) {
-    if (options[index].requiresKey) {
-      options[index].key = controller.keyController.text.isNotEmpty
-          ? int.parse(controller.keyController.text)
-          : null;
-    }
     if (controller is EncryptionController) {
       controller.encryptUsing(method: options[index]);
-    }
-    else if (controller is DecryptionController) {
+    } else if (controller is DecryptionController) {
       controller.decryptUsing(method: options[index]);
     }
 
@@ -82,8 +75,8 @@ class EncryptionDecryptionOptionsController extends GetxController {
   }
 
   Widget getOptionList({controller}) {
-    return Obx(
-          () => ListView.builder(
+    return Obx(() {
+      return ListView.builder(
         shrinkWrap: true,
         itemCount: options.length,
         itemBuilder: (context, index) {
@@ -93,9 +86,7 @@ class EncryptionDecryptionOptionsController extends GetxController {
             index: index,
           );
         },
-      ),
-    );
+      );
+    });
   }
 }
-
-

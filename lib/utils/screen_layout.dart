@@ -1,6 +1,6 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-Widget modernScreenLayout({
+Widget commonScreenLayout({
   required BuildContext context,
   required controller,
   required String titleText,
@@ -52,13 +52,13 @@ Widget modernScreenLayout({
                       const SizedBox(height: 10),
 
                       // 🎯 INPUT CARD
-                      _buildHorizontalInputCard(controller, context, titleText,
+                      buildInputCard(controller, context, titleText,
                           methodsController, isEncoding),
 
                       const SizedBox(height: 20),
 
                       // 🎯 METHODS CARD
-                      _buildHorizontalMethodsCard(methodsController, controller),
+                      buildMethodsCard(methodsController, controller),
 
                       if (isEncryption) ...[
                         const SizedBox(height: 20),
@@ -90,7 +90,7 @@ Widget modernScreenLayout({
 }
 
 
-Widget _buildHorizontalInputCard(
+Widget buildInputCard(
     controller, context, String titleText, methodsController, bool isEncoding) {
   return Container(
     decoration: BoxDecoration(
@@ -136,7 +136,7 @@ Widget _buildHorizontalInputCard(
 }
 
 // 🎯 HORIZONTAL METHODS CARD
-Widget _buildHorizontalMethodsCard(methodsController, controller) {
+Widget buildMethodsCard(methodsController, controller) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
@@ -256,8 +256,7 @@ Widget _buildHorizontalAddCard(controller, methodsController) {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          methodsController.addWidget(
-              methodObj: CeaseCipher(), controller: controller);
+          methodsController.addWidget(controller: controller);
         },
         borderRadius: BorderRadius.circular(12),
         child: Row(
@@ -376,6 +375,7 @@ Widget _buildHorizontalInfoCard(methodsController) {
       children: [
         Row(
           children: [
+            // Icon
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -432,8 +432,7 @@ Widget _buildHorizontalInfoCard(methodsController) {
             ),
           ),
           child: Obx(() {
-            print("Details Obx........................ ");
-
+            // print("Details Obx........................ ");
             return description(
               context: null,
               controller: methodsController,

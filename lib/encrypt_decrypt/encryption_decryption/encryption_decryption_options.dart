@@ -2,8 +2,13 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 // ignore:must_be_immutable
 class EncryptionDecryptionOptions extends StatefulWidget {
-  EncryptionDecryptionOptions({super.key, required this.controller, this.index, required this.encryptionDecryptionOptionController}){
-    txt = 'Select method to ${controller is EncryptionController ? 'encrypt' : 'decrypt'}';
+  EncryptionDecryptionOptions(
+      {super.key,
+      required this.controller,
+      this.index,
+      required this.encryptionDecryptionOptionController}) {
+    txt =
+        'Select method to ${controller is EncryptionController ? 'encrypt' : 'decrypt'}';
   }
 
   final dynamic controller;
@@ -12,7 +17,8 @@ class EncryptionDecryptionOptions extends StatefulWidget {
   String txt = '';
 
   @override
-  State<EncryptionDecryptionOptions> createState() => _EncryptionDecryptionOptionsState();
+  State<EncryptionDecryptionOptions> createState() =>
+      _EncryptionDecryptionOptionsState();
 }
 
 class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOptions> with SingleTickerProviderStateMixin {
@@ -38,13 +44,13 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         // region Method Heading With Delete button
         Row(
           children: [
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -72,37 +78,39 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
             ),
             n > 1
                 ? Container(
-              margin: const EdgeInsets.only(left: 8),
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFFF0040), width: 1),
-                borderRadius: BorderRadius.circular(6),
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFFF0040).withOpacity(0.1),
-                    const Color(0xFFFF0040).withOpacity(0.05),
-                  ],
-                ),
-              ),
-              child: IconButton(
-                onPressed: () {
-                  widget.encryptionDecryptionOptionController.removeWidget(
-                      index: widget.index,
-                      controller: widget.controller
-                  );
-                },
-                icon: const Icon(
-                  Icons.delete_outline,
-                  color: Color(0xFFFF0040),
-                  size: 20,
-                ),
-                tooltip: 'DELETE Method',
-              ),
-            )
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.all(0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xFFFF0040), width: 1),
+                      borderRadius: BorderRadius.circular(6),
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color(0xFFFF0040).withOpacity(0.1),
+                          const Color(0xFFFF0040).withOpacity(0.05),
+                        ],
+                      ),
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        widget.encryptionDecryptionOptionController
+                            .removeWidget(
+                                index: widget.index,
+                                controller: widget.controller);
+                      },
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Color(0xFFFF0040),
+                        size: 20,
+                      ),
+                      tooltip: 'DELETE Method',
+                    ),
+                  )
                 : const SizedBox(height: 0),
           ],
         ),
         // endregion
-
 
         const SizedBox(height: 12.0),
 
@@ -126,20 +134,22 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                     ],
                   ),
                   border: Border.all(
-                    color: const Color(0xFF00FF41).withOpacity(_glowAnimation.value),
+                    color: const Color(0xFF00FF41)
+                        .withOpacity(_glowAnimation.value),
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00FF41).withOpacity(_glowAnimation.value * 0.2),
+                      color: const Color(0xFF00FF41)
+                          .withOpacity(_glowAnimation.value * 0.2),
                       blurRadius: 10,
                       spreadRadius: 1,
                     ),
                   ],
                 ),
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
@@ -156,7 +166,9 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                           // ),
                           const SizedBox(height: 4),
                           Text(
-                            widget.encryptionDecryptionOptionController.options[widget.index!].title!.toUpperCase(),
+                            widget.encryptionDecryptionOptionController
+                                .options[widget.index!].title!
+                                .toUpperCase(),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -197,10 +209,11 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
         ),
         //endregion
 
-
-        // region Conditional Key Input Field with Cyberpunk Styling
-        Obx(
-              () => AnimatedSwitcher(
+        // region Conditional Key Input Field
+        Obx(() {
+          EncryptionDecryptionModel obj = widget
+              .encryptionDecryptionOptionController.options[widget.index!];
+          return AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (child, animation) {
               return SizeTransition(
@@ -208,116 +221,49 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                 child: FadeTransition(opacity: animation, child: child),
               );
             },
-            child: widget.encryptionDecryptionOptionController.options[widget.index!].requiresKey
+            child: obj.requiresKey
                 ? Container(
-              key: const ValueKey('conditionalField'),
-              margin: const EdgeInsets.only(top: 16),
-              child: myInputfield(
-                key: const ValueKey("conditionalField"),
-                context: context,
-                textTitle: "Enter Key:",
-                hintText: "Enter Integer Key... ",
-                controller: widget.controller,
-                keyboardType: TextInputType.number,
-                onChanged: (value){
-                  widget.encryptionDecryptionOptionController.keyUpdateWidget(index: widget.index,controller: widget.controller);
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
-                ],
-              ),
-            )
+                    key: const ValueKey('conditionalField'),
+                    margin: const EdgeInsets.only(top: 16),
+                    child: myInputfield(
+                      key: const ValueKey("conditionalField"),
+                      context: context,
+                      textTitle: "Enter Key:",
+                      hintText: "Enter Integer Key... ",
+                      controller: obj.keyController!,
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        widget.encryptionDecryptionOptionController
+                            .keyUpdateWidget(
+                                index: widget.index,
+                                controller: widget.controller);
+                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+                      ],
+                    ),
+                  )
                 : const SizedBox.shrink(key: ValueKey('emptyConditional')),
-          ),
-        ),
+          );
+        }),
         //endregion
 
         Obx(
-              () => Visibility(
-            visible: !widget.encryptionDecryptionOptionController.options[widget.index!].requiresKey,
+          () => Visibility(
+            visible: !widget.encryptionDecryptionOptionController
+                .options[widget.index!].requiresKey,
             child: SizedBox(
               height: fieldSpacing * 1.5,
             ),
           ),
         ),
-      ],
-    );
-  }
 
-  /*
-  Widget _cyberpunkInputField({
-    required BuildContext context,
-    required String textTitle,
-    required String hintText,
-    required dynamic controller,
-    required TextInputType keyboardType,
-    required Function(String) onChanged,
-    required List<TextInputFormatter> inputFormatters,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color(0xFF9D00FF).withOpacity(0.1),
-                Colors.transparent,
-              ],
-            ),
-            border: Border.all(
-              color: const Color(0xFF9D00FF).withOpacity(0.3),
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            textTitle,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF9D00FF),
-              fontFamily: 'monospace',
-              letterSpacing: 0.8,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.black.withOpacity(0.4),
-                const Color(0xFF9D00FF).withOpacity(0.1),
-                Colors.black.withOpacity(0.3),
-              ],
-            ),
-            border: Border.all(
-              color: const Color(0xFF9D00FF).withOpacity(0.5),
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFF9D00FF).withOpacity(0.1),
-                blurRadius: 8,
-                spreadRadius: 1,
-              ),
-            ],
-          ),
-          child: myInputfield(
-              context: context,
-              textTitle: textTitle,
-              controller: controller
-          ),
-        ),
+        SizedBox(
+          height: 8,
+        )
       ],
     );
   }
-   */
 
   void _showCyberpunkMethodDialog() {
     Get.dialog(
@@ -411,15 +357,20 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                   mainAxisSpacing: 12,
                   childAspectRatio: 2.5,
                   children: encryptionDecryptionMethods.map((method) {
-                    EncryptionDecryptionModel encryptionDecryptionModel = getMethod(element: method);
-                    bool isSelected = widget.encryptionDecryptionOptionController
-                        .options[widget.index!].title == encryptionDecryptionModel.title;
+                    EncryptionDecryptionModel encryptionDecryptionModel =
+                        getMethod(element: method);
+                    bool isSelected = widget
+                            .encryptionDecryptionOptionController
+                            .options[widget.index!]
+                            .title ==
+                        encryptionDecryptionModel.title;
 
                     return _CyberpunkMethodCard(
                       title: encryptionDecryptionModel.title!,
                       isSelected: isSelected,
                       onTap: () {
-                        widget.encryptionDecryptionOptionController.updateWidget(
+                        widget.encryptionDecryptionOptionController
+                            .updateWidget(
                           methodObj: encryptionDecryptionModel,
                           index: widget.index,
                           controller: widget.controller,
@@ -501,8 +452,7 @@ class _CyberpunkMethodCard extends StatefulWidget {
   State<_CyberpunkMethodCard> createState() => _CyberpunkMethodCardState();
 }
 
-class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
-    with SingleTickerProviderStateMixin {
+class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard> with SingleTickerProviderStateMixin {
   late AnimationController _hoverController;
   late Animation<double> _scaleAnimation;
   bool _isHovered = false;
@@ -528,50 +478,42 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
           scale: _scaleAnimation.value,
           child: GestureDetector(
             onTap: widget.onTap,
-            onTapDown: (_) {
-              setState(() => _isHovered = true);
-              _hoverController.forward();
-            },
-            onTapUp: (_) {
-              setState(() => _isHovered = false);
-              _hoverController.reverse();
-            },
-            onTapCancel: () {
-              setState(() => _isHovered = false);
-              _hoverController.reverse();
-            },
             child: Container(
               decoration: BoxDecoration(
                 gradient: widget.isSelected
                     ? LinearGradient(
-                  colors: [
-                    const Color(0xFF00FF41).withOpacity(0.3),
-                    const Color(0xFF00FFFF).withOpacity(0.2),
-                  ],
-                )
+                        colors: [
+                          const Color(0xFF00FF41).withOpacity(0.3),
+                          const Color(0xFF00FFFF).withOpacity(0.2),
+                        ],
+                      )
                     : LinearGradient(
-                  colors: [
-                    const Color(0xFF00FFFF).withOpacity(_isHovered ? 0.2 : 0.1),
-                    const Color(0xFF9D00FF).withOpacity(_isHovered ? 0.15 : 0.1),
-                  ],
-                ),
+                        colors: [
+                          const Color(0xFF00FFFF)
+                              .withOpacity(_isHovered ? 0.2 : 0.1),
+                          const Color(0xFF9D00FF)
+                              .withOpacity(_isHovered ? 0.15 : 0.1),
+                        ],
+                      ),
                 border: Border.all(
                   color: widget.isSelected
                       ? const Color(0xFF00FF41)
-                      : (_isHovered ? const Color(0xFF00FFFF) : const Color(0xFF00FFFF).withOpacity(0.5)),
+                      : (_isHovered
+                          ? const Color(0xFF00FFFF)
+                          : const Color(0xFF00FFFF).withOpacity(0.5)),
                   width: widget.isSelected ? 2 : 1,
                 ),
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: widget.isSelected || _isHovered
                     ? [
-                  BoxShadow(
-                    color: widget.isSelected
-                        ? const Color(0xFF00FF41).withOpacity(0.4)
-                        : const Color(0xFF00FFFF).withOpacity(0.3),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                  ),
-                ]
+                        BoxShadow(
+                          color: widget.isSelected
+                              ? const Color(0xFF00FF41).withOpacity(0.4)
+                              : const Color(0xFF00FFFF).withOpacity(0.3),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                        ),
+                      ]
                     : null,
               ),
               child: Center(

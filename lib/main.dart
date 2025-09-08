@@ -196,8 +196,17 @@ class CipherDecoderApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainNavigationScreen(),
+      initialRoute: RT_SPLASH_SCREEN,
       getPages: [
+        GetPage(
+            name: RT_SPLASH_SCREEN,
+            page: ()=> SplashScreen()
+        ),
+        
+        GetPage(
+          name: RT_MAIN_SCREEN,
+          page: ()=>const MainNavigationScreen()
+        ),
         GetPage(
           name: RT_DASHBOARD_ENCODE_DECODE,
           page: () => const DashboardEncodeDecode(),

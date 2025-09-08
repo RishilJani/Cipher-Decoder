@@ -51,7 +51,9 @@ const String BASE32_DESC = "This is Base32";
 // endregion
 
 // region Routes
+const String RT_SPLASH_SCREEN = "/splash_screen";
 const String RT_DASHBOARD = "/dashboard";
+const String RT_MAIN_SCREEN = "/main_screen";
 const String RT_DASHBOARD_ENCRYPT_DECRYPT = "/dashboard_encrypt_decrypt";
 const String RT_DASHBOARD_ENCODE_DECODE = "/dashboard_encode_decode";
 

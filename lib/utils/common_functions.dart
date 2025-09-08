@@ -168,6 +168,23 @@ Widget myInputfield(
   );
 }
 
+dynamic getMethod({required  element}){
+  if(element is EncryptionDecryptionTypes){
+    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return new CeaseCipher();}
+    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return new AtbashCipher();}
+    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return new MonoAlphabaticCipher(); }
+    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return new RailFenceCipher();}
+  }
+  else if(element is EncodeDecodeTypes){
+    if(element == EncodeDecodeTypes.Base64){ return Base64(); }
+    if(element == EncodeDecodeTypes.Base32){ return Base32(); }
+  }
+  else{
+    throw ControllerTypeException(message: "encrypt decrypt element is not right ${element.runtimeType}");
+  }
+}
+
+// region description
 Widget description({required context, controller}){
   if(controller is EncodeController || controller is DecodeController){
     return const SizedBox(height: 0,);
@@ -326,7 +343,6 @@ Widget _getDescriptionList({ controller , context}){
   );
 }
 
-
 String dynamicDescription({controller,String? text1, String? text2}) {
 
   if(controller is EncryptionController){
@@ -368,25 +384,11 @@ String dynamicDescription({controller,String? text1, String? text2}) {
   return ans;
 }
 
-dynamic getMethod({required  element}){
-  if(element is EncryptionDecryptionTypes){
-    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return new CeaseCipher();}
-    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return new AtbashCipher();}
-    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return new MonoAlphabaticCipher(); }
-    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return new RailFenceCipher();}
-  }
-  else if(element is EncodeDecodeTypes){
-    if(element == EncodeDecodeTypes.Base64){ return Base64(); }
-    if(element == EncodeDecodeTypes.Base32){ return Base32(); }
-  }
-  else{
-    throw ControllerTypeException(message: "encrypt decrypt element is not right ${element.runtimeType}");
-  }
-}
+// endregion
 
-// region IconButton
+// region IconButtons
 
-// CLEAR BUTTON
+// region CLEAR BUTTON
 Widget enhancedClearIconButton({
   required controller,
   required encryptionDecryptionOptionsController,
@@ -402,14 +404,6 @@ Widget enhancedClearIconButton({
         colors: [ cyberpunkRed.withOpacity(0.2),  cyberpunkRed.withOpacity(0.1),
         ],
       ),
-      // boxShadow: [
-      //   BoxShadow(
-      //     color: cyberpunkRed.withOpacity(0.2),
-      //     blurRadius: 8,
-      //     spreadRadius: 1,
-      //     offset: const Offset(0, 2),
-      //   ),
-      // ],
     ),
     child: IconButton(
       icon: const Icon(Icons.clear, color: cyberpunkRed, size: 22),
@@ -426,8 +420,9 @@ Widget enhancedClearIconButton({
     ),
   );
 }
+// endregion
 
-// PASTE BUTTON
+// region PASTE BUTTON
 Widget buildMobilePasteButton({controller, onChange}) {
   return Container(
     height: 40,
@@ -460,7 +455,26 @@ Widget buildMobilePasteButton({controller, onChange}) {
   );
 }
 
-// COPY BUTTON
+// to paste text from clipboard
+void pasteText({controller, required Function onChange}) async {
+  ClipboardData? data = await Clipboard.getData('text/plain');
+  if (data != null) {
+    if (controller is EncodeController || controller is EncryptionController) {
+      controller.plainTextController.text = data.text!;
+    } else if (controller is DecodeController ||
+        controller is DecryptionController) {
+      controller.cipherTextController.text = data.text!;
+    } else {
+      throw ControllerTypeException(
+          message:
+          "Controller is not right in pasteText ${controller.runtimeType}");
+    }
+    onChange(controller: controller);
+  }
+}
+// endregion
+
+// region COPY BUTTON
 Widget buildMobileCopyButton(controller, bool isEncoding) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
@@ -496,5 +510,41 @@ Widget buildMobileCopyButton(controller, bool isEncoding) {
   );
 }
 
+// to copy text into clipboard
+void copyText(String txt) {
+  if (txt.isEmpty) {
+    Get.snackbar("Empty Field", "There is nothing to copy.",
+        backgroundColor: cyberpunkLightRed,
+        colorText: cyberpunkGrayDark,
+        snackPosition: SnackPosition.BOTTOM);
+  } else {
+    Clipboard.setData(ClipboardData(text: txt)).then(
+          (value) {
+        Get.snackbar("Success", "Cipher text copied successfully",
+            backgroundColor: cyberpunkGreenLight,
+            colorText: cyberpunkDarkElevated,
+            snackPosition: SnackPosition.BOTTOM);
+      },
+    );
+  }
+}
+// endregion
+
 
 // endregion
+
+bool checkAllTypes({controller}) {
+  return controller is EncryptionController ||
+      controller is DecryptionController ||
+      controller is EncodeController ||
+      controller is DecodeController;
+}
+
+void showSnackBar({title , message,  backgroundColor, colorText}) {
+  Get.snackbar("Max Limit Reached", "Can't add more methods",
+      duration: const Duration(seconds: 5),
+      backgroundColor: cyberpunkDarkElevated,
+      colorText: cyberpunkGreen,
+      snackPosition: SnackPosition.BOTTOM
+  );
+}

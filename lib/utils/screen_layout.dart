@@ -432,7 +432,6 @@ Widget _buildHorizontalInfoCard(methodsController) {
             ),
           ),
           child: Obx(() {
-            // print("Details Obx........................ ");
             return description(
               context: null,
               controller: methodsController,

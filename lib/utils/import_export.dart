@@ -1,16 +1,18 @@
 export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
 export 'package:get/get.dart';
+export 'dart:async';
+export 'package:google_fonts/google_fonts.dart';
+
 
 export 'package:cipher_decoder/dashboard/dashboard.dart';
+export 'package:cipher_decoder/dashboard/splash_screen.dart';
 
 // region Utils
 export 'package:cipher_decoder/utils/string_constants.dart';
 export 'package:cipher_decoder/utils/common_functions.dart';
 export 'package:cipher_decoder/utils/colors.dart';
 export 'package:cipher_decoder/utils/custom_exceptions.dart';
-export 'package:cipher_decoder/utils/utils.dart';
-export 'package:cipher_decoder/utils/enhanced_screen_layout.dart';
 export 'package:cipher_decoder/utils/screen_layout.dart';
 // endregion
 

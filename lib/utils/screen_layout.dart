@@ -74,7 +74,7 @@ Widget commonScreenLayout({
                       const SizedBox(height: 20),
 
                       // 🎯 INFO CARD
-                      _buildHorizontalInfoCard(methodsController),
+                      _buildHorizontalInfoCard(methodsController,context: context),
 
                       const SizedBox(height: 32),
                     ],
@@ -88,7 +88,6 @@ Widget commonScreenLayout({
     ),
   );
 }
-
 
 Widget buildInputCard(
     controller, context, String titleText, methodsController, bool isEncoding) {
@@ -343,7 +342,7 @@ Widget _buildHorizontalOutputCard(
 }
 
 // 🎯 HORIZONTAL INFO CARD
-Widget _buildHorizontalInfoCard(methodsController) {
+Widget _buildHorizontalInfoCard(methodsController, {context}) {
   return Container(
     padding: const EdgeInsets.all(15),
     decoration: BoxDecoration(
@@ -433,7 +432,7 @@ Widget _buildHorizontalInfoCard(methodsController) {
           ),
           child: Obx(() {
             return description(
-              context: null,
+              context: context,
               controller: methodsController,
             );
           }),

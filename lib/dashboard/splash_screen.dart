@@ -36,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navigate to home after 5s
     Timer(const Duration(seconds: 5), () {
-      // Navigator.pushReplacementNamed(context, "/home");
       Get.offNamed(RT_MAIN_SCREEN);
     });
   }
@@ -97,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
             // Typewriter Text
             Text(
               displayText,
-              style: GoogleFonts.vt323(
+              style: GoogleFonts.robotoMono(
                 textStyle: const TextStyle(
                   color: Colors.cyanAccent,
                   fontSize: 30,

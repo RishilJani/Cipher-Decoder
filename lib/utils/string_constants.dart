@@ -46,14 +46,15 @@ List<EncodeDecodeTypes> encodeDecodeMethods = EncodeDecodeTypes.values;
 const String EN_BASE64 = "Base64";
 const String EN_BASE32 = "Base32";
 
-const String BASE64_DESC = "This is Base64";
-const String BASE32_DESC = "This is Base32";
+const String BASE64_DESC = "Each Base64 character represents 6 bits (2^6 = 64).\nBase64 makes the data size ~33% larger.";
+const String BASE32_DESC = "Each Base32 character represents 5 bits (2^5 = 32).\nBase32 makes the data size ~60% larger.";
 // endregion
 
 // region Routes
 const String RT_SPLASH_SCREEN = "/splash_screen";
 const String RT_DASHBOARD = "/dashboard";
 const String RT_MAIN_SCREEN = "/main_screen";
+const String RT_FEEDBACK_SCREEN = "/feedback_screen";
 const String RT_DASHBOARD_ENCRYPT_DECRYPT = "/dashboard_encrypt_decrypt";
 const String RT_DASHBOARD_ENCODE_DECODE = "/dashboard_encode_decode";
 
@@ -72,11 +73,17 @@ const String TAG_ENCODE = "encode";
 const String TAG_DECODE = "decode";
 // endregion
 
+// region Exception
 const String DECODE_LENGTH_ERROR = "A single remaining encoded character in the last quadruple or a padding of 3 characters is not allowed";
+//endregion
 
 // region RegExp
 
 var base64RegExp = RegExp(r'^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$');
 var base32RegExp = RegExp(r'^(?:[A-Z2-7]{8})*(?:[A-Z2-7]{2}======|[A-Z2-7]{4}====|[A-Z2-7]{5}===|[A-Z2-7]{7}=)?$' );
 
+// endregion
+
+// region Api
+const String BASE_URL = "http://api.aswdc.in/Api/MST_AppVersions/PostAppFeedback/AppPostFeedback";
 // endregion

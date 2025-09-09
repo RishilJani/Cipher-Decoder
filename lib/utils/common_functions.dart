@@ -184,7 +184,7 @@ dynamic getMethod({required  element}){
   }
 }
 
-// region description
+// region Description
 Widget description({required context, controller}){
   if(controller is EncodeController || controller is DecodeController){
     return const SizedBox(height: 0,);
@@ -248,6 +248,7 @@ Widget _getDescriptionList({ controller , context}){
           description = controller.options[index].description!;
         }
       }
+
       return Visibility(
         visible: !isCame,
         child: Column(
@@ -273,7 +274,7 @@ Widget _getDescriptionList({ controller , context}){
                 ),
                 Expanded(
                   child: Text(
-                    controller is EncryptionDecryptionOptionsController ? txt1 : "",
+                    txt1 ,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -513,18 +514,23 @@ Widget buildMobileCopyButton(controller, bool isEncoding) {
 // to copy text into clipboard
 void copyText(String txt) {
   if (txt.isEmpty) {
-    Get.snackbar("Empty Field", "There is nothing to copy.",
-        backgroundColor: cyberpunkLightRed,
-        colorText: cyberpunkGrayDark,
-        snackPosition: SnackPosition.BOTTOM);
+    showSnackBar(
+      title: "Empty Field",
+      message: "There is nothing to copy.",
+      colorText: cyberpunkGrayDark,
+      backgroundColor: cyberpunkLightRed,
+    );
+
   } else {
-    Clipboard.setData(ClipboardData(text: txt)).then(
-          (value) {
-        Get.snackbar("Success", "Cipher text copied successfully",
+    Clipboard.setData(ClipboardData(text: txt)).then((value)
+      {
+          showSnackBar(
+            title: "Success",
+            message:  "Cipher text copied successfully",
             backgroundColor: cyberpunkGreenLight,
             colorText: cyberpunkDarkElevated,
-            snackPosition: SnackPosition.BOTTOM);
-      },
+          );
+      }
     );
   }
 }
@@ -541,10 +547,62 @@ bool checkAllTypes({controller}) {
 }
 
 void showSnackBar({title , message,  backgroundColor, colorText}) {
-  Get.snackbar("Max Limit Reached", "Can't add more methods",
+  Get.snackbar(title, message,
       duration: const Duration(seconds: 5),
-      backgroundColor: cyberpunkDarkElevated,
-      colorText: cyberpunkGreen,
+      backgroundColor: backgroundColor,
+      colorText: colorText,
       snackPosition: SnackPosition.BOTTOM
+  );
+}
+
+
+PreferredSizeWidget buildEnhancedAppBar({title , content , bottom})   {
+  return AppBar(
+    title: Column(
+      children: [
+        ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [cyberpunkGreen, cyberpunkCyan],
+          ).createShader(bounds),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              fontFamily: 'monospace',
+              letterSpacing: 2.0,
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+            color: cyberpunkGreen.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: cyberpunkGreen.withOpacity(0.4),
+              width: 1,
+            ),
+          ),
+          child: Text(
+            content,
+            style: TextStyle(
+              fontSize: 9,
+              color: cyberpunkGreen,
+              fontFamily: 'monospace',
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
+    ),
+    centerTitle: true,
+    backgroundColor: cyberpunkDark,
+    elevation: 0,
+    toolbarHeight: 75,
+
+    bottom: bottom,
   );
 }

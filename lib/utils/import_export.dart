@@ -2,6 +2,7 @@ export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
 export 'package:get/get.dart';
 export 'dart:async';
+export 'dart:convert';
 export 'package:google_fonts/google_fonts.dart';
 
 
@@ -45,3 +46,9 @@ export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_mod
 export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_option_controller.dart';
 export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
 // endregion
+
+
+// region Feedback
+export 'package:cipher_decoder/feedback/feedback_screen.dart';
+export 'package:cipher_decoder/feedback/feedback_controller.dart';
+export 'package:cipher_decoder/feedback/api_repo.dart';

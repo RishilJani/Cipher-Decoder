@@ -30,7 +30,11 @@ class _DashboardEncryptDecryptState extends State<DashboardEncryptDecrypt>
       length: 2,
       child: Scaffold(
         backgroundColor: cyberpunkDark,
-        appBar: _buildEnhancedAppBar(),
+        appBar: buildEnhancedAppBar(
+          title: 'ENCRYPT / DECRYPT',
+          content: '> CRYPTOGRAPHIC OPERATIONS TERMINAL',
+          bottom: _buildEnhancedTabBar()
+        ),
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -52,88 +56,6 @@ class _DashboardEncryptDecryptState extends State<DashboardEncryptDecrypt>
           ),
         ),
       ),
-    );
-  }
-
-  PreferredSizeWidget _buildEnhancedAppBar() {
-    return AppBar(
-      title: Column(
-        children: [
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [cyberpunkGreen, cyberpunkCyan],
-            ).createShader(bounds),
-            child: const Text(
-              'ENCRYPT / DECRYPT',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-                fontFamily: 'monospace',
-                letterSpacing: 2.0,
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            decoration: BoxDecoration(
-              color: cyberpunkGreen.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: cyberpunkGreen.withOpacity(0.4),
-                width: 1,
-              ),
-            ),
-            child: const Text(
-              '> CRYPTOGRAPHIC OPERATIONS TERMINAL',
-              style: TextStyle(
-                fontSize: 9,
-                color: cyberpunkGreen,
-                fontFamily: 'monospace',
-                letterSpacing: 1.2,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
-      centerTitle: true,
-      backgroundColor: cyberpunkDark,
-      elevation: 0,
-      toolbarHeight: 75,
-
-      // leading: Container(
-      //   height: 100,
-      //   margin: const EdgeInsets.all(8),
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(8),
-      //     gradient: LinearGradient(
-      //       colors: [
-      //         cyberpunkCyan.withOpacity(0.2),
-      //         cyberpunkCyan.withOpacity(0.1),
-      //       ],
-      //     ),
-      //     border: Border.all(
-      //       color: cyberpunkCyan.withOpacity(0.4),
-      //       width: 1,
-      //     ),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: cyberpunkCyan.withOpacity(0.2),
-      //         blurRadius: 8,
-      //         spreadRadius: 1,
-      //         offset: const Offset(0, 2),
-      //       ),
-      //     ],
-      //   ),
-      //   child: IconButton(
-      //     icon: const Icon(Icons.arrow_back, color: cyberpunkCyan, size: 20),
-      //     onPressed: () => Get.back(),
-      //     tooltip: "RETURN TO DASHBOARD",
-      //   ),
-      // ),
-
-      bottom: _buildEnhancedTabBar(),
     );
   }
 
@@ -200,3 +122,4 @@ class _DashboardEncryptDecryptState extends State<DashboardEncryptDecrypt>
     );
   }
 }
+

@@ -24,8 +24,6 @@ class CipherDecoderApp extends StatelessWidget {
           onTertiary: cyberpunkDark,
           surface: cyberpunkDarkElevated,
           onSurface: Colors.white,
-          // background: cyberpunkDark,
-          // onBackground: Colors.white,
           error: cyberpunkRed,
           onError: Colors.white,
         ),
@@ -198,23 +196,11 @@ class CipherDecoderApp extends StatelessWidget {
       ),
       initialRoute: RT_SPLASH_SCREEN,
       getPages: [
-        GetPage(
-            name: RT_SPLASH_SCREEN,
-            page: ()=> SplashScreen()
-        ),
-        
-        GetPage(
-          name: RT_MAIN_SCREEN,
-          page: ()=>const MainNavigationScreen()
-        ),
-        GetPage(
-          name: RT_DASHBOARD_ENCODE_DECODE,
-          page: () => const DashboardEncodeDecode(),
-        ),
-        GetPage(
-          name: RT_DASHBOARD_ENCRYPT_DECRYPT,
-          page: () => const DashboardEncryptDecrypt(),
-        ),
+        GetPage(name: RT_SPLASH_SCREEN, page: () => SplashScreen()),
+        GetPage(name: RT_FEEDBACK_SCREEN, page: () => FeedbackScreen()),
+        GetPage(name: RT_MAIN_SCREEN, page: () => const MainNavigationScreen()),
+        GetPage(name: RT_DASHBOARD_ENCODE_DECODE,  page: () => const DashboardEncodeDecode(),),
+        GetPage(name: RT_DASHBOARD_ENCRYPT_DECRYPT,  page: () => const DashboardEncryptDecrypt(), ),
       ],
     );
   }
@@ -299,7 +285,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
 
   Widget _buildEnhancedHeader() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 40, 24,0),
+      padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
       child: Column(
         children: [
           // Main Title with Glow Effect

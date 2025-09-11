@@ -23,3 +23,13 @@ plugins {
 }
 
 include ":app"
+
+def properties = new Properties()
+file("local.properties").withInputStream { properties.load(it) }
+
+def flutterSdkPath = properties.getProperty("flutter.sdk")
+if (flutterSdkPath == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+//apply from: new File(flutterSdkPath, 'packages/flutter_tools/gradle/app_plugin_loader.gradle')

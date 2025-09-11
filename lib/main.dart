@@ -41,7 +41,7 @@ class CipherDecoderApp extends StatelessWidget {
           ),
           iconTheme: IconThemeData(color: cyberpunkCyan),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: cyberpunkDarkElevated,
           elevation: 8,
           shadowColor: cyberpunkGreen.withOpacity(0.3),
@@ -176,7 +176,7 @@ class CipherDecoderApp extends StatelessWidget {
             color: cyberpunkCyan,
           ),
         ),
-        tabBarTheme: const TabBarTheme(
+        tabBarTheme: const TabBarThemeData(
           labelColor: cyberpunkCyan,
           unselectedLabelColor: Colors.grey,
           indicator: BoxDecoration(

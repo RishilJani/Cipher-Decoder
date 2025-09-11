@@ -44,7 +44,7 @@ class CipherDecoderApp extends StatelessWidget {
         cardTheme: CardThemeData(
           color: cyberpunkDarkElevated,
           elevation: 8,
-          shadowColor: cyberpunkGreen.withOpacity(0.3),
+          shadowColor: cyberpunkGreen.withValues(alpha : 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -54,11 +54,11 @@ class CipherDecoderApp extends StatelessWidget {
           fillColor: cyberpunkDarkElevated,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: cyberpunkCyan.withOpacity(0.3)),
+            borderSide: BorderSide(color: cyberpunkCyan.withValues(alpha: 0.3)),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: cyberpunkCyan.withOpacity(0.3)),
+            borderSide: BorderSide(color: cyberpunkCyan.withValues(alpha: 0.3)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -80,7 +80,7 @@ class CipherDecoderApp extends StatelessWidget {
             backgroundColor: cyberpunkGreen,
             foregroundColor: cyberpunkDark,
             elevation: 4,
-            shadowColor: cyberpunkGreen.withOpacity(0.4),
+            shadowColor: cyberpunkGreen.withValues(alpha: 0.4),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -294,18 +294,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  cyberpunkGreen.withOpacity(0.15),
-                  cyberpunkCyan.withOpacity(0.08),
+                  cyberpunkGreen.withValues(alpha: 0.15),
+                  cyberpunkCyan.withValues(alpha: 0.08),
                 ],
               ),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: cyberpunkGreen.withOpacity(0.4),
+                color: cyberpunkGreen.withValues(alpha: 0.4),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: cyberpunkGreen.withOpacity(0.3),
+                  color: cyberpunkGreen.withValues(alpha: 0.3),
                   blurRadius: 24,
                   spreadRadius: 4,
                   offset: const Offset(0, 8),
@@ -343,7 +343,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
           //         borderRadius: BorderRadius.circular(5),
           //         boxShadow: [
           //           BoxShadow(
-          //             color: cyberpunkGreen.withOpacity(0.6),
+          //             color: cyberpunkGreen.withValues(0.6),
           //             blurRadius: 12,
           //             spreadRadius: 2,
           //           ),
@@ -355,10 +355,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
           //       padding:
           //           const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           //       decoration: BoxDecoration(
-          //         color: cyberpunkGreen.withOpacity(0.2),
+          //         color: cyberpunkGreen.withValues(0.2),
           //         borderRadius: BorderRadius.circular(16),
           //         border: Border.all(
-          //           color: cyberpunkGreen.withOpacity(0.4),
+          //           color: cyberpunkGreen.withValues(0.4),
           //           width: 1,
           //         ),
           //       ),
@@ -398,13 +398,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
         color: cyberpunkDarkElevated,
         border: Border(
           top: BorderSide(
-            color: cyberpunkGreen.withOpacity(0.3),
+            color: cyberpunkGreen.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 20,
             spreadRadius: 0,
             offset: const Offset(0, -5),
@@ -446,11 +446,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color:
-              isSelected ? cyberpunkGreen.withOpacity(0.2) : Colors.transparent,
+              isSelected ? cyberpunkGreen.withValues(alpha: 0.2) : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected
-                ? cyberpunkGreen.withOpacity(0.5)
+                ? cyberpunkGreen.withValues(alpha: 0.5)
                 : Colors.transparent,
             width: 1,
           ),

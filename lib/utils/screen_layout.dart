@@ -96,7 +96,7 @@ Widget buildInputCard(
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
-          color: cyberpunkCyan.withOpacity(0.15),
+          color: cyberpunkCyan.withValues(alpha: 0.15),
           blurRadius: 16,
           spreadRadius: 1,
           offset: const Offset(0, 4),
@@ -143,18 +143,18 @@ Widget buildMethodsCard(methodsController, controller) {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          cyberpunkPurple.withOpacity(0.15),
-          cyberpunkCyan.withOpacity(0.08),
+          cyberpunkPurple.withValues(alpha: 0.15),
+          cyberpunkCyan.withValues(alpha: 0.08),
         ],
       ),
       borderRadius: BorderRadius.circular(16),
       border: Border.all(
-        color: cyberpunkPurple.withOpacity(0.3),
+        color: cyberpunkPurple.withValues(alpha: 0.3),
         width: 1,
       ),
       boxShadow: [
         BoxShadow(
-          color: cyberpunkPurple.withOpacity(0.15),
+          color: cyberpunkPurple.withValues(alpha: 0.15),
           blurRadius: 14,
           spreadRadius: 1,
           offset: const Offset(0, 4),
@@ -170,10 +170,10 @@ Widget buildMethodsCard(methodsController, controller) {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: cyberpunkPurple.withOpacity(0.2),
+                color: cyberpunkPurple.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: cyberpunkPurple.withOpacity(0.4),
+                  color: cyberpunkPurple.withValues(alpha: 0.4),
                   width: 1,
                 ),
               ),
@@ -202,7 +202,7 @@ Widget buildMethodsCard(methodsController, controller) {
                     'Select method',
                     style: TextStyle(
                       fontSize: 10,
-                      color: cyberpunkPurple.withOpacity(0.8),
+                      color: cyberpunkPurple.withValues(alpha: 0.8),
                       fontFamily: 'monospace',
                     ),
                   ),
@@ -215,10 +215,10 @@ Widget buildMethodsCard(methodsController, controller) {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: cyberpunkPurple.withOpacity(0.2),
+              color: cyberpunkPurple.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -236,15 +236,15 @@ Widget _buildHorizontalAddCard(controller, methodsController) {
     decoration: BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          cyberpunkCyan.withOpacity(0.2),
-          cyberpunkPurple.withOpacity(0.15),
+          cyberpunkCyan.withValues(alpha: 0.2),
+          cyberpunkPurple.withValues(alpha: 0.15),
         ],
       ),
-      border: Border.all(color: cyberpunkCyan.withOpacity(0.4), width: 1),
+      border: Border.all(color: cyberpunkCyan.withValues(alpha: 0.4), width: 1),
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: cyberpunkCyan.withOpacity(0.2),
+          color: cyberpunkCyan.withValues(alpha: 0.2),
           blurRadius: 12,
           spreadRadius: 1,
           offset: const Offset(0, 3),
@@ -264,7 +264,7 @@ Widget _buildHorizontalAddCard(controller, methodsController) {
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: cyberpunkCyan.withOpacity(0.15),
+                color: cyberpunkCyan.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(7),
               ),
               child: const Icon(
@@ -304,7 +304,7 @@ Widget _buildHorizontalOutputCard(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: cyberpunkPurple.withOpacity(0.15),
+              color: cyberpunkPurple.withValues(alpha: 0.15),
               blurRadius: 16,
               spreadRadius: 1,
               offset: const Offset(0, 4),
@@ -350,18 +350,18 @@ Widget _buildHorizontalInfoCard(methodsController, {context}) {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          cyberpunkGreen.withOpacity(0.15),
-          cyberpunkCyan.withOpacity(0.08),
+          cyberpunkGreen.withValues(alpha: 0.15),
+          cyberpunkCyan.withValues(alpha: 0.08),
         ],
       ),
       borderRadius: BorderRadius.circular(16),
       border: Border.all(
-        color: cyberpunkGreen.withOpacity(0.3),
+        color: cyberpunkGreen.withValues(alpha: 0.3),
         width: 1,
       ),
       boxShadow: [
         BoxShadow(
-          color: cyberpunkGreen.withOpacity(0.15),
+          color: cyberpunkGreen.withValues(alpha: 0.15),
           blurRadius: 14,
           spreadRadius: 1,
           offset: const Offset(0, 4),
@@ -378,10 +378,10 @@ Widget _buildHorizontalInfoCard(methodsController, {context}) {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: cyberpunkGreen.withOpacity(0.2),
+                color: cyberpunkGreen.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: cyberpunkGreen.withOpacity(0.4),
+                  color: cyberpunkGreen.withValues(alpha: 0.4),
                   width: 1,
                 ),
               ),
@@ -410,7 +410,7 @@ Widget _buildHorizontalInfoCard(methodsController, {context}) {
                     'Method info',
                     style: TextStyle(
                       fontSize: 10,
-                      color: cyberpunkGreen.withOpacity(0.8),
+                      color: cyberpunkGreen.withValues(alpha: 0.8),
                       fontFamily: 'monospace',
                     ),
                   ),
@@ -423,10 +423,10 @@ Widget _buildHorizontalInfoCard(methodsController, {context}) {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: cyberpunkGreen.withOpacity(0.2),
+              color: cyberpunkGreen.withValues(alpha: 0.2),
               width: 1,
             ),
           ),

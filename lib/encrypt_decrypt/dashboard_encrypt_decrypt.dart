@@ -67,13 +67,13 @@ class _DashboardEncryptDecryptState extends State<DashboardEncryptDecrypt>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              cyberpunkPurple.withOpacity(0.1),
-              cyberpunkCyan.withOpacity(0.05),
+              cyberpunkPurple.withValues(alpha: 0.1),
+              cyberpunkCyan.withValues(alpha: 0.05),
             ],
           ),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: cyberpunkPurple.withOpacity(0.2),
+            color: cyberpunkPurple.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -82,19 +82,19 @@ class _DashboardEncryptDecryptState extends State<DashboardEncryptDecrypt>
           indicator: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                cyberpunkGreen.withOpacity(0.3),
-                cyberpunkCyan.withOpacity(0.2),
+                cyberpunkGreen.withValues(alpha: 0.3),
+                cyberpunkCyan.withValues(alpha: 0.2),
               ],
             ),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: cyberpunkGreen.withOpacity(0.4),
+              color: cyberpunkGreen.withValues(alpha: 0.4),
               width: 1,
             ),
           ),
           indicatorSize: TabBarIndicatorSize.tab,
           labelColor: cyberpunkGreen,
-          unselectedLabelColor: cyberpunkCyan.withOpacity(0.7),
+          unselectedLabelColor: cyberpunkCyan.withValues(alpha: 0.7),
           labelStyle: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w800,

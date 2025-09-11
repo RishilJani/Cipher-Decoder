@@ -27,6 +27,7 @@ const Color cyberpunkGray = Color(0xFFB0B0B0);
 const Color cyberpunkGrayDark = Color(0xFF707070);
 const Color cyberpunkBlack = Color(0xFF000000);
 
+
 // Gradient color combinations
 const List<Color> cyberpunkGreenGradient = [
   cyberpunkGreen,

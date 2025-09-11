@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:cipher_decoder/utils/import_export.dart';
 
-
 class ApiRepo{
   var url = Uri.parse(BASE_URL);
 

@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.cyanAccent.withOpacity(0.8),
+                      color: Colors.cyanAccent.withValues(alpha : 0.8),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),

@@ -59,16 +59,16 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
                 gradient: widget.isSelected
                     ? LinearGradient(
                         colors: [
-                          const Color(0xFF00FF41).withOpacity(0.3),
-                          const Color(0xFF00FFFF).withOpacity(0.2),
+                          const Color(0xFF00FF41).withValues(alpha: 0.3),
+                          const Color(0xFF00FFFF).withValues(alpha: 0.2),
                         ],
                       )
                     : LinearGradient(
                         colors: [
                           const Color(0xFF00FFFF)
-                              .withOpacity(_isHovered ? 0.2 : 0.1),
+                              .withValues(alpha: _isHovered ? 0.2 : 0.1),
                           const Color(0xFF9D00FF)
-                              .withOpacity(_isHovered ? 0.15 : 0.1),
+                              .withValues(alpha: _isHovered ? 0.15 : 0.1),
                         ],
                       ),
                 border: Border.all(
@@ -76,7 +76,7 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
                       ? const Color(0xFF00FF41)
                       : (_isHovered
                           ? const Color(0xFF00FFFF)
-                          : const Color(0xFF00FFFF).withOpacity(0.5)),
+                          : const Color(0xFF00FFFF).withValues(alpha: 0.5)),
                   width: widget.isSelected ? 2 : 1,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -84,8 +84,8 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
                     ? [
                         BoxShadow(
                           color: widget.isSelected
-                              ? const Color(0xFF00FF41).withOpacity(0.4)
-                              : const Color(0xFF00FFFF).withOpacity(0.3),
+                              ? const Color(0xFF00FF41).withValues(alpha: 0.4)
+                              : const Color(0xFF00FFFF).withValues(alpha: 0.3),
                           blurRadius: 10,
                           spreadRadius: 1,
                         ),
@@ -164,12 +164,12 @@ class EncodeDecodeOptions extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF00FFFF).withOpacity(0.1),
+                      const Color(0xFF00FFFF).withValues(alpha: 0.1),
                       Colors.transparent,
                     ],
                   ),
                   border: Border.all(
-                    color: const Color(0xFF00FFFF).withOpacity(0.3),
+                    color: const Color(0xFF00FFFF).withValues(alpha: 0.3),
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(6),
@@ -207,20 +207,20 @@ class EncodeDecodeOptions extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      const Color(0xFF00FF41).withOpacity(0.1),
-                      const Color(0xFF00FFFF).withOpacity(0.1),
-                      Colors.black.withOpacity(0.3),
+                      const Color(0xFF00FF41).withValues(alpha: 0.1),
+                      const Color(0xFF00FFFF).withValues(alpha: 0.1),
+                      Colors.black.withValues(alpha: 0.3),
                     ],
                   ),
                   border: Border.all(
-                    color: const Color(0xFF00FF41).withOpacity(glowValue),
+                    color: const Color(0xFF00FF41).withValues(alpha: glowValue),
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
                       color:
-                          const Color(0xFF00FF41).withOpacity(glowValue * 0.2),
+                          const Color(0xFF00FF41).withValues(alpha: glowValue * 0.2),
                       blurRadius: 10,
                       spreadRadius: 1,
                     ),
@@ -261,13 +261,13 @@ class EncodeDecodeOptions extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: const Color(0xFF00FF41).withOpacity(0.5),
+                            color: const Color(0xFF00FF41).withValues(alpha: 0.5),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(4),
                           gradient: LinearGradient(
                             colors: [
-                              const Color(0xFF00FF41).withOpacity(0.1),
+                              const Color(0xFF00FF41).withValues(alpha: 0.1),
                               Colors.transparent,
                             ],
                           ),
@@ -315,7 +315,7 @@ class EncodeDecodeOptions extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00FF41).withOpacity(0.3),
+                color: const Color(0xFF00FF41).withValues(alpha: 0.3),
                 blurRadius: 20,
                 spreadRadius: 2,
               ),
@@ -330,7 +330,7 @@ class EncodeDecodeOptions extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: const Color(0xFF00FFFF).withOpacity(0.3),
+                      color: const Color(0xFF00FFFF).withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -411,13 +411,13 @@ class EncodeDecodeOptions extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: const Color(0xFF00FF41).withOpacity(0.3),
+                    color: const Color(0xFF00FF41).withValues(alpha: 0.3),
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(4),
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF00FF41).withOpacity(0.05),
+                      const Color(0xFF00FF41).withValues(alpha: 0.05),
                       Colors.transparent,
                     ],
                   ),
@@ -448,7 +448,7 @@ class EncodeDecodeOptions extends StatelessWidget {
         ),
       ),
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.8),
+      barrierColor: Colors.black.withValues(alpha: 0.8),
     );
   }
 }

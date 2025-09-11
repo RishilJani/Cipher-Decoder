@@ -108,18 +108,18 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              cyberpunkPurple.withOpacity(0.2),
-              cyberpunkCyan.withOpacity(0.1),
+              cyberpunkPurple.withValues(alpha: 0.2),
+              cyberpunkCyan.withValues(alpha : 0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: cyberpunkPurple.withOpacity(0.4),
+            color: cyberpunkPurple.withValues(alpha: 0.4),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: cyberpunkPurple.withOpacity(0.2),
+              color: cyberpunkPurple.withValues(alpha: 0.2),
               blurRadius: 20,
               spreadRadius: 2,
               offset: const Offset(0, 8),
@@ -136,10 +136,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: cyberpunkCyan.withOpacity(0.2),
+                      color: cyberpunkCyan.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: cyberpunkCyan.withOpacity(0.4),
+                        color: cyberpunkCyan.withValues(alpha: 0.4),
                         width: 1,
                       ),
                     ),
@@ -196,8 +196,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             subtitle: "BASE64, BASE32, and more",
             accentColor: cyberpunkCyan,
             gradientColors: [
-              cyberpunkCyan.withOpacity(0.25),
-              cyberpunkCyan.withOpacity(0.08)
+              cyberpunkCyan.withValues(alpha: 0.25),
+              cyberpunkCyan.withValues(alpha: 0.08)
             ],
             onTap: () {
               // Get.toNamed(RT_DASHBOARD_ENCODE_DECODE);
@@ -211,8 +211,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             subtitle: "Caesar, Atbash, Rail Fence, and more",
             accentColor: cyberpunkGreen,
             gradientColors: [
-              cyberpunkGreen.withOpacity(0.25),
-              cyberpunkGreen.withOpacity(0.08)
+              cyberpunkGreen.withValues(alpha: 0.25),
+              cyberpunkGreen.withValues(alpha: 0.08)
             ],
             onTap: () {
               Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
@@ -241,12 +241,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: accentColor.withOpacity(0.4),
+          color: accentColor.withValues(alpha: 0.4),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: accentColor.withOpacity(0.15),
+            color: accentColor.withValues(alpha: 0.15),
             blurRadius: 20,
             spreadRadius: 2,
             offset: const Offset(0, 8),
@@ -270,10 +270,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: accentColor.withOpacity(0.15),
+                          color: accentColor.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: accentColor.withOpacity(0.4),
+                            color: accentColor.withValues(alpha: 0.4),
                             width: 1,
                           ),
                         ),
@@ -303,10 +303,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: accentColor.withOpacity(0.2),
+                    color: accentColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: accentColor.withOpacity(0.4),
+                      color: accentColor.withValues(alpha: 0.4),
                       width: 1,
                     ),
                   ),
@@ -334,28 +334,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                   textAlign: TextAlign.center,
                 ),
 
-                // const SizedBox(height: 20),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                //   decoration: BoxDecoration(
-                //     color: accentColor.withOpacity(0.25),
-                //     borderRadius: BorderRadius.circular(20),
-                //     border: Border.all(
-                //       color: accentColor.withOpacity(0.5),
-                //       width: 1,
-                //     ),
-                //   ),
-                //   child: Text(
-                //     'SELECT',
-                //     style: TextStyle(
-                //       fontSize: 13,
-                //       color: accentColor,
-                //       fontFamily: 'monospace',
-                //       fontWeight: FontWeight.w700,
-                //       letterSpacing: 1.5,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -365,5 +343,4 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   }
 
 }
-
 

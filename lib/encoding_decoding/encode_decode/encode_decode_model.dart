@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:cipher_decoder/utils/import_export.dart';
 
 abstract class EncodeDecodeModel{

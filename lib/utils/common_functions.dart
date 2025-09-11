@@ -43,8 +43,8 @@ Widget myInputfield(
       boxShadow: [
         BoxShadow(
           color: readonly
-              ? cyberpunkPurple.withOpacity(0.15)
-              : cyberpunkCyan.withOpacity(0.15),
+              ? cyberpunkPurple.withValues(alpha: 0.15)
+              : cyberpunkCyan.withValues(alpha: 0.15),
           blurRadius: 16,
           spreadRadius: 2,
           offset: const Offset(0, 4),
@@ -59,8 +59,8 @@ Widget myInputfield(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                cyberpunkCyan.withOpacity(0.2),
-                cyberpunkCyan.withOpacity(0.1),
+                cyberpunkCyan.withValues(alpha: 0.2),
+                cyberpunkCyan.withValues(alpha: 0.1),
               ],
             ),
             borderRadius: const BorderRadius.only(
@@ -68,7 +68,7 @@ Widget myInputfield(
               topRight: Radius.circular(16),
             ),
             border: Border.all(
-              color: readonly ? cyberpunkPurple.withOpacity(0.3) : cyberpunkCyan.withOpacity(0.3),
+              color: readonly ? cyberpunkPurple.withValues(alpha: 0.3) : cyberpunkCyan.withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -99,7 +99,7 @@ Widget myInputfield(
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
-              color: cyberpunkGreen.withOpacity(0.4),
+              color: cyberpunkGreen.withValues(alpha: 0.4),
               fontFamily: 'monospace',
               fontSize: 14,
             ),
@@ -109,7 +109,7 @@ Widget myInputfield(
                 bottomRight: Radius.circular(16),
               ),
               borderSide: BorderSide(
-                color: cyberpunkCyan.withOpacity(0.3),
+                color: cyberpunkCyan.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -119,7 +119,7 @@ Widget myInputfield(
                 bottomRight: Radius.circular(16),
               ),
               borderSide: BorderSide(
-                color: cyberpunkCyan.withOpacity(0.3),
+                color: cyberpunkCyan.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -265,7 +265,7 @@ Widget _getDescriptionList({ controller , context}){
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF00FF41).withOpacity(0.6),
+                        color: const Color(0xFF00FF41).withValues(alpha: 0.6),
                         blurRadius: 6,
                         spreadRadius: 1,
                       ),
@@ -288,13 +288,13 @@ Widget _getDescriptionList({ controller , context}){
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: const Color(0xFF00FF41).withOpacity(0.5),
+                      color: const Color(0xFF00FF41).withValues(alpha: 0.5),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(3),
                     gradient: LinearGradient(
                       colors: [
-                        const Color(0xFF00FF41).withOpacity(0.1),
+                        const Color(0xFF00FF41).withValues(alpha: 0.1),
                         Colors.transparent,
                       ],
                     ),
@@ -321,7 +321,7 @@ Widget _getDescriptionList({ controller , context}){
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
-                    color: const Color(0xFF00FFFF).withOpacity(0.3),
+                    color: const Color(0xFF00FFFF).withValues(alpha: 0.3),
                     width: 2,
                   ),
                 ),
@@ -399,10 +399,10 @@ Widget enhancedClearIconButton({
     width: 40,
     margin: const EdgeInsets.only(left: 5,right: 10),
     decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkRed.withOpacity(0.4), width: 1),
+      border: Border.all(color: cyberpunkRed.withValues(alpha: 0.4), width: 1),
       borderRadius: BorderRadius.circular(8),
       gradient: LinearGradient(
-        colors: [ cyberpunkRed.withOpacity(0.2),  cyberpunkRed.withOpacity(0.1),
+        colors: [ cyberpunkRed.withValues(alpha: 0.2),  cyberpunkRed.withValues(alpha: 0.1),
         ],
       ),
     ),
@@ -430,17 +430,17 @@ Widget buildMobilePasteButton({controller, onChange}) {
     width: 40,
     margin: const EdgeInsets.only(left: 5, right: 5),
     decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkCyan.withOpacity(0.4), width: 1),
+      border: Border.all(color: cyberpunkCyan.withValues(alpha: 0.4), width: 1),
       borderRadius: BorderRadius.circular(6),
       gradient: LinearGradient(
         colors: [
-          cyberpunkCyan.withOpacity(0.2),
-          cyberpunkCyan.withOpacity(0.1),
+          cyberpunkCyan.withValues(alpha: 0.2),
+          cyberpunkCyan.withValues(alpha: 0.1),
         ],
       ),
       // boxShadow: [
       //   BoxShadow(
-      //     color: cyberpunkCyan.withOpacity(0.2),
+      //     color: cyberpunkCyan.withValues(0.2),
       //     blurRadius: 6,
       //     spreadRadius: 1,
       //     offset: const Offset(0, 2),
@@ -481,17 +481,17 @@ Widget buildMobileCopyButton(controller, bool isEncoding) {
     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
     margin: const EdgeInsets.only(left: 5, right: 10),
     decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkPurple.withOpacity(0.4), width: 1),
+      border: Border.all(color: cyberpunkPurple.withValues(alpha: 0.4), width: 1),
       borderRadius: BorderRadius.circular(6),
       gradient: LinearGradient(
         colors: [
-          cyberpunkPurple.withOpacity(0.2),
-          cyberpunkPurple.withOpacity(0.1),
+          cyberpunkPurple.withValues(alpha: 0.2),
+          cyberpunkPurple.withValues(alpha: 0.1),
         ],
       ),
       boxShadow: [
         BoxShadow(
-          color: cyberpunkPurple.withOpacity(0.2),
+          color: cyberpunkPurple.withValues(alpha: 0.2),
           blurRadius: 6,
           spreadRadius: 1,
           offset: const Offset(0, 2),
@@ -578,10 +578,10 @@ PreferredSizeWidget buildEnhancedAppBar({title , content , bottom})   {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
-            color: cyberpunkGreen.withOpacity(0.2),
+            color: cyberpunkGreen.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: cyberpunkGreen.withOpacity(0.4),
+              color: cyberpunkGreen.withValues(alpha: 0.4),
               width: 1,
             ),
           ),

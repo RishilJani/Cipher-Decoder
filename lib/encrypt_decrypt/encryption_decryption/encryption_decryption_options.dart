@@ -21,7 +21,9 @@ class EncryptionDecryptionOptions extends StatefulWidget {
       _EncryptionDecryptionOptionsState();
 }
 
-class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOptions> with SingleTickerProviderStateMixin {
+class _EncryptionDecryptionOptionsState
+    extends State<EncryptionDecryptionOptions>
+    with SingleTickerProviderStateMixin {
   late AnimationController _glowController;
   late Animation<double> _glowAnimation;
   double fieldSpacing = 20.0;
@@ -54,12 +56,12 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF00FFFF).withOpacity(0.1),
+                      cyberpunkCyan.withValues(alpha: 0.1),
                       Colors.transparent,
                     ],
                   ),
                   border: Border.all(
-                    color: const Color(0xFF00FFFF).withOpacity(0.3),
+                    color: cyberpunkCyan.withValues(alpha: 0.3),
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(6),
@@ -83,12 +85,13 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                     margin: const EdgeInsets.only(left: 8),
                     padding: const EdgeInsets.all(0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFFF0040), width: 1),
+                      border:
+                          Border.all(color: const Color(0xFFFF0040), width: 1),
                       borderRadius: BorderRadius.circular(6),
                       gradient: LinearGradient(
                         colors: [
-                          const Color(0xFFFF0040).withOpacity(0.1),
-                          const Color(0xFFFF0040).withOpacity(0.05),
+                          const Color(0xFFFF0040).withValues(alpha: 0.1),
+                          const Color(0xFFFF0040).withValues(alpha: 0.05),
                         ],
                       ),
                     ),
@@ -128,21 +131,21 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      const Color(0xFF00FF41).withOpacity(0.1),
-                      const Color(0xFF00FFFF).withOpacity(0.1),
-                      Colors.black.withOpacity(0.3),
+                      const Color(0xFF00FF41).withValues(alpha: 0.1),
+                      const Color(0xFF00FFFF).withValues(alpha: 0.1),
+                      Colors.black.withValues(alpha: 0.3),
                     ],
                   ),
                   border: Border.all(
                     color: const Color(0xFF00FF41)
-                        .withOpacity(_glowAnimation.value),
+                        .withValues(alpha: _glowAnimation.value),
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
                       color: const Color(0xFF00FF41)
-                          .withOpacity(_glowAnimation.value * 0.2),
+                          .withValues(alpha: _glowAnimation.value * 0.2),
                       blurRadius: 10,
                       spreadRadius: 1,
                     ),
@@ -155,15 +158,6 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // const Text(
-                          //   '> ACTIVE PROTOCOL:',
-                          //   style: TextStyle(
-                          //     fontSize: 10,
-                          //     color: Color(0xFF00FFFF),
-                          //     fontFamily: 'monospace',
-                          //     letterSpacing: 1,
-                          //   ),
-                          // ),
                           const SizedBox(height: 4),
                           Text(
                             widget.encryptionDecryptionOptionController
@@ -183,13 +177,13 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: const Color(0xFF00FF41).withOpacity(0.5),
+                            color: const Color(0xFF00FF41).withValues(alpha: 0.5),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(4),
                           gradient: LinearGradient(
                             colors: [
-                              const Color(0xFF00FF41).withOpacity(0.1),
+                              const Color(0xFF00FF41).withValues(alpha: 0.1),
                               Colors.transparent,
                             ],
                           ),
@@ -288,7 +282,7 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00FF41).withOpacity(0.3),
+                color: const Color(0xFF00FF41).withValues(alpha: 0.3),
                 blurRadius: 20,
                 spreadRadius: 2,
               ),
@@ -303,7 +297,7 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: const Color(0xFF00FFFF).withOpacity(0.3),
+                      color: const Color(0xFF00FFFF).withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -389,13 +383,13 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: const Color(0xFF00FF41).withOpacity(0.3),
+                    color: const Color(0xFF00FF41).withValues(alpha: 0.3),
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(4),
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF00FF41).withOpacity(0.05),
+                      const Color(0xFF00FF41).withValues(alpha: 0.05),
                       Colors.transparent,
                     ],
                   ),
@@ -426,7 +420,7 @@ class _EncryptionDecryptionOptionsState extends State<EncryptionDecryptionOption
         ),
       ),
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.8),
+      barrierColor: Colors.black.withValues(alpha: 0.8),
     );
   }
 
@@ -452,7 +446,8 @@ class _CyberpunkMethodCard extends StatefulWidget {
   State<_CyberpunkMethodCard> createState() => _CyberpunkMethodCardState();
 }
 
-class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard> with SingleTickerProviderStateMixin {
+class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _hoverController;
   late Animation<double> _scaleAnimation;
   bool _isHovered = false;
@@ -483,16 +478,16 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard> with SingleT
                 gradient: widget.isSelected
                     ? LinearGradient(
                         colors: [
-                          const Color(0xFF00FF41).withOpacity(0.3),
-                          const Color(0xFF00FFFF).withOpacity(0.2),
+                          const Color(0xFF00FF41).withValues(alpha: 0.3),
+                          const Color(0xFF00FFFF).withValues(alpha: 0.2),
                         ],
                       )
                     : LinearGradient(
                         colors: [
                           const Color(0xFF00FFFF)
-                              .withOpacity(_isHovered ? 0.2 : 0.1),
+                              .withValues(alpha: 0.2),
                           const Color(0xFF9D00FF)
-                              .withOpacity(_isHovered ? 0.15 : 0.1),
+                              .withValues(alpha: 0.15),
                         ],
                       ),
                 border: Border.all(
@@ -500,7 +495,7 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard> with SingleT
                       ? const Color(0xFF00FF41)
                       : (_isHovered
                           ? const Color(0xFF00FFFF)
-                          : const Color(0xFF00FFFF).withOpacity(0.5)),
+                          : const Color(0xFF00FFFF).withValues(alpha: 0.5)),
                   width: widget.isSelected ? 2 : 1,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -508,8 +503,8 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard> with SingleT
                     ? [
                         BoxShadow(
                           color: widget.isSelected
-                              ? const Color(0xFF00FF41).withOpacity(0.4)
-                              : const Color(0xFF00FFFF).withOpacity(0.3),
+                              ? const Color(0xFF00FF41).withValues(alpha: 0.4)
+                              : const Color(0xFF00FFFF).withValues(alpha: 0.3),
                           blurRadius: 10,
                           spreadRadius: 1,
                         ),

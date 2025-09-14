@@ -21,8 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     // Logo fade + scale animation
-    _logoController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _logoController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _logoAnimation = CurvedAnimation(
       parent: _logoController,
       curve: Curves.easeInOut,
@@ -30,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
     _logoController.forward();
 
     // Start typewriter effect after logo appears
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       _startTypingEffect();
     });
 

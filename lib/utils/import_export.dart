@@ -47,8 +47,13 @@ export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_opt
 export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
 // endregion
 
+//region Main Navigation
+export 'package:cipher_decoder/main_navigation_screen/main_navigation_screen.dart';
+export 'package:cipher_decoder/main_navigation_screen/main_navigation_screen_controller.dart';
+//endregion
 
-// region Feedback
+//region Feedback
 export 'package:cipher_decoder/feedback/feedback_screen.dart';
 export 'package:cipher_decoder/feedback/feedback_controller.dart';
 export 'package:cipher_decoder/feedback/api_repo.dart';
+// endregion

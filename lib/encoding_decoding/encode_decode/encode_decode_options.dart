@@ -43,15 +43,15 @@ class _CyberpunkMethodCardState extends State<_CyberpunkMethodCard>
           child: GestureDetector(
             onTap: widget.onTap,
             onTapDown: (_) {
-              setState(() => _isHovered = true);
+              // setState(() => _isHovered = true);
               _hoverController.forward();
             },
             onTapUp: (_) {
-              setState(() => _isHovered = false);
+              // setState(() => _isHovered = false);
               _hoverController.reverse();
             },
             onTapCancel: () {
-              setState(() => _isHovered = false);
+              // setState(() => _isHovered = false);
               _hoverController.reverse();
             },
             child: Container(

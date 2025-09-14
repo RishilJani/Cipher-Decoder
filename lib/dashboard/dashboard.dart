@@ -190,6 +190,21 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
           _buildWelcomeSection(),
           const SizedBox(height: 32),
           _buildActionCard(
+            icon: Icons.lock_outline,
+            title: "Encrypt / Decrypt",
+            description: "Secure your data with strong encryption algorithms",
+            subtitle: "Caesar, Atbash, Rail Fence, and more",
+            accentColor: cyberpunkGreen,
+            gradientColors: [
+              cyberpunkGreen.withValues(alpha: 0.25),
+              cyberpunkGreen.withValues(alpha: 0.08)
+            ],
+            onTap: () {
+              // Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
+            },
+          ),
+          const SizedBox(height: 24),
+          _buildActionCard(
             icon: Icons.transform,
             title: "Encode / Decode",
             description: "Transform text and files with various encoding schemes",
@@ -201,21 +216,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             ],
             onTap: () {
               // Get.toNamed(RT_DASHBOARD_ENCODE_DECODE);
-            },
-          ),
-          const SizedBox(height: 24),
-          _buildActionCard(
-            icon: Icons.lock_outline,
-            title: "Encrypt / Decrypt",
-            description: "Secure your data with strong encryption algorithms",
-            subtitle: "Caesar, Atbash, Rail Fence, and more",
-            accentColor: cyberpunkGreen,
-            gradientColors: [
-              cyberpunkGreen.withValues(alpha: 0.25),
-              cyberpunkGreen.withValues(alpha: 0.08)
-            ],
-            onTap: () {
-              Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
             },
           ),
         ],
@@ -256,7 +256,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          // onTap: onTap,
+          onTap: onTap,
           borderRadius: BorderRadius.circular(20),
           child: Container(
             padding: const EdgeInsets.all(28),

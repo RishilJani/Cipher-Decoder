@@ -2,7 +2,6 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -15,6 +14,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _pulseAnimation;
+
+  var navigationController = Get.find<MainNavigationScreenController>();
 
   @override
   void initState() {
@@ -200,7 +201,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
               cyberpunkGreen.withValues(alpha: 0.08)
             ],
             onTap: () {
-              // Get.toNamed(RT_DASHBOARD_ENCRYPT_DECRYPT);
+              navigationController.changeIndex(1);
             },
           ),
           const SizedBox(height: 24),
@@ -215,7 +216,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
               cyberpunkCyan.withValues(alpha: 0.08)
             ],
             onTap: () {
-              // Get.toNamed(RT_DASHBOARD_ENCODE_DECODE);
+              navigationController.changeIndex(2);
             },
           ),
         ],

@@ -9,33 +9,32 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen>
     with TickerProviderStateMixin {
-  late TabController _tabController;
+  // late TabController _tabController;
 
-  var navigationController = Get.put(MainNavigationScreenController());
-  static const double _headerHeight = 150;
+  MainNavigationScreenController navigationController = Get.put(MainNavigationScreenController());
+  static const double _headerHeight = 130;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging &&
-          navigationController.selectedIndex.value != _tabController.index) {
-        navigationController.changeIndex(_tabController.index);
+
+    navigationController
+        .setTabController(TabController(length: 3, vsync: this));
+    navigationController.tabController.addListener(() {
+      if (!navigationController.tabController.indexIsChanging &&
+          navigationController.selectedIndex.value !=
+              navigationController.tabController.index) {
+        navigationController
+            .changeIndex(navigationController.tabController.index);
       }
     });
   }
 
   late List<Widget> pages = [
     _buildDashboardTab(),
-    _buildEncodeDecodeTab(),
     _buildEncryptDecryptTab(),
+    _buildEncodeDecodeTab(),
   ];
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,32 +52,31 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
             ],
           ),
         ),
-        child: Obx((){
-              return Column(
-                children: [
-                  // Enhanced Header
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 350),
-                    curve: Curves.easeInOut,
-                    child: SizedBox(
-                      height: navigationController.selectedIndex.value == 0
-                          ? _headerHeight
-                          : 0,
-                      child: RepaintBoundary(child: _buildEnhancedHeader()),
-                    ),
-                  ),
+        child: Obx(() {
+          return Column(
+            children: [
+              // Enhanced Header
+              AnimatedSize(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeInOut,
+                child: SizedBox(
+                  height: navigationController.selectedIndex.value == 0
+                      ? _headerHeight
+                      : 0,
+                  child: RepaintBoundary(child: _buildEnhancedHeader()),
+                ),
+              ),
 
-                  // Main Content Area
-                  Expanded(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: pages,
-                    ),
-                  ),
-                ],
-              );
-            }
-        ),
+              // Main Content Area
+              Expanded(
+                child: TabBarView(
+                  controller: navigationController.tabController,
+                  children: pages,
+                ),
+              ),
+            ],
+          );
+        }),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -181,6 +179,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     );
   }
 
+  //region Tabs
   Widget _buildDashboardTab() {
     return const Dashboard();
   }
@@ -192,6 +191,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
   Widget _buildEncryptDecryptTab() {
     return const DashboardEncryptDecrypt();
   }
+  //endregion
 
   Widget _buildBottomNavigationBar() {
     return Container(
@@ -213,20 +213,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
         ],
       ),
       child: SafeArea(
-        child: Obx((){
+        child: Obx(() {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 buildNavItem(0, Icons.dashboard, 'Dashboard'),
-                buildNavItem(1, Icons.transform, 'Encode/Decode'),
-                buildNavItem(2, Icons.lock, 'Encrypt/Decrypt'),
+                buildNavItem(1, Icons.lock, 'Encrypt/Decrypt'),
+                buildNavItem(2, Icons.transform, 'Encode/Decode'),
               ],
             ),
           );
-        }
-        ),
+        }),
       ),
     );
   }
@@ -236,11 +235,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     return GestureDetector(
       onTap: () {
         navigationController.changeIndex(index);
-        _tabController.animateTo(
-          index,
-          duration: const Duration(milliseconds: 600),
-          curve: Curves.easeInOut,
-        );
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),

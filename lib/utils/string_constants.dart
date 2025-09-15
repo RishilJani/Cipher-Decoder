@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 const String APPLICATION_NAME = "SherlockCode";
+const String VERSION_NO = "1.0.0";
 
 // region AppBar title
 const String APPBAR_TITLE_DASHBOARD = "Dashboard";
@@ -55,6 +56,7 @@ const String RT_SPLASH_SCREEN = "/splash_screen";
 const String RT_DASHBOARD = "/dashboard";
 const String RT_MAIN_SCREEN = "/main_screen";
 const String RT_FEEDBACK_SCREEN = "/feedback_screen";
+const String RT_ABOUT_US_SCREEN = "/about_us_screen";
 const String RT_DASHBOARD_ENCRYPT_DECRYPT = "/dashboard_encrypt_decrypt";
 const String RT_DASHBOARD_ENCODE_DECODE = "/dashboard_encode_decode";
 
@@ -86,4 +88,15 @@ var base32RegExp = RegExp(r'^(?:[A-Z2-7]{8})*(?:[A-Z2-7]{2}======|[A-Z2-7]{4}===
 
 // region Api
 const String BASE_URL = "http://api.aswdc.in/Api/MST_AppVersions/PostAppFeedback/AppPostFeedback";
+
+const String API_APP_NAME = "AppName";
+const String API_VERSiON_NO = "VersionNo";
+const String API_PLATFORM = "Platform";
+const String API_PERSON_NAME = "PersonName";
+const String API_MOBILE = "Mobile";
+const String API_EMAIL = "Email";
+const String API_MESSAGE = "Message";
+const String API_REMARKS = "Remarks";
+const String API_KEY = "API_KEY";
+
 // endregion

@@ -219,6 +219,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
               navigationController.changeIndex(2);
             },
           ),
+          const SizedBox(height: 24),
+          buildFooter(),
         ],
       ),
     );
@@ -338,6 +340,37 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildFooter(){
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: cyberpunkPurple.withValues(alpha: 0.4),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: cyberpunkPurple.withValues(alpha: 0.2),
+              blurRadius: 20,
+              spreadRadius: 2,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            buildFeedbackButton(),
+            buildAboutUsButton(),
+          ],
         ),
       ),
     );

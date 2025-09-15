@@ -1,13 +1,13 @@
 import 'package:cipher_decoder/utils/import_export.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class MySplashScreen extends StatefulWidget {
+  const MySplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<MySplashScreen> createState() => _MySplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _MySplashScreenState extends State<MySplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _logoController;
   late Animation<double> _logoAnimation;

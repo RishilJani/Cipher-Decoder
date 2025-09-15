@@ -9,7 +9,6 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen>
     with TickerProviderStateMixin {
-  // late TabController _tabController;
 
   MainNavigationScreenController navigationController = Get.put(MainNavigationScreenController());
   static const double _headerHeight = 130;
@@ -60,9 +59,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
                 duration: const Duration(milliseconds: 350),
                 curve: Curves.easeInOut,
                 child: SizedBox(
-                  height: navigationController.selectedIndex.value == 0
-                      ? _headerHeight
-                      : 0,
+                  height: navigationController.selectedIndex.value == 0  ? _headerHeight : 0,
                   child: RepaintBoundary(child: _buildEnhancedHeader()),
                 ),
               ),
@@ -85,7 +82,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
   Widget _buildEnhancedHeader() {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Main Title with Glow Effect
           Container(
@@ -128,52 +126,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
             ),
           ),
 
-          const SizedBox(height: 10),
-
-          // // Status Indicator
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Container(
-          //       width: 10,
-          //       height: 10,
-          //       decoration: BoxDecoration(
-          //         color: cyberpunkGreen,
-          //         borderRadius: BorderRadius.circular(5),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: cyberpunkGreen.withValues(0.6),
-          //             blurRadius: 12,
-          //             spreadRadius: 2,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     const SizedBox(width: 12),
-          //     Container(
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          //       decoration: BoxDecoration(
-          //         color: cyberpunkGreen.withValues(0.2),
-          //         borderRadius: BorderRadius.circular(16),
-          //         border: Border.all(
-          //           color: cyberpunkGreen.withValues(0.4),
-          //           width: 1,
-          //         ),
-          //       ),
-          //       child: const Text(
-          //         'SYSTEM ONLINE',
-          //         style: TextStyle(
-          //           fontSize: 12,
-          //           color: cyberpunkGreen,
-          //           fontFamily: 'monospace',
-          //           fontWeight: FontWeight.w700,
-          //           letterSpacing: 1.2,
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

@@ -2,25 +2,34 @@ import 'package:http/http.dart' as http;
 import 'package:cipher_decoder/utils/import_export.dart';
 
 class ApiRepo{
+  ApiRepo._internal();
+
+  static ApiRepo _instance = ApiRepo._internal();
+  factory ApiRepo(){
+    return _instance;
+  }
+
+
   var url = Uri.parse(BASE_URL);
 
-  Future<bool> sendData({data}) async{
-    print("sending data using api ::::::::: ");
+  Future<bool> sendData(Map<String,dynamic> data) async{
     try {
       var res = await http.post(
         url,
         body: jsonEncode(data),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          API_KEY : "1234",
+        },
       );
       if(res.statusCode == 200){
-        print("data sent using api ::::::::: ");
+        showSnackBar( title: "Feedback",  message: "Submitted Successfully", colorText: cyberpunkBlack, backgroundColor: cyberpunkGreenLight);
         return true;
       }else{
-        print("Error....... ${res.statusCode}");
+        showSnackBar( title: "Feedback",  message: "Not submitted",  colorText: cyberpunkBlack, backgroundColor: cyberpunkRedDark);
         return false;
       }
     } catch(e){
-      print("Error....... $e");
       return false;
     }
   }

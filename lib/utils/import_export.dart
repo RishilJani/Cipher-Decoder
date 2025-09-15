@@ -4,12 +4,19 @@ export 'package:get/get.dart';
 export 'dart:async';
 export 'dart:convert';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:aswdc_flutter_pub/aswdc_flutter_pub.dart';
 
+//region AboutUs
+export 'package:cipher_decoder/about_us/about_us.dart';
+//endregion
 
+//region Dashboard
 export 'package:cipher_decoder/dashboard/dashboard.dart';
 export 'package:cipher_decoder/dashboard/splash_screen.dart';
+//endregion
 
 // region Utils
+export 'package:cipher_decoder/utils/app_routes.dart';
 export 'package:cipher_decoder/utils/string_constants.dart';
 export 'package:cipher_decoder/utils/common_functions.dart';
 export 'package:cipher_decoder/utils/colors.dart';
@@ -54,6 +61,5 @@ export 'package:cipher_decoder/main_navigation_screen/main_navigation_screen_con
 
 //region Feedback
 export 'package:cipher_decoder/feedback/feedback_screen.dart';
-export 'package:cipher_decoder/feedback/feedback_controller.dart';
 export 'package:cipher_decoder/feedback/api_repo.dart';
 // endregion

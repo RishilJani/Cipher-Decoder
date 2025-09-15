@@ -42,7 +42,7 @@ class CipherDecoderApp extends StatelessWidget {
           iconTheme: IconThemeData(color: cyberpunkCyan),
         ),
         cardTheme: CardThemeData(
-          color: cyberpunkDarkElevated,
+          color: cyberpunkGrayDark,
           elevation: 8,
           shadowColor: cyberpunkGreen.withValues(alpha : 0.3),
           shape: RoundedRectangleBorder(
@@ -194,14 +194,8 @@ class CipherDecoderApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: RT_SPLASH_SCREEN,
-      getPages: [
-        GetPage(name: RT_SPLASH_SCREEN, page: () => SplashScreen()),
-        GetPage(name: RT_FEEDBACK_SCREEN, page: () => FeedbackScreen()),
-        GetPage(name: RT_MAIN_SCREEN, page: () => const MainNavigationScreen()),
-        GetPage(name: RT_DASHBOARD_ENCODE_DECODE,  page: () => const DashboardEncodeDecode(),),
-        GetPage(name: RT_DASHBOARD_ENCRYPT_DECRYPT,  page: () => const DashboardEncryptDecrypt(), ),
-      ],
+      initialRoute: AppRoutes.InitialRoute,
+      getPages: AppRoutes.pages,
     );
   }
 }

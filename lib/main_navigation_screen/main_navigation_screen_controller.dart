@@ -7,12 +7,13 @@ class MainNavigationScreenController extends GetxController{
   void setTabController(TabController controller) {
     tabController = controller;
   }
+
   void changeIndex(int ind){
     selectedIndex.value = ind;
     tabController.animateTo(
       ind,
-      duration: const Duration(milliseconds: 700),
-      curve: Curves.easeInCubic,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
     );
   }
 }

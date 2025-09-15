@@ -2,37 +2,36 @@ import 'package:cipher_decoder/utils/import_export.dart';
 
 Widget myInputfield(
     {key,
-      required context,
-      required String textTitle,
-      String? hintText,
-      suffixIcon,
-      required controller,
-      minLines,
-      maxLines,
-      keyboardType,
-      textInputAction,
-      inputFormatters,
-      onChanged,
-      validator,
-      bool readonly = false,
-      bool isEncode = true,
-      bool isPlain  = true,
-      methodController})
-{
-  if (!checkAllTypes(controller: controller) && controller is! TextEditingController) {
-    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
+    required context,
+    required String textTitle,
+    String? hintText,
+    suffixIcon,
+    required controller,
+    minLines,
+    maxLines,
+    keyboardType,
+    textInputAction,
+    inputFormatters,
+    onChanged,
+    validator,
+    bool readonly = false,
+    bool isEncode = true,
+    bool isPlain = true,
+    methodController}) {
+  if (!checkAllTypes(controller: controller) &&
+      controller is! TextEditingController) {
+    throw ControllerTypeException(
+        message: "Controller is Not right ::: ${controller.runtimeType}");
   }
 
   TextEditingController ctr;
   if (isPlain) {
     if (key != null) {
       ctr = controller;
-    }
-    else {
+    } else {
       ctr = controller.plainTextController;
     }
-  }
-  else {
+  } else {
     ctr = controller.cipherTextController;
   }
 
@@ -68,7 +67,9 @@ Widget myInputfield(
               topRight: Radius.circular(16),
             ),
             border: Border.all(
-              color: readonly ? cyberpunkPurple.withValues(alpha: 0.3) : cyberpunkCyan.withValues(alpha: 0.3),
+              color: readonly
+                  ? cyberpunkPurple.withValues(alpha: 0.3)
+                  : cyberpunkCyan.withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -142,7 +143,9 @@ Widget myInputfield(
                 suffixIcon ?? const SizedBox(width: 0),
                 Visibility(
                   visible: isEncode,
-                  child:  enhancedClearIconButton(controller: controller, encryptionDecryptionOptionsController: methodController),
+                  child: enhancedClearIconButton(
+                      controller: controller,
+                      encryptionDecryptionOptionsController: methodController),
                 ),
               ],
             ),
@@ -168,33 +171,43 @@ Widget myInputfield(
   );
 }
 
-dynamic getMethod({required  element}){
-  if(element is EncryptionDecryptionTypes){
-    if(element == EncryptionDecryptionTypes.Ceaser_Cipher){ return new CeaseCipher();}
-    else if(element == EncryptionDecryptionTypes.Atbash_Cipher){ return new AtbashCipher();}
-    else if(element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher){ return new MonoAlphabaticCipher(); }
-    else if(element == EncryptionDecryptionTypes.Rail_Fence_Cipher){ return new RailFenceCipher();}
-  }
-  else if(element is EncodeDecodeTypes){
-    if(element == EncodeDecodeTypes.Base64){ return Base64(); }
-    if(element == EncodeDecodeTypes.Base32){ return Base32(); }
-  }
-  else{
-    throw ControllerTypeException(message: "encrypt decrypt element is not right ${element.runtimeType}");
+dynamic getMethod({required element}) {
+  if (element is EncryptionDecryptionTypes) {
+    if (element == EncryptionDecryptionTypes.Ceaser_Cipher) {
+      return new CeaseCipher();
+    } else if (element == EncryptionDecryptionTypes.Atbash_Cipher) {
+      return new AtbashCipher();
+    } else if (element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher) {
+      return new MonoAlphabaticCipher();
+    } else if (element == EncryptionDecryptionTypes.Rail_Fence_Cipher) {
+      return new RailFenceCipher();
+    }
+  } else if (element is EncodeDecodeTypes) {
+    if (element == EncodeDecodeTypes.Base64) {
+      return Base64();
+    }
+    if (element == EncodeDecodeTypes.Base32) {
+      return Base32();
+    }
+  } else {
+    throw ControllerTypeException(
+        message: "encrypt decrypt element is not right ${element.runtimeType}");
   }
 }
 
 // region Description
-Widget description({required context, controller}){
-  if(controller is EncodeController || controller is DecodeController){
-    return const SizedBox(height: 0,);
+Widget description({required context, controller}) {
+  if (controller is EncodeController || controller is DecodeController) {
+    return const SizedBox(
+      height: 0,
+    );
   }
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _getDescriptionList(controller: controller,context: context),
+        _getDescriptionList(controller: controller, context: context),
 
         // character mapping for encryption decryption
         Visibility(
@@ -220,30 +233,32 @@ Widget description({required context, controller}){
 }
 
 // to write multiple descriptions for encryption decryption
-Widget _getDescriptionList({ controller , context}){
+Widget _getDescriptionList({controller, context}) {
   List<String> temp = [];
   return ListView.builder(
     shrinkWrap: true,
-    itemCount: controller is EncryptionDecryptionOptionsController ? controller.options.length : 1,
+    itemCount: controller is EncryptionDecryptionOptionsController
+        ? controller.options.length
+        : 1,
     physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (context, index) {
       bool isCame = false;
       String txt1;
       String description = "";
-      if(controller is EncodeDecodeOptionController){
+      if (controller is EncodeDecodeOptionController) {
         txt1 = controller.selectedMethod.value.title!.toUpperCase();
-        if(temp.contains(txt1)){
+        if (temp.contains(txt1)) {
           isCame = true;
-        }else{
+        } else {
           temp.add(txt1);
           description = controller.selectedMethod.value.description!;
         }
-      }else{
+      } else {
         String name = controller.options[index].title!.toUpperCase();
         txt1 = '${index + 1}. $name';
-        if(temp.contains(name)){
+        if (temp.contains(name)) {
           isCame = true;
-        }else{
+        } else {
           temp.add(name);
           description = controller.options[index].description!;
         }
@@ -274,7 +289,7 @@ Widget _getDescriptionList({ controller , context}){
                 ),
                 Expanded(
                   child: Text(
-                    txt1 ,
+                    txt1,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -285,7 +300,8 @@ Widget _getDescriptionList({ controller , context}){
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color(0xFF00FF41).withValues(alpha: 0.5),
@@ -344,20 +360,18 @@ Widget _getDescriptionList({ controller , context}){
   );
 }
 
-String dynamicDescription({controller,String? text1, String? text2}) {
-
-  if(controller is EncryptionController){
+String dynamicDescription({controller, String? text1, String? text2}) {
+  if (controller is EncryptionController) {
     text1 ??= controller.plainTextController.text;
     text2 ??= controller.cipherTextController.text;
-  }
-  else if(controller is DecryptionController){
+  } else if (controller is DecryptionController) {
     text1 ??= controller.cipherTextController.text;
     text2 ??= controller.plainTextController.text;
-  }else if(controller is DecodeController || controller is EncodeController){
+  } else if (controller is DecodeController || controller is EncodeController) {
     return '';
-  }
-  else{
-    throw ControllerTypeException(message: "Controller is Not right ::: ${controller.runtimeType}");
+  } else {
+    throw ControllerTypeException(
+        message: "Controller is Not right ::: ${controller.runtimeType}");
   }
 
   const int maxLimit = 10;
@@ -389,71 +403,58 @@ String dynamicDescription({controller,String? text1, String? text2}) {
 
 // region IconButtons
 
+//region CustomIconButton
+Decoration? iconDecoration({required Color borderColor}) {
+  return BoxDecoration(
+    border: Border.all(color: borderColor.withValues(alpha: 0.4), width: 1),
+    borderRadius: BorderRadius.circular(8),
+    gradient: LinearGradient(
+      colors: [
+        borderColor.withValues(alpha: 0.2),
+        borderColor.withValues(alpha: 0.1),
+      ],
+    ),
+  );
+}
+
+Widget _customIconButton({Color? color, onTap, IconData , double? size}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+    margin: const EdgeInsets.only(left: 5, right: 10),
+    decoration: iconDecoration(borderColor: color!),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(6),
+      child: Icon(IconData, color: color, size: size ?? 22.0),
+    ),
+  );
+}
+//endregion
+
 // region CLEAR BUTTON
 Widget enhancedClearIconButton({
   required controller,
   required encryptionDecryptionOptionsController,
 }) {
-  return Container(
-    height: 40,
-    width: 40,
-    margin: const EdgeInsets.only(left: 5,right: 10),
-    decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkRed.withValues(alpha: 0.4), width: 1),
-      borderRadius: BorderRadius.circular(8),
-      gradient: LinearGradient(
-        colors: [ cyberpunkRed.withValues(alpha: 0.2),  cyberpunkRed.withValues(alpha: 0.1),
-        ],
-      ),
-    ),
-    child: IconButton(
-      icon: const Icon(Icons.clear, color: cyberpunkRed, size: 22),
-      onPressed: () {
+  return _customIconButton(
+      color: cyberpunkRed,
+      IconData: Icons.clear,
+      onTap: () {
         controller.plainTextController.clear();
         controller.cipherTextController.clear();
         encryptionDecryptionOptionsController.onChange(controller: controller);
-      },
-      tooltip: 'CLEAR ALL DATA',
-      // constraints: const BoxConstraints(
-      //   minWidth: 44,
-      //   minHeight: 44,
-      // ),
-    ),
-  );
+      });
 }
 // endregion
 
 // region PASTE BUTTON
 Widget buildMobilePasteButton({controller, onChange}) {
-  return Container(
-    height: 40,
-    width: 40,
-    margin: const EdgeInsets.only(left: 5, right: 5),
-    decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkCyan.withValues(alpha: 0.4), width: 1),
-      borderRadius: BorderRadius.circular(6),
-      gradient: LinearGradient(
-        colors: [
-          cyberpunkCyan.withValues(alpha: 0.2),
-          cyberpunkCyan.withValues(alpha: 0.1),
-        ],
-      ),
-      // boxShadow: [
-      //   BoxShadow(
-      //     color: cyberpunkCyan.withValues(0.2),
-      //     blurRadius: 6,
-      //     spreadRadius: 1,
-      //     offset: const Offset(0, 2),
-      //   ),
-      // ],
-    ),
-    child: InkWell(
-        child: const Icon(Icons.paste, color: cyberpunkCyan, size: 22),
-        onTap: () {
-          pasteText(controller: controller, onChange: onChange);
-        }
-    ),
-  );
+  return _customIconButton(
+      color: cyberpunkCyan,
+      IconData: Icons.paste,
+      onTap: () {
+        pasteText(controller: controller, onChange: onChange);
+      });
 }
 
 // to paste text from clipboard
@@ -468,47 +469,25 @@ void pasteText({controller, required Function onChange}) async {
     } else {
       throw ControllerTypeException(
           message:
-          "Controller is not right in pasteText ${controller.runtimeType}");
+              "Controller is not right in pasteText ${controller.runtimeType}");
     }
     onChange(controller: controller);
   }
 }
+
 // endregion
 
 // region COPY BUTTON
 Widget buildMobileCopyButton(controller, bool isEncoding) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
-    margin: const EdgeInsets.only(left: 5, right: 10),
-    decoration: BoxDecoration(
-      border: Border.all(color: cyberpunkPurple.withValues(alpha: 0.4), width: 1),
-      borderRadius: BorderRadius.circular(6),
-      gradient: LinearGradient(
-        colors: [
-          cyberpunkPurple.withValues(alpha: 0.2),
-          cyberpunkPurple.withValues(alpha: 0.1),
-        ],
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: cyberpunkPurple.withValues(alpha: 0.2),
-          blurRadius: 6,
-          spreadRadius: 1,
-          offset: const Offset(0, 2),
-        ),
-      ],
-    ),
-    child: InkWell(
+  return _customIconButton(
+      color: cyberpunkPurple,
       onTap: () {
         String cpy = isEncoding
             ? controller.cipherTextController.text.toString()
             : controller.plainTextController.text.toString();
         copyText(cpy);
       },
-      borderRadius: BorderRadius.circular(6),
-      child: const Icon(Icons.copy, color: cyberpunkPurple, size: 22),
-    ),
-  );
+      IconData: Icons.copy);
 }
 
 // to copy text into clipboard
@@ -520,22 +499,66 @@ void copyText(String txt) {
       colorText: cyberpunkGrayDark,
       backgroundColor: cyberpunkLightRed,
     );
-
   } else {
-    Clipboard.setData(ClipboardData(text: txt)).then((value)
-      {
-          showSnackBar(
-            title: "Success",
-            message:  "Cipher text copied successfully",
-            backgroundColor: cyberpunkGreenLight,
-            colorText: cyberpunkDarkElevated,
-          );
-      }
-    );
+    Clipboard.setData(ClipboardData(text: txt)).then((value) {
+      showSnackBar(
+        title: "Success",
+        message: "Cipher text copied successfully",
+        backgroundColor: cyberpunkGreenLight,
+        colorText: cyberpunkDarkElevated,
+      );
+    });
   }
 }
 // endregion
 
+Widget buildFeedbackButton() {
+  return Column(
+    children: [
+      _customIconButton(
+        onTap: () {
+          Get.toNamed(RT_FEEDBACK_SCREEN);
+        },
+        color: cyberpunkLightRed,
+        IconData: Icons.feedback,
+        size: 25
+      ),
+      Text(
+        "Feedback",
+        style: TextStyle(
+          fontFamily: "monospace",
+          fontSize: 13,
+          color: cyberpunkPurpleLight,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildAboutUsButton() {
+  return Column(
+    children: [
+      _customIconButton(
+        onTap: () {
+          Get.toNamed(RT_ABOUT_US_SCREEN);
+        },
+        color: cyberpunkCyanDark,
+        IconData: Icons.person,
+        size: 25
+      ),
+      Text(
+        "About Us",
+        style: TextStyle(
+          fontFamily: "monospace",
+          fontSize: 13,
+          color: cyberpunkPurpleLight,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ],
+  );
+}
 
 // endregion
 
@@ -546,17 +569,15 @@ bool checkAllTypes({controller}) {
       controller is DecodeController;
 }
 
-void showSnackBar({title , message,  backgroundColor, colorText}) {
+void showSnackBar({title, message, backgroundColor, colorText}) {
   Get.snackbar(title, message,
       duration: const Duration(seconds: 5),
       backgroundColor: backgroundColor,
       colorText: colorText,
-      snackPosition: SnackPosition.BOTTOM
-  );
+      snackPosition: SnackPosition.BOTTOM);
 }
 
-
-PreferredSizeWidget buildEnhancedAppBar({title , content , bottom})   {
+PreferredSizeWidget buildEnhancedAppBar({title, content, bottom}) {
   return AppBar(
     title: Column(
       children: [
@@ -602,7 +623,6 @@ PreferredSizeWidget buildEnhancedAppBar({title , content , bottom})   {
     backgroundColor: cyberpunkDark,
     elevation: 0,
     toolbarHeight: 75,
-
     bottom: bottom,
   );
 }

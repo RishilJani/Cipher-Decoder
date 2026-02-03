@@ -1,5 +1,5 @@
 name: cipher_decoder
-description: "A new Flutter project."
+description: "A totally free flutter application to learn encoding decoding and encryption-decryption all at one place."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.7.2
-  google_fonts: ^6.1.0
+  google_fonts:
   aswdc_flutter_pub: ^1.0.27
   http: ^1.5.0
 

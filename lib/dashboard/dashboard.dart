@@ -192,7 +192,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
           const SizedBox(height: 32),
           _buildActionCard(
             icon: Icons.lock_outline,
-            title: "Encrypt / Decrypt",
+            title: "Encrypt - Decrypt",
             description: "Secure your data with strong encryption algorithms",
             subtitle: "Caesar, Atbash, Rail Fence, and more",
             accentColor: cyberpunkGreen,
@@ -207,8 +207,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
           const SizedBox(height: 24),
           _buildActionCard(
             icon: Icons.transform,
-            title: "Encode / Decode",
-            description: "Transform text and files with various encoding schemes",
+            title: "Encode - Decode",
+            description: "Transform text with various encoding schemes",
             subtitle: "BASE64, BASE32, and more",
             accentColor: cyberpunkCyan,
             gradientColors: [

@@ -3,8 +3,7 @@ import 'package:cipher_decoder/utils/import_export.dart';
 class EncryptionDecryptionOptionsController extends GetxController {
   final int maxLimit = 5;
   RxString desc = ''.obs;
-  RxList<EncryptionDecryptionModel> options =
-      <EncryptionDecryptionModel>[CeaseCipher()].obs;
+  RxList<EncryptionDecryptionModel> options = <EncryptionDecryptionModel>[CeaseCipher()].obs;
 
   void addWidget({required controller}) {
     EncryptionDecryptionModel methodObj = CeaseCipher();
@@ -55,7 +54,6 @@ class EncryptionDecryptionOptionsController extends GetxController {
   // to change description according to methods
   void changeDescription({controller}) {
     if (controller is EncryptionController) {
-      // desc.value = controller.dynamicDescription();
       desc.value = dynamicDescription(controller: controller);
     } else if (controller is DecryptionController) {
       desc.value = dynamicDescription(controller: controller);

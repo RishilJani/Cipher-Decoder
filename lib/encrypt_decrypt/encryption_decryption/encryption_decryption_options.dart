@@ -351,8 +351,7 @@ class _EncryptionDecryptionOptionsState
                   mainAxisSpacing: 12,
                   childAspectRatio: 2.5,
                   children: encryptionDecryptionMethods.map((method) {
-                    EncryptionDecryptionModel encryptionDecryptionModel =
-                        getMethod(element: method);
+                    EncryptionDecryptionModel encryptionDecryptionModel = getMethod(element: method);
                     bool isSelected = widget
                             .encryptionDecryptionOptionController
                             .options[widget.index!]

@@ -3,7 +3,7 @@ export 'package:flutter/services.dart';
 export 'package:get/get.dart';
 export 'dart:async';
 export 'dart:convert';
-export 'package:google_fonts/google_fonts.dart';
+// export 'package:google_fonts/google_fonts.dart';
 export 'package:aswdc_flutter_pub/aswdc_flutter_pub.dart';
 
 //region AboutUs

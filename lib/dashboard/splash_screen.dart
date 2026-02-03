@@ -95,14 +95,13 @@ class _MySplashScreenState extends State<MySplashScreen>
             // Typewriter Text
             Text(
               displayText,
-              style: GoogleFonts.robotoMono(
-                textStyle: const TextStyle(
+              style: const TextStyle(
                   color: Colors.cyanAccent,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
                 ),
-              ),
+
             ),
           ],
         ),

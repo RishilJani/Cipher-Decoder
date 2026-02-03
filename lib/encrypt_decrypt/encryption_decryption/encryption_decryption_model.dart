@@ -13,24 +13,24 @@ abstract class EncryptionDecryptionModel {
   String decrypt({required String cipherText });
 
 }
+//
+// class CeaseCipher extends EncryptionDecryptionModel {
+//   CeaseCipher()  : super(title: EN_CEASER_CIPHER, description: CEASER_CIPHER_DESC);
+//
+//   @override
+//   String encrypt({required String plainText}) {
+//     return MonoAlphabaticCipher().encrypt(plainText: plainText, optionalKey: 3);
+//   }
+//
+//   @override
+//   String decrypt({required String cipherText}) {
+//     return MonoAlphabaticCipher().decrypt(cipherText: cipherText, key: 3);
+//   }
+//
+// }
 
 class CeaseCipher extends EncryptionDecryptionModel {
-  CeaseCipher()  : super(title: EN_CEASER_CIPHER, description: CEASER_CIPHER_DESC);
-
-  @override
-  String encrypt({required String plainText}) {
-    return MonoAlphabaticCipher().encrypt(plainText: plainText, optionalKey: 3);
-  }
-
-  @override
-  String decrypt({required String cipherText}) {
-    return MonoAlphabaticCipher().decrypt(cipherText: cipherText, key: 3);
-  }
-
-}
-
-class MonoAlphabaticCipher extends EncryptionDecryptionModel {
-  MonoAlphabaticCipher():super( title: EN_MONO_ALPHABATIC,  description: MONO_ALPHABATIC_CIPHER_DESC, requiresKey: true, keyController: new TextEditingController());
+  CeaseCipher():super( title: EN_CEASER_CIPHER,  description: CEASER_CIPHER_DESC, requiresKey: true, keyController: new TextEditingController(text: "3"));
 
   @override
   String encrypt({required String plainText, int? optionalKey }) {

@@ -173,13 +173,12 @@ Widget myInputfield(
 
 dynamic getMethod({required element}) {
   if (element is EncryptionDecryptionTypes) {
-    if (element == EncryptionDecryptionTypes.Ceaser_Cipher) {
+    if (element == EncryptionDecryptionTypes.CeaseCipher) {
       return new CeaseCipher();
     } else if (element == EncryptionDecryptionTypes.Atbash_Cipher) {
       return new AtbashCipher();
-    } else if (element == EncryptionDecryptionTypes.Mono_Alphabatic_Cipher) {
-      return new MonoAlphabaticCipher();
-    } else if (element == EncryptionDecryptionTypes.Rail_Fence_Cipher) {
+    }
+    else if (element == EncryptionDecryptionTypes.Rail_Fence_Cipher) {
       return new RailFenceCipher();
     }
   } else if (element is EncodeDecodeTypes) {

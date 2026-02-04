@@ -43,8 +43,7 @@ class EncryptionDecryptionOptionsController extends GetxController {
       controller.plainTextController.text = ans;
     } else {
       throw ControllerTypeException(
-          message:
-              "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
+          message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
 
     changeDescription(controller: controller);
@@ -59,8 +58,7 @@ class EncryptionDecryptionOptionsController extends GetxController {
       desc.value = dynamicDescription(controller: controller);
     } else {
       throw ControllerTypeException(
-          message:
-              "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
+          message: "Encryption Decryption Controller is Not right ::: ${controller.runtimeType}");
     }
   }
 

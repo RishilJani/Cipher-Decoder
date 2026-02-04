@@ -15,17 +15,20 @@ const String APPBAR_TITLE_DECODING = "Decoding";
 const String EN_CEASER_CIPHER = "Ceaser Cipher";
 const String EN_ATBASH_CIPHER = "Atbash Cipher";
 const String EN_RAIL_FENCE = "Rail Fence";
+const String EN_PLAY_FAIR = "PlayFair";
 
 const String CEASER_CIPHER_DESC = "Caesar cipher is one of the simplest and most widely known encryption techniques, where each letter is shifted exactly k places.(Generally 3)";
 const String ATBASH_CIPHER_DESC = "The Atbash cipher is a particular type of monoalphabetic cipher formed by taking the alphabet and mapping it to its reverse, so that the first letter becomes the last letter, the second letter becomes the second to last letter, and so on.";
 const String RAIL_FENCE_DESC = "This is Rail Fence Cipher";
+const String PLAY_FAIR_DESC = "This is play fair cipher";
 // endregion
 
 // region enum
 enum EncryptionDecryptionTypes {
   CeaseCipher,
   Atbash_Cipher,
-  Rail_Fence_Cipher
+  Rail_Fence_Cipher,
+  Play_Fair_Cipher
 }
 
 enum EncodeDecodeTypes{

@@ -10,7 +10,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late AnimationController _slideController;
   late AnimationController _pulseController;
-  
+
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _pulseAnimation;
@@ -20,17 +20,17 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
+
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
+
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
@@ -60,14 +60,15 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if(mounted){
-        _fadeController.forward();
-        _pulseController.repeat(reverse: true);
-        _slideController.forward();
-      }
-    },);
-
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        if (mounted) {
+          _fadeController.forward();
+          _pulseController.repeat(reverse: true);
+          _slideController.forward();
+        }
+      },
+    );
   }
 
   @override
@@ -110,7 +111,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
             end: Alignment.bottomRight,
             colors: [
               cyberpunkPurple.withValues(alpha: 0.2),
-              cyberpunkCyan.withValues(alpha : 0.1),
+              cyberpunkCyan.withValues(alpha: 0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(24),
@@ -289,7 +290,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                     );
                   },
                 ),
-
                 const SizedBox(height: 20),
                 Text(
                   title,
@@ -304,7 +304,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: accentColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
@@ -336,7 +337,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                   ),
                   textAlign: TextAlign.center,
                 ),
-
               ],
             ),
           ),
@@ -345,7 +345,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildFooter(){
+  Widget buildFooter() {
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
@@ -375,6 +375,4 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       ),
     );
   }
-
 }
-

@@ -9,8 +9,7 @@ class EncryptionController extends GetxController {
       String ans =method.encrypt(plainText: encrypt);
       return ans;
     } else {
-      cipherTextController.text =
-          method.encrypt(plainText: plainTextController.text);
+      cipherTextController.text = method.encrypt(plainText: plainTextController.text);
       return null;
     }
   }

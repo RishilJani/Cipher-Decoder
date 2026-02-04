@@ -81,7 +81,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
 
   Widget _buildEnhancedHeader() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -167,7 +166,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
       child: SafeArea(
         child: Obx(() {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -191,7 +190,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         decoration: BoxDecoration(
           color: isSelected
               ? cyberpunkGreen.withValues(alpha: 0.2)
@@ -219,6 +218,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
                 fontSize: 10,
                 color: isSelected ? cyberpunkGreen : Colors.grey[400],
                 fontFamily: 'monospace',
+                overflow: TextOverflow.clip,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               ),
             ),

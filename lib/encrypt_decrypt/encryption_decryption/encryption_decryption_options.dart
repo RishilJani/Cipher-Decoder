@@ -205,8 +205,7 @@ class _EncryptionDecryptionOptionsState
 
         // region Conditional Key Input Field
         Obx(() {
-          EncryptionDecryptionModel obj = widget
-              .encryptionDecryptionOptionController.options[widget.index!];
+          EncryptionDecryptionModel obj = widget.encryptionDecryptionOptionController.options[widget.index!];
           return AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (child, animation) {
@@ -225,15 +224,14 @@ class _EncryptionDecryptionOptionsState
                       textTitle: "Enter Key:",
                       hintText: "Enter Integer Key... ",
                       controller: obj.keyController!,
-                      keyboardType: TextInputType.number,
+                      // keyboardType: TextInputType.number,
                       onChanged: (value) {
                         widget.encryptionDecryptionOptionController
-                            .keyUpdateWidget(
-                                index: widget.index,
+                            .keyUpdateWidget(index: widget.index,
                                 controller: widget.controller);
                       },
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+                        obj is! PlayFairCipher ?  FilteringTextInputFormatter.allow(RegExp(r"[0-9]")) : FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]")),
                       ],
                     ),
                   )

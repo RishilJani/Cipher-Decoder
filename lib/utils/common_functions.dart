@@ -180,6 +180,8 @@ dynamic getMethod({required element}) {
     }
     else if (element == EncryptionDecryptionTypes.Rail_Fence_Cipher) {
       return new RailFenceCipher();
+    }else if(element == EncryptionDecryptionTypes.Play_Fair_Cipher){
+      return new PlayFairCipher();
     }
   } else if (element is EncodeDecodeTypes) {
     if (element == EncodeDecodeTypes.Base64) {
@@ -379,7 +381,7 @@ String dynamicDescription({controller, String? text1, String? text2}) {
   String ignore = "\n ";
   var l1 = text1.split('');
   var l2 = text2.split('');
-  for (int i = 0; i < l1.length; i++) {
+  for (int i = 0; i < l1.length && i < l2.length; i++) {
     if (i == 0) {
       ans = "\n> CIPHER MAP:\n";
     }

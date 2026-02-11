@@ -1,7 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
+
+// region App Data
 const String APPLICATION_NAME = "SherlockCode";
 const String VERSION_NO = "1.0.0";
+const String ANDROID_APP_URL = "URL Here";
+const String IOS_APP_URL = "URL Here";
+const String SHARE_APP_MESSAGE = 'Start you journey of cyber security by learning Encryption Decryption algorithms practically, with encoding and decoding.';
+const String APP_LOGO_PATH = 'assets/image/SherlockCode.jpg';
+// endregion
 
 // region AppBar title
 const String APPBAR_TITLE_DASHBOARD = "Dashboard";
@@ -86,7 +93,7 @@ var base32RegExp = RegExp(r'^(?:[A-Z2-7]{8})*(?:[A-Z2-7]{2}======|[A-Z2-7]{4}===
 
 // endregion
 
-// region Api
+// region ApiConstants
 const String BASE_URL = "http://api.aswdc.in/Api/MST_AppVersions/PostAppFeedback/AppPostFeedback";
 
 const String API_APP_NAME = "AppName";

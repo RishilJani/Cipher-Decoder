@@ -5,16 +5,24 @@ class AboutUs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DeveloperScreen(
-        developerName: "Rishil V. Jani",
-        mentorName: "Prof. Mehul Bhundiya",
-        exploredByName: "ASWDC",
-        isAdmissionApp: false,
-        shareMessage: '',
-        appTitle: "SherlockCode",
-        appLogo: 'assets/image/SherlockCode.png',
-        appBarColor: cyberpunkGreenDark,
-        backgroundColor: cyberpunkLightElevated,
+    return Container(
+      decoration: BoxDecoration(
+
+      ),
+      child: DeveloperScreen(
+          developerName: "Rishil V. Jani",
+          mentorName: "Prof. Mehul Bhundiya",
+          exploredByName: "ASWDC",
+          isAdmissionApp: false,
+          textColor: Colors.white,
+          androidAPPURL: ANDROID_APP_URL,
+          iosAPPURL: IOS_APP_URL,
+          appTitle: APPLICATION_NAME,
+          appLogo: APP_LOGO_PATH,
+          appBarColor: cyberpunkGreenDark,
+          backgroundColor: cyberpunkLightElevated,
+          shareMessage: SHARE_APP_MESSAGE,
+      ),
     );
   }
 }

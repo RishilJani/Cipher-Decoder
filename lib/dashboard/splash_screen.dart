@@ -82,7 +82,7 @@ class _MySplashScreenState extends State<MySplashScreen>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(27.0), // Adjust the radius as needed
                   child: Image.asset(
-                    "assets/image/SherlockCode.png", // put your logo here
+                    APP_LOGO_PATH,
                     height: 160,
                     
                   ),

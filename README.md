@@ -94,7 +94,7 @@ flutter run
 Example:
 
 <p align="center">
-  <img src="assets/image/SherlockCode.png" width="200" />
+  <img src="assets/image/SherlockCode.jpg" width="200" />
 </p>
 
 ---
@@ -110,7 +110,3 @@ Contributions are welcome!
 When contributing, please include any UI screenshots for new screens like the Feedback screen so reviewers can see the UX changes quickly.
 
 ---
-
-## 📜 License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.  

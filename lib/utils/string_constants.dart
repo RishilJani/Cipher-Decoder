@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-
 // region App Data
 const String APPLICATION_NAME = "SherlockCode";
 const String VERSION_NO = "1.0.0";

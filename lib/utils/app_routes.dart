@@ -5,7 +5,7 @@ class AppRoutes {
   static var pages = [
     GetPage(name: RT_SPLASH_SCREEN, page: () => MySplashScreen()),
     GetPage(name: RT_FEEDBACK_SCREEN, page: () => FeedbackScreen(),transition: Transition.fade),
-    GetPage(name: RT_ABOUT_US_SCREEN, page: () => AboutUs(),transition: Transition.fade),
+    GetPage(name: RT_ABOUT_US_SCREEN, page: () => NewAboutUs(),transition: Transition.fade),
 
     GetPage(name: RT_MAIN_SCREEN, page: () => const MainNavigationScreen()),
 

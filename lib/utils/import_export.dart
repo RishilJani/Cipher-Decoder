@@ -1,57 +1,44 @@
-export 'package:flutter/material.dart';
-export 'package:flutter/services.dart';
-export 'package:get/get.dart';
 export 'dart:async';
 export 'dart:convert';
-// export 'package:google_fonts/google_fonts.dart';
+
 export 'package:aswdc_flutter_pub/aswdc_flutter_pub.dart';
 
 //region AboutUs
-export 'package:cipher_decoder/about_us/about_us.dart';
+export 'package:cipher_decoder/about_us/new_about_us.dart';
+
 //endregion
 
 //region Dashboard
 export 'package:cipher_decoder/dashboard/dashboard.dart';
 export 'package:cipher_decoder/dashboard/splash_screen.dart';
-//endregion
+// endregion
 
-// region Utils
-export 'package:cipher_decoder/utils/app_routes.dart';
-export 'package:cipher_decoder/utils/string_constants.dart';
-export 'package:cipher_decoder/utils/common_functions.dart';
-export 'package:cipher_decoder/utils/colors.dart';
-export 'package:cipher_decoder/utils/custom_exceptions.dart';
-export 'package:cipher_decoder/utils/screen_layout.dart';
+// region Encode
+export 'package:cipher_decoder/encoding_decoding/dashboard_encode_decode.dart';
+export 'package:cipher_decoder/encoding_decoding/decode/decode_controller.dart';
+export 'package:cipher_decoder/encoding_decoding/decode/decode_view.dart';
+export 'package:cipher_decoder/encoding_decoding/encode/encode_controller.dart';
+export 'package:cipher_decoder/encoding_decoding/encode/encode_view.dart';
+export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_model.dart';
+export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_option_controller.dart';
+export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
 // endregion
 
 // region Encrypt Decrypt
 
 export 'package:cipher_decoder/encrypt_decrypt/dashboard_encrypt_decrypt.dart';
-
-export 'package:cipher_decoder/encrypt_decrypt/encryption/encryption_controller.dart';
-export 'package:cipher_decoder/encrypt_decrypt/encryption/encryption_view.dart';
-
 export 'package:cipher_decoder/encrypt_decrypt/decryption/decryption_controller.dart';
 export 'package:cipher_decoder/encrypt_decrypt/decryption/decryption_view.dart';
-
+export 'package:cipher_decoder/encrypt_decrypt/encryption/encryption_controller.dart';
+export 'package:cipher_decoder/encrypt_decrypt/encryption/encryption_view.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_model.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_options.dart';
 export 'package:cipher_decoder/encrypt_decrypt/encryption_decryption/encryption_decryption_options_controller.dart';
+export 'package:cipher_decoder/feedback/api_repo.dart';
+//endregion
 
-// endregion
-
-// region Encode
-export 'package:cipher_decoder/encoding_decoding/dashboard_encode_decode.dart';
-
-export 'package:cipher_decoder/encoding_decoding/encode/encode_controller.dart';
-export 'package:cipher_decoder/encoding_decoding/encode/encode_view.dart';
-
-export 'package:cipher_decoder/encoding_decoding/decode/decode_controller.dart';
-export 'package:cipher_decoder/encoding_decoding/decode/decode_view.dart';
-
-export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_model.dart';
-export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_option_controller.dart';
-export 'package:cipher_decoder/encoding_decoding/encode_decode/encode_decode_options.dart';
+//region Feedback
+export 'package:cipher_decoder/feedback/feedback_screen.dart';
 // endregion
 
 //region Main Navigation
@@ -59,7 +46,14 @@ export 'package:cipher_decoder/main_navigation_screen/main_navigation_screen.dar
 export 'package:cipher_decoder/main_navigation_screen/main_navigation_screen_controller.dart';
 //endregion
 
-//region Feedback
-export 'package:cipher_decoder/feedback/feedback_screen.dart';
-export 'package:cipher_decoder/feedback/api_repo.dart';
+// region Utils
+export 'package:cipher_decoder/utils/app_routes.dart';
+export 'package:cipher_decoder/utils/colors.dart';
+export 'package:cipher_decoder/utils/common_functions.dart';
+export 'package:cipher_decoder/utils/custom_exceptions.dart';
+export 'package:cipher_decoder/utils/screen_layout.dart';
+export 'package:cipher_decoder/utils/string_constants.dart';
+export 'package:flutter/material.dart';
+export 'package:flutter/services.dart';
+export 'package:get/get.dart';
 // endregion

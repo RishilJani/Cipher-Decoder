@@ -3,10 +3,13 @@
 // region App Data
 const String APPLICATION_NAME = "SherlockCode";
 const String VERSION_NO = "1.0.0";
+const String DU_URL = "https://www.darshan.ac.in/";
 const String ANDROID_APP_URL = "URL Here";
 const String IOS_APP_URL = "URL Here";
 const String SHARE_APP_MESSAGE = 'Start you journey of cyber security by learning Encryption Decryption algorithms practically, with encoding and decoding.';
 const String APP_LOGO_PATH = 'assets/image/SherlockCode.jpg';
+const String DU_LOGO_PATH = 'assets/image/DU_Logo.jpeg';
+const String ASWDC_LOGO_PATH = 'assets/image/ASWDC.jpeg';
 // endregion
 
 // region AppBar title

@@ -34,9 +34,9 @@ class _MySplashScreenState extends State<MySplashScreen>
     });
 
     // Navigate to home after 5s
-    Timer(const Duration(seconds: 5), () {
-      Get.offNamed(RT_MAIN_SCREEN);
-    });
+    // Timer(const Duration(seconds: 5), () {
+    //   Get.offNamed(RT_MAIN_SCREEN);
+    // });
   }
 
   void _startTypingEffect() {
@@ -62,10 +62,10 @@ class _MySplashScreenState extends State<MySplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             // Animated Logo
             ScaleTransition(
               scale: _logoAnimation,
@@ -73,18 +73,17 @@ class _MySplashScreenState extends State<MySplashScreen>
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.cyanAccent.withValues(alpha : 0.8),
+                      color: Colors.cyanAccent.withValues(alpha: 0.8),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(27.0), // Adjust the radius as needed
+                  borderRadius: BorderRadius.circular(27.0),
                   child: Image.asset(
                     APP_LOGO_PATH,
                     height: 160,
-                    
                   ),
                 ),
               ),
@@ -96,12 +95,35 @@ class _MySplashScreenState extends State<MySplashScreen>
             Text(
               displayText,
               style: const TextStyle(
-                  color: Colors.cyanAccent,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
+                color: Colors.cyanAccent,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
+            ),
 
+            const Spacer(),
+
+            // Logos at the bottom
+            Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 9.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      DU_LOGO_PATH,
+                      height: 60,
+                    ),
+                    const SizedBox(width: 40),
+                    Image.asset(
+                      ASWDC_LOGO_PATH,
+                      height: 60,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

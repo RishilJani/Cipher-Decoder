@@ -34,9 +34,9 @@ class _MySplashScreenState extends State<MySplashScreen>
     });
 
     // Navigate to home after 5s
-    // Timer(const Duration(seconds: 5), () {
-    //   Get.offNamed(RT_MAIN_SCREEN);
-    // });
+    Timer(const Duration(seconds: 5), () {
+      Get.offNamed(RT_MAIN_SCREEN);
+    });
   }
 
   void _startTypingEffect() {
